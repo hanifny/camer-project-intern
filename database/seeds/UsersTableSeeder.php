@@ -13,9 +13,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Hanif Nuryanto',
-            'email' => 'hanif@uaf.com',
+            'id'       => '4f41d354-10b4-4a23-b8cf-e9b4e1b202ab',
+            'nama'     => 'Hanif Nuryanto',
+            'email'    => 'hanif@uaf.com',
             'password' => bcrypt('secret'),
+            'role_id'  => '78e83712-9bfe-4bd2-9689-886324a48acb'
         ]);
     }
 }

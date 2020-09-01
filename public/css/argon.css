@@ -2846,7 +2846,8 @@ textarea.form-control
 
 .form-group
 {
-    margin-bottom: 1.5rem;
+    margin-left: 7px;
+    margin-bottom: 0;
 }
 
 .form-text
@@ -2859,7 +2860,7 @@ textarea.form-control
 .form-row
 {
     display: flex;
-
+    align-items: center;
     margin-right: -5px;
     margin-left: -5px; 
 
@@ -6171,7 +6172,7 @@ input[type='button'].btn-block
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active
 {
-    color: rgba(0, 0, 0, .9);
+    color: #0f4c75;
 }
 
 .navbar-light .navbar-toggler
@@ -8874,6 +8875,10 @@ button.bg-dark:focus
 .bg-default
 {
     background-color: #172b4d !important;
+}
+
+.brand-image {
+    width: 100%;
 }
 
 a.bg-default:hover,
@@ -21397,7 +21402,7 @@ textarea[resize='horizontal']
 .navbar-vertical .navbar-brand > img
 {
     max-width: 100%;
-    max-height: 2rem;
+    max-height: 3rem;
 }
 @media (min-width: 768px)
 {
@@ -21596,7 +21601,7 @@ textarea[resize='horizontal']
     padding-left: 1rem;
 
     border-radius: .375rem; 
-    background: #f6f9fc;
+    background: #a2d5f2;
 }
 .navbar-vertical.navbar-expand-xs .lavalamp-object
 {
@@ -21714,7 +21719,7 @@ textarea[resize='horizontal']
         padding-left: 1rem;
 
         border-radius: .375rem; 
-        background: #f6f9fc;
+        background: #a2d5f2;
     }
     .navbar-vertical.navbar-expand-sm .lavalamp-object
     {
@@ -21833,7 +21838,7 @@ textarea[resize='horizontal']
         padding-left: 1rem;
 
         border-radius: .375rem; 
-        background: #f6f9fc;
+        background: #a2d5f2;
     }
     .navbar-vertical.navbar-expand-md .lavalamp-object
     {
@@ -21952,7 +21957,7 @@ textarea[resize='horizontal']
         padding-left: 1rem;
 
         border-radius: .375rem; 
-        background: #f6f9fc;
+        background: #a2d5f2;
     }
     .navbar-vertical.navbar-expand-lg .lavalamp-object
     {
@@ -22071,7 +22076,7 @@ textarea[resize='horizontal']
         padding-left: 1rem;
 
         border-radius: .375rem; 
-        background: #f6f9fc;
+        background: #a2d5f2;
     }
     .navbar-vertical.navbar-expand-xl .lavalamp-object
     {
@@ -22220,7 +22225,7 @@ textarea[resize='horizontal']
 
 .sidenav-header
 {
-    height: 78px;
+    height: 87x;
 
     text-align: center;
 }
@@ -22248,7 +22253,8 @@ textarea[resize='horizontal']
 .g-sidenav-show .sidenav .nav-link-text
 {
     transition: .3s ease;
-
+    color: #0f3460;
+    font-weight: 601;
     opacity: 1;
 }
 
@@ -22274,7 +22280,7 @@ textarea[resize='horizontal']
         padding-left: 25px !important; 
 
         border-radius: 0 !important;
-        background: #f6f9fc;
+        background: #a2d5f2;
     }
 }
 
@@ -23773,14 +23779,16 @@ textarea[resize='horizontal']
 
 .table .thead-light th
 {
-    color: #8898aa; 
+    color: #1a1a2e; 
     background-color: #f6f9fc;
 }
 .table .thead-light th a
 {
     color: #8898aa;
 }
-
+.list {
+    color: #16213e;
+}
 .table-hover tr
 {
     transition: all .15s ease;

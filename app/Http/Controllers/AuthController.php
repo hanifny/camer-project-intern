@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -16,10 +18,9 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (! $token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized', 'status' => 'failed']);
         }
-        //APABILA BERHASIL, GENERATE API_TOKEN MENGGUNAKAN STRING RANDOM
         $data = $this->respondWithToken($token)->original['access_token'];
         // $updateApi = auth()->user()->where('id', auth()->user()->id)->update(['api_token' => $data]);
         //KEMUDIAN KIRIM RESPONSENYA KE CLIENT UNTUK DIPROSES LEBIH LANJUT
@@ -31,7 +32,8 @@ class AuthController extends Controller
 
     public function me()
     {
-        return response()->json(auth()->user());
+        return User::get();
+        // return response()->json(auth()->user());
     }
 
     public function logout()

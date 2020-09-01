@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/nucleo/css/nucleo.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/argon.css?v=1.2.0') }}" type="text/css">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/381a841f7d.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-default">

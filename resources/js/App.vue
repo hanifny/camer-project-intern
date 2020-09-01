@@ -1,16 +1,18 @@
 <template>
-    <div class="wrapper">
-        <app-header v-if="isAuth" />
-
-        <div class="content-wrapper">
+<div id="app">
+        <app-sidebar v-if="isAuth"></app-sidebar>
+        <!-- Main content -->
+        <div class="main-content" id="panel">
+            <app-topbar v-if="isAuth"></app-topbar>
             <router-view></router-view>
         </div>
-        <app-footer v-if="isAuth" />
-    </div>
+        <app-footer v-if="isAuth"></app-footer>
+</div>
 </template>
 <script>
     import { mapState, mapGetters } from 'vuex'
-    import Header from './components/Header.vue'
+    import Sidebar from './components/Sidebar.vue'
+    import Topbar from './components/Topbar.vue'
     import Footer from './components/Footer.vue'
     export default {
         computed: {
@@ -18,8 +20,9 @@
             ...mapGetters(['isAuth'])
         },
         components: {
-            'app-header': Header,
-            'app-footer': Footer
+            'app-sidebar': Sidebar,
+            'app-topbar' : Topbar,
+            'app-footer' : Footer
         }
     }
 </script>

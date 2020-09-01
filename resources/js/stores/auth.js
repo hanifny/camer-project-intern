@@ -25,6 +25,7 @@ const actions = {
                 if (response.data.status == 'success') {
                     //MAKA LOCAL STORAGE DAN STATE TOKEN AKAN DISET MENGGUNAKAN
                     //API DARI SERVER RESPONSE
+
                     localStorage.setItem('token', response.data.data)
                     commit('SET_TOKEN', response.data.data, { root: true })
                 } else {
@@ -40,14 +41,6 @@ const actions = {
             })
         })
     },
-    signout({ commit }) {
-        localStorage.setItem('token', null) //RESET LOCAL STORAGE MENJADI NULL
-        commit('SET_TOKEN', null, { root: true }) //RESET STATE TOKEN MENJADI NULL
-        $axios.post('/logout')
-        .catch((error) => {
-
-        })
-    }
 }
 
 export default {

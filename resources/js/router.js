@@ -1,8 +1,10 @@
 import Vue from 'vue'
+import store from './store'
 import Router from 'vue-router'
 import Home from './pages/Home.vue'
 import Login from './pages/Login.vue'
-import store from './store'
+import Rekap from './pages/Rekap.vue'
+import Camer from './pages/Camer.vue'
 
 Vue.use(Router)
 
@@ -20,6 +22,18 @@ const router = new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/rekap',
+            name: 'rekap',
+            component: Rekap,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/camer',
+            name: 'camer',
+            component: Camer,
+            meta: { requiresAuth: true }
         }
     ]
 })
