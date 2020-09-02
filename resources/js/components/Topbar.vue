@@ -153,7 +153,7 @@
                                     <img alt="Image placeholder" src="img/favicon.png">
                                 </span>
                                 <div class="media-body  ml-2  d-none d-lg-block">
-                                    <span class="mb-0 text-sm  font-weight-bold"> {{authenticated.nama}} </span>
+                                    <span class="mb-0 text-sm  font-weight-bold"> {{authenticated[0].nama}} </span>
                                 </div>
                             </div>
                         </a>

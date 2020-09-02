@@ -16,7 +16,7 @@ const actions = {
             $axios.post('/me')
             .then((response) => {
                 commit('ASSIGN_USER_AUTH', response.data)
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 resolve(response.data)
             })
         })

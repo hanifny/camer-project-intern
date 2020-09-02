@@ -6789,7 +6789,7 @@ var render = function() {
                               { staticClass: "mb-0 text-sm  font-weight-bold" },
                               [
                                 _vm._v(
-                                  " " + _vm._s(_vm.authenticated.nama) + " "
+                                  " " + _vm._s(_vm.authenticated[0].nama) + " "
                                 )
                               ]
                             )
@@ -25598,8 +25598,8 @@ var actions = {
     var commit = _ref.commit;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('/me').then(function (response) {
-        commit('ASSIGN_USER_AUTH', response.data);
-        console.log(response.data.data);
+        commit('ASSIGN_USER_AUTH', response.data); // console.log(response.data.data);
+
         resolve(response.data);
       });
     });
@@ -25632,8 +25632,8 @@ var actions = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/hanif/Classified/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/hanif/Classified/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/hanif/Documents/Classified/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/hanif/Documents/Classified/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

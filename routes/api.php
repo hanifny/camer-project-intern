@@ -14,4 +14,14 @@ Route::middleware('auth:api')->group(function () {
     Route::post('me', 'AuthController@me');
     // Logout user from application
     Route::post('logout', 'AuthController@logout');
+
+    // Get Lantai
+    Route::get('lantai', 'CamerController@lantai');
+
+    // Get unit per Lantai
+    Route::get('lantai/{nama}', 'CamerController@unit_per_lantai');
+
+    // Get unit per Lantai
+    Route::get('lantai/{nama}/{unit}', 'CamerController@detail_unit');
+
 });
