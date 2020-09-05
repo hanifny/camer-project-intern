@@ -3,7 +3,7 @@ import store from './store'
 import Router from 'vue-router'
 import Home from './pages/Home.vue'
 import Login from './pages/Login.vue'
-import Rekap from './pages/Rekap.vue'
+import Unit from './pages/Unit.vue'
 import Camer from './pages/Camer.vue'
 
 Vue.use(Router)
@@ -24,9 +24,9 @@ const router = new Router({
             component: Login
         },
         {
-            path: '/rekap',
-            name: 'rekap',
-            component: Rekap,
+            path: '/unit',
+            name: 'unit',
+            component: Unit,
             meta: { requiresAuth: true }
         },
         {

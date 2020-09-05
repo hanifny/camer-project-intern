@@ -6,6 +6,7 @@ import App from './App.vue'
 
 window.swal = swal
 
+Vue.component('pagination', require('laravel-vue-pagination'));
 const toast = swal.mixin({
     toast: true,
     position: 'top-end',

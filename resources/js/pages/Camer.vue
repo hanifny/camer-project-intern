@@ -32,7 +32,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-danger">Validasi Semua</button>
+                                        <button class="btn btn-danger" @click.prevent="getCamer">Validasi Semua</button>
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-success">Export to Excel <i class="fas fa-file-excel"></i></button>
@@ -157,11 +157,10 @@
 </template>
 
 <script>
+    import {mapState, mapActions} from 'vuex' 
     export default {
-
+        methods: {
+            ...mapActions('camer', ['getCamer'])
+        }
     }
 </script>
-
-<style>
-
-</style>

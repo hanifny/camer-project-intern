@@ -21,8 +21,8 @@
                                 <span class="nav-link-text">Catatan Meter</span>
                             </router-link>
                         </li>
-                        <li class="nav-item" @click="activate('rekap')">
-                            <router-link class="nav-link" to="/rekap" :class="{ active : active_el == 'rekap' }">
+                        <li class="nav-item" @click="activate('unit')">
+                            <router-link class="nav-link" to="/unit" :class="{ active : active_el == 'unit' }">
                                 <i class="ni ni-archive-2 text-orange"></i>
                                 <span class="nav-link-text">Data Apartement Unit</span>
                             </router-link>
