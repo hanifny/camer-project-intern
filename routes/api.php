@@ -25,6 +25,8 @@ Route::middleware('auth:api')->group(function () {
     // Get detail camer unit per lantai
     Route::get('floor/{id}/{unit}', 'CamerController@camer_unit');
 
+    Route::post('floor/{id}/{unit}', 'CamerController@store');
+
     // Get semua unit
     Route::get('unit', 'CamerController@all_unit');
 

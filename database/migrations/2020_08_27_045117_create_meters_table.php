@@ -26,7 +26,7 @@ class CreateMetersTable extends Migration
             $table->uuid('validator_id');
             $table->uuid('apartement_id');
             $table->foreign('engineer_id')->references('id')->on('users');
-            $table->foreign('validator_id')->references('id')->on('users');
+            $table->foreign('validator_id')->references('id')->on('users')->default('null');
             $table->foreign('apartement_id')->references('id')->on('apartements');
             $table->timestamps();
         });

@@ -2397,71 +2397,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('camer', ['getCamer']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('camer', {
+    all_camer: function all_camer(state) {
+      return state.camer;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('camer', ['getCamer'])),
+  created: function created() {
+    this.getCamer();
+  }
 });
 
 /***/ }),
@@ -25118,90 +25064,68 @@ var render = function() {
                 [
                   _vm._m(4),
                   _vm._v(" "),
-                  _c("tbody", { staticClass: "list" }, [
-                    _c("tr", [
-                      _vm._m(5),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("router-link", { attrs: { to: "" } }, [
-                            _vm._v("T-06-01")
+                  _c(
+                    "tbody",
+                    { staticClass: "list" },
+                    _vm._l(_vm.all_camer, function(camer, index) {
+                      return _c("tr", [
+                        _c("th", { attrs: { scope: "row" } }, [
+                          _c("div", { staticClass: "media" }, [
+                            _c("div", { staticClass: "media-body" }, [
+                              _c(
+                                "span",
+                                { staticClass: "number mb-0 text-sm" },
+                                [_vm._v(_vm._s(index + 1))]
+                              )
+                            ])
                           ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("93.4 Kwh")]),
-                      _vm._v(" "),
-                      _vm._m(6),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Harry Styles")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("17 Agustus 2020")]),
-                      _vm._v(" "),
-                      _vm._m(7)
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _vm._m(8),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("router-link", { attrs: { to: "" } }, [
-                            _vm._v("T-06-02")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c("router-link", { attrs: { to: "" } }, [
+                              _vm._v(_vm._s(camer.unit))
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(" " + _vm._s(camer.pemakaian_listrik) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(" " + _vm._s(camer.pemakaian_air) + " m"),
+                          _c("sup", [_vm._v("3")])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(camer.engineer) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(camer.validator) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(" " + _vm._s(camer.bulan_tahun) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "form-check" }, [
+                            _c("input", {
+                              staticClass: "form-check-input position-static",
+                              attrs: { type: "checkbox" },
+                              domProps: { checked: camer.validasi }
+                            })
                           ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("93.4 Kwh")]),
-                      _vm._v(" "),
-                      _vm._m(9),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Harry Styles")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("17 Agustus 2020")]),
-                      _vm._v(" "),
-                      _vm._m(10)
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _vm._m(11),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("router-link", { attrs: { to: "" } }, [
-                            _vm._v("T-06-03")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("93.4 Kwh")]),
-                      _vm._v(" "),
-                      _vm._m(12),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Harry Styles")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("17 Agustus 2020")]),
-                      _vm._v(" "),
-                      _vm._m(13)
-                    ])
-                  ])
+                        ])
+                      ])
+                    }),
+                    0
+                  )
                 ]
               )
             ]),
             _vm._v(" "),
-            _vm._m(14)
+            _vm._m(5)
           ])
         ])
       ])
@@ -25302,159 +25226,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", { attrs: { scope: "row" } }, [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-body" }, [
-          _c("span", { staticClass: "number mb-0 text-sm" }, [_vm._v("1")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_vm._v("1.573 m"), _c("sup", [_vm._v("3")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", { staticClass: "form-check" }, [
-        _c("input", {
-          staticClass: "form-check-input position-static",
-          attrs: {
-            type: "checkbox",
-            id: "blankCheckbox",
-            value: "option1",
-            "aria-label": "..."
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { attrs: { scope: "row" } }, [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-body" }, [
-          _c("span", { staticClass: "number mb-0 text-sm" }, [_vm._v("2")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_vm._v("1.573 m"), _c("sup", [_vm._v("3")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", { staticClass: "form-check" }, [
-        _c("input", {
-          staticClass: "form-check-input position-static",
-          attrs: {
-            type: "checkbox",
-            id: "blankCheckbox",
-            value: "option1",
-            "aria-label": "..."
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { attrs: { scope: "row" } }, [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-body" }, [
-          _c("span", { staticClass: "number mb-0 text-sm" }, [_vm._v("3")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_vm._v("1.573 m"), _c("sup", [_vm._v("3")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", { staticClass: "form-check" }, [
-        _c("input", {
-          staticClass: "form-check-input position-static",
-          attrs: {
-            type: "checkbox",
-            id: "blankCheckbox",
-            value: "option1",
-            "aria-label": "..."
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-footer py-4" }, [
       _c("nav", { attrs: { "aria-label": "..." } }, [
-        _c("ul", { staticClass: "pagination justify-content-end mb-0" }, [
-          _c("li", { staticClass: "page-item disabled" }, [
-            _c(
-              "a",
-              {
-                staticClass: "page-link",
-                attrs: { href: "#", tabindex: "-1" }
-              },
-              [
-                _c("i", { staticClass: "fas fa-angle-left" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item active" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("1")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("2 "),
-              _c("span", { staticClass: "sr-only" }, [_vm._v("(current)")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("3")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fas fa-angle-right" }),
-              _vm._v(" "),
-              _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-            ])
-          ])
-        ])
+        _c("ul", { staticClass: "pagination justify-content-end mb-0" })
       ])
     ])
   }
@@ -25902,7 +25676,9 @@ var render = function() {
           _c("div", { staticClass: "row align-items-center py-4" }, [
             _c("div", { staticClass: "col-lg-6 col-7" }, [
               _c("h6", { staticClass: "h2 text-white d-inline-block mb-0" }, [
-                _vm._v(" Data Apartement Unit " + _vm._s(_vm.floor) + " ")
+                _vm._v(
+                  " Data Apartement Unit " + _vm._s(_vm.units.length) + " "
+                )
               ])
             ])
           ])
@@ -25996,11 +25772,11 @@ var render = function() {
                   _c(
                     "tbody",
                     { staticClass: "list" },
-                    _vm._l(_vm.units.data, function(unit, index) {
+                    _vm._l(_vm.units, function(unit, index) {
                       return _c("tr", { key: unit.id }, [
-                        _c("td", [_vm._v(" " + _vm._s(unit.id) + " ")]),
+                        _c("td", [_vm._v(" " + _vm._s(unit.unit) + " ")]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(unit.type_id) + " ")]),
+                        _c("td", [_vm._v(" " + _vm._s(unit.tipe) + " ")]),
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(unit.lantai) + " ")])
                       ])
@@ -43400,7 +43176,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = function state() {
   return {
-    unit: {}
+    unit: {},
+    camer: {}
   };
 };
 
@@ -43410,6 +43187,9 @@ var mutations = {
   },
   GET_UNIT_PER_FLOOR: function GET_UNIT_PER_FLOOR(state, payload) {
     state.unit = payload;
+  },
+  GET_CAMER: function GET_CAMER(state, payload) {
+    state.camer = payload;
   }
 };
 var actions = {
@@ -43435,7 +43215,8 @@ var actions = {
     var commit = _ref3.commit;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get('/camer').then(function (response) {
-        resolve(response);
+        commit('GET_CAMER', response.data);
+        resolve(response.data);
       });
     });
   }

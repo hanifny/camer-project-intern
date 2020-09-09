@@ -2,7 +2,8 @@ import $axios from '../api.js'
 import { reject } from 'lodash'
 
 const state = () => ({
-    unit: {}
+    unit: {},
+    camer: {},
 })
 
 const mutations = {
@@ -11,7 +12,10 @@ const mutations = {
     },
     GET_UNIT_PER_FLOOR(state, payload) {
         state.unit = payload
-    }
+    },
+    GET_CAMER(state, payload) {
+        state.camer = payload
+    },
 }
 
 const actions = {
@@ -37,7 +41,8 @@ const actions = {
         return new Promise((resolve, reject) => {
             $axios.get('/camer')
             .then((response) => {
-                resolve(response)
+                commit('GET_CAMER', response.data)
+                resolve(response.data)
             })
         })
     }

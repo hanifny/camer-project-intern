@@ -3,10 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class Apartement extends Model
 {
+    use Notifiable;
+    use Uuid;
+    protected $keyType = 'string';
+    public $incrementing = false;
     public function type() {
-        return $this->belongsTo('App\Type', 'type_id', 'type');
+        return $this->belongsTo(Type::class);
     }
 }

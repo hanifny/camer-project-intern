@@ -55,69 +55,25 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr>
+                                    <tr v-for="camer, index in all_camer">
                                         <th scope="row">
                                             <div class="media">
                                                 <div class="media-body">
-                                                    <span class="number mb-0 text-sm">1</span>
+                                                    <span class="number mb-0 text-sm">{{index+1}}</span>
                                                 </div>
                                             </div>
                                         </th>
                                         <td>
-                                            <router-link to="">T-06-01</router-link>
+                                            <router-link to="">{{camer.unit}}</router-link>
                                         </td>
-                                        <td>93.4 Kwh</td>
-                                        <td>1.573 m<sup>3</sup></td>
-                                        <td>Harry Styles</td>
-                                        <td></td>
-                                        <td>17 Agustus 2020</td>
+                                        <td> {{camer.pemakaian_listrik}} </td>
+                                        <td> {{camer.pemakaian_air}} m<sup>3</sup></td>
+                                        <td> {{camer.engineer}} </td>
+                                        <td> {{camer.validator}} </td>
+                                        <td> {{camer.bulan_tahun}} </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span class="number mb-0 text-sm">2</span>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <router-link to="">T-06-02</router-link>
-                                        </td>
-                                        <td>93.4 Kwh</td>
-                                        <td>1.573 m<sup>3</sup></td>
-                                        <td>Harry Styles</td>
-                                        <td></td>
-                                        <td>17 Agustus 2020</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span class="number mb-0 text-sm">3</span>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <router-link to="">T-06-03</router-link>
-                                        </td>
-                                        <td>93.4 Kwh</td>
-                                        <td>1.573 m<sup>3</sup></td>
-                                        <td>Harry Styles</td>
-                                        <td></td>
-                                        <td>17 Agustus 2020</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+                                                <input class="form-check-input position-static" type="checkbox" :checked=camer.validasi>
                                             </div>
                                         </td>
                                     </tr>
@@ -127,25 +83,7 @@
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-end mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">
-                                            <i class="fas fa-angle-left"></i>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            <i class="fas fa-angle-right"></i>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
+                                    
                                 </ul>
                             </nav>
                         </div>
@@ -159,8 +97,16 @@
 <script>
     import {mapState, mapActions} from 'vuex' 
     export default {
+        computed: {
+            ...mapState('camer', {
+                all_camer: state => state.camer
+            })
+        },
         methods: {
             ...mapActions('camer', ['getCamer'])
+        },
+        created() {
+            this.getCamer()
         }
     }
 </script>

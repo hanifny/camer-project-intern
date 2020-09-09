@@ -6,7 +6,7 @@
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit {{floor}} </h6>
+                            <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit {{units.length}} </h6>
                         </div>
                     </div>
                 </div>
@@ -40,9 +40,9 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr v-for="(unit, index) in units.data" :key="unit.id">
-                                        <td> {{unit.id}} </td>
-                                        <td> {{unit.type_id}} </td>
+                                    <tr v-for="(unit, index) in units" :key="unit.id">
+                                        <td> {{unit.unit}} </td>
+                                        <td> {{unit.tipe}} </td>
                                         <td> {{unit.lantai}} </td>
                                     </tr>
                                 </tbody>
