@@ -35,7 +35,8 @@
                                         <button class="btn btn-danger" @click.prevent="getCamer">Validasi Semua</button>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-success">Export to Excel <i class="fas fa-file-excel"></i></button>
+                                        <button class="btn btn-success">Export to Excel <i
+                                                class="fas fa-file-excel"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -55,7 +56,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr v-for="camer, index in all_camer">
+                                    <tr v-for="camer, index in all_camer" v-bind:class="{ validated: camer.validasi, fingerCursor: camer }" @click="cekDetail">
                                         <th scope="row">
                                             <div class="media">
                                                 <div class="media-body">
@@ -66,14 +67,17 @@
                                         <td>
                                             <router-link to="">{{camer.unit}}</router-link>
                                         </td>
-                                        <td> {{camer.pemakaian_listrik}} </td>
-                                        <td> {{camer.pemakaian_air}} m<sup>3</sup></td>
+                                        <td v-if="camer.pemakaian_listrik"> {{ camer.pemakaian_listrik }} watt </td>
+                                        <td v-else> Tidak ada data </td>
+                                        <td v-if="camer.pemakaian_air"> {{ camer.pemakaian_air }} m<sup>3</sup></td>
+                                        <td v-else> Tidak ada data </td>
                                         <td> {{camer.engineer}} </td>
                                         <td> {{camer.validator}} </td>
                                         <td> {{camer.bulan_tahun}} </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input position-static" type="checkbox" :checked=camer.validasi>
+                                        <td v-if="camer.validasi"> Tervalidasi </td>
+                                        <td v-else>
+                                            <div class="col-lg-6 col-5 text-right">
+                                                <a href="/adddatateknisi" class="btn btn-sm btn-success">Validasi</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -83,7 +87,7 @@
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-end mb-0">
-                                    
+
                                 </ul>
                             </nav>
                         </div>
@@ -95,7 +99,10 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex' 
+    import {
+        mapState,
+        mapActions
+    } from 'vuex'
     export default {
         computed: {
             ...mapState('camer', {
@@ -103,7 +110,39 @@
             })
         },
         methods: {
-            ...mapActions('camer', ['getCamer'])
+            ...mapActions('camer', ['getCamer']),
+            confirm() {
+                swal.fire({
+                    title: '<strong>HTML <u>example</u></strong>',
+                    icon: 'info',
+                    html: 'You can use <b>bold text</b>, ' +
+                        '<a href="//sweetalert2.github.io">links</a> ' +
+                        'and other HTML tags',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+                    confirmButtonAriaLabel: 'Thumbs up, great!',
+                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+                    cancelButtonAriaLabel: 'Thumbs down'
+                })
+            },
+            cekDetail() {
+                swal.fire({
+                    title: '<strong>HTML <u>example</u></strong>',
+                    icon: 'info',
+                    html: 'You can use <b>bold text</b>, ' +
+                        '<a href="//sweetalert2.github.io">links</a> ' +
+                        'and other HTML tags',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+                    confirmButtonAriaLabel: 'Thumbs up, great!',
+                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+                    cancelButtonAriaLabel: 'Thumbs down'
+                })
+            }
         },
         created() {
             this.getCamer()

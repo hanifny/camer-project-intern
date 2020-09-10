@@ -28,10 +28,10 @@
                             </router-link>
                         </li>
                         <li class="nav-item" @click="activate('teknisi')">
-                            <a class="nav-link" href="" :class="{ active : active_el == 4 }">
+                            <router-link class="nav-link" to="/teknisi" :class="{ active : active_el == 'teknisi' }">
                                 <i class="ni ni-single-02 text-yellow"></i>
                                 <span class="nav-link-text">Data Teknisi</span>
-                            </a>
+                            </router-link>
                         </li>
                         <li class="nav-item" @click="activate('invalid')">
                             <a class="nav-link" href="" :class="{ active : active_el == 5 }">

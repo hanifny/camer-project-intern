@@ -34,6 +34,7 @@
                             <table class="table align-items-center table-flush text-center">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th>No</th>
                                         <th>Unit</th>
                                         <th>Tipe</th>
                                         <th>Lantai</th>
@@ -41,6 +42,13 @@
                                 </thead>
                                 <tbody class="list">
                                     <tr v-for="(unit, index) in units" :key="unit.id">
+                                        <th scope="row">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <span class="number mb-0 text-sm">{{index+1}}</span>
+                                                </div>
+                                            </div>
+                                        </th>
                                         <td> {{unit.unit}} </td>
                                         <td> {{unit.tipe}} </td>
                                         <td> {{unit.lantai}} </td>

@@ -5,6 +5,7 @@ import Home from './pages/Home.vue'
 import Login from './pages/Login.vue'
 import Unit from './pages/Unit.vue'
 import Camer from './pages/Camer.vue'
+import Teknisi from './pages/Teknisi.vue'
 
 Vue.use(Router)
 
@@ -34,7 +35,13 @@ const router = new Router({
             name: 'camer',
             component: Camer,
             meta: { requiresAuth: true }
-        }
+        },
+        {
+            path: '/teknisi',
+            name: 'teknisi',
+            component: Teknisi,
+            meta: { requiresAuth: true }
+        },
     ]
 })
 

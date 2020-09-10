@@ -23831,6 +23831,14 @@ textarea[resize='horizontal']
     padding-left: 1.5rem;
 }
 
+.validated {
+    background-color: #ade498;
+}
+
+.fingerCursor {
+    cursor: pointer;
+}
+
 .table .custom-toggle
 {
     display: block;

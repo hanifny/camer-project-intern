@@ -2397,6 +2397,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('camer', {
@@ -2404,7 +2408,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.camer;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('camer', ['getCamer'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('camer', ['getCamer'])), {}, {
+    confirm: function confirm() {
+      swal.fire({
+        title: '<strong>HTML <u>example</u></strong>',
+        icon: 'info',
+        html: 'You can use <b>bold text</b>, ' + '<a href="//sweetalert2.github.io">links</a> ' + 'and other HTML tags',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: 'Thumbs down'
+      });
+    },
+    cekDetail: function cekDetail() {
+      swal.fire({
+        title: '<strong>HTML <u>example</u></strong>',
+        icon: 'info',
+        html: 'You can use <b>bold text</b>, ' + '<a href="//sweetalert2.github.io">links</a> ' + 'and other HTML tags',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: 'Thumbs down'
+      });
+    }
+  }),
   created: function created() {
     this.getCamer();
   }
@@ -2639,6 +2672,115 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Teknisi.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Teknisi.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Unit.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Unit.vue?vue&type=script&lang=js& ***!
@@ -2655,6 +2797,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -24368,11 +24518,11 @@ var render = function() {
                   },
                   [
                     _c(
-                      "a",
+                      "router-link",
                       {
                         staticClass: "nav-link",
-                        class: { active: _vm.active_el == 4 },
-                        attrs: { href: "" }
+                        class: { active: _vm.active_el == "teknisi" },
+                        attrs: { to: "/teknisi" }
                       },
                       [
                         _c("i", { staticClass: "ni ni-single-02 text-yellow" }),
@@ -24382,7 +24532,8 @@ var render = function() {
                         ])
                       ]
                     )
-                  ]
+                  ],
+                  1
                 ),
                 _vm._v(" "),
                 _c(
@@ -25068,56 +25219,74 @@ var render = function() {
                     "tbody",
                     { staticClass: "list" },
                     _vm._l(_vm.all_camer, function(camer, index) {
-                      return _c("tr", [
-                        _c("th", { attrs: { scope: "row" } }, [
-                          _c("div", { staticClass: "media" }, [
-                            _c("div", { staticClass: "media-body" }, [
-                              _c(
-                                "span",
-                                { staticClass: "number mb-0 text-sm" },
-                                [_vm._v(_vm._s(index + 1))]
-                              )
+                      return _c(
+                        "tr",
+                        {
+                          class: {
+                            validated: camer.validasi,
+                            fingerCursor: camer
+                          },
+                          on: { click: _vm.cekDetail }
+                        },
+                        [
+                          _c("th", { attrs: { scope: "row" } }, [
+                            _c("div", { staticClass: "media" }, [
+                              _c("div", { staticClass: "media-body" }, [
+                                _c(
+                                  "span",
+                                  { staticClass: "number mb-0 text-sm" },
+                                  [_vm._v(_vm._s(index + 1))]
+                                )
+                              ])
                             ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c("router-link", { attrs: { to: "" } }, [
-                              _vm._v(_vm._s(camer.unit))
-                            ])
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(" " + _vm._s(camer.pemakaian_listrik) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(" " + _vm._s(camer.pemakaian_air) + " m"),
-                          _c("sup", [_vm._v("3")])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(camer.engineer) + " ")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(camer.validator) + " ")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(" " + _vm._s(camer.bulan_tahun) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-check" }, [
-                            _c("input", {
-                              staticClass: "form-check-input position-static",
-                              attrs: { type: "checkbox" },
-                              domProps: { checked: camer.validasi }
-                            })
-                          ])
-                        ])
-                      ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c("router-link", { attrs: { to: "" } }, [
+                                _vm._v(_vm._s(camer.unit))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          camer.pemakaian_listrik
+                            ? _c("td", [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(camer.pemakaian_listrik) +
+                                    " watt "
+                                )
+                              ])
+                            : _c("td", [_vm._v(" Tidak ada data ")]),
+                          _vm._v(" "),
+                          camer.pemakaian_air
+                            ? _c("td", [
+                                _vm._v(
+                                  " " + _vm._s(camer.pemakaian_air) + " m"
+                                ),
+                                _c("sup", [_vm._v("3")])
+                              ])
+                            : _c("td", [_vm._v(" Tidak ada data ")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(" " + _vm._s(camer.engineer) + " ")
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(" " + _vm._s(camer.validator) + " ")
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(" " + _vm._s(camer.bulan_tahun) + " ")
+                          ]),
+                          _vm._v(" "),
+                          camer.validasi
+                            ? _c("td", [_vm._v(" Tervalidasi ")])
+                            : _c("td", [_vm._m(5, true)])
+                        ]
+                      )
                     }),
                     0
                   )
@@ -25125,7 +25294,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(5)
+            _vm._m(6)
           ])
         ])
       ])
@@ -25220,6 +25389,21 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Validasi")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6 col-5 text-right" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-sm btn-success",
+          attrs: { href: "/adddatateknisi" }
+        },
+        [_vm._v("Validasi")]
+      )
     ])
   },
   function() {
@@ -25654,6 +25838,281 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Teknisi.vue?vue&type=template&id=2570b11c&":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Teknisi.vue?vue&type=template&id=2570b11c& ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "main-content    " }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "container-fluid mt--6" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header border-0 d-flex align-items-center justify-content-between"
+              },
+              [
+                _c("h3", { staticClass: "mb-0" }, [
+                  _vm._v("Rekap Data Catatan Meter")
+                ]),
+                _vm._v(" "),
+                _c("form", [
+                  _c("div", { staticClass: "form-row" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getCamer($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Validasi Semua")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3)
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5)
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header bg-gradient-success pb-6" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "header-body" }, [
+          _c("div", { staticClass: "row align-items-center py-4" }, [
+            _c("div", { staticClass: "col-lg-6 col-7" }, [
+              _c("h6", { staticClass: "h2 text-white d-inline-block mb-0" }, [
+                _vm._v("Data Teknisi")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 col-5 text-right" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-sm btn-success",
+                  attrs: { href: "/adddatateknisi" }
+                },
+                [_vm._v("Add")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "select",
+        { staticClass: "form-control", attrs: { id: "inputState" } },
+        [
+          _c("option", { attrs: { selected: "", disabled: "" } }, [
+            _vm._v("Bulan")
+          ]),
+          _vm._v(" "),
+          _c("option", [_vm._v("...")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "select",
+        { staticClass: "form-control", attrs: { id: "inputState" } },
+        [
+          _c("option", { attrs: { selected: "", disabled: "" } }, [
+            _vm._v("Tahun")
+          ]),
+          _vm._v(" "),
+          _c("option", [_vm._v("...")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-success" }, [
+        _vm._v("Export to Excel "),
+        _c("i", { staticClass: "fas fa-file-excel" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive" }, [
+      _c(
+        "table",
+        { staticClass: "table align-items-center text-center table-flush" },
+        [
+          _c("thead", { staticClass: "thead-light" }, [
+            _c("tr", [
+              _c(
+                "th",
+                {
+                  staticClass: "sort",
+                  attrs: { scope: "col", "data-sort": "number" }
+                },
+                [_vm._v("No")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticClass: "sort",
+                  attrs: { scope: "col", "data-sort": "idteknisi" }
+                },
+                [_vm._v("Id Teknisi")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticClass: "sort",
+                  attrs: { scope: "col", "data-sort": "namateknisi" }
+                },
+                [_vm._v("Nama Teknisi")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticClass: "sort",
+                  attrs: { scope: "col", "data-sort": "tglval" }
+                },
+                [_vm._v("Tanggal Validasi")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticClass: "sort",
+                  attrs: { scope: "col", "data-sort": "aksi" }
+                },
+                [_vm._v("Aksi")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody", { staticClass: "list" }, [
+            _c("tr", [
+              _c("th", { attrs: { scope: "row" } }, [
+                _c("div", { staticClass: "media align-items-center" }, [
+                  _c("div", { staticClass: "media-body" }, [
+                    _c("span", { staticClass: "number mb-0 text-sm" }, [
+                      _vm._v("1")
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "idteknisi" }, [
+                _vm._v(
+                  "\n                                        000001\n                                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "namateknisi" }, [
+                _vm._v(
+                  "\n                                        Hanif\n                                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "tglval" }, [
+                _vm._v(
+                  "\n                                        24-01-2020\n                                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-warning",
+                    attrs: { href: "/editdatateknisi" }
+                  },
+                  [_vm._v("Edit")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-danger",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer py-4" }, [
+      _c("nav", { attrs: { "aria-label": "..." } })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Unit.vue?vue&type=template&id=9cb3bae6&":
 /*!**************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Unit.vue?vue&type=template&id=9cb3bae6& ***!
@@ -25774,6 +26233,18 @@ var render = function() {
                     { staticClass: "list" },
                     _vm._l(_vm.units, function(unit, index) {
                       return _c("tr", { key: unit.id }, [
+                        _c("th", { attrs: { scope: "row" } }, [
+                          _c("div", { staticClass: "media" }, [
+                            _c("div", { staticClass: "media-body" }, [
+                              _c(
+                                "span",
+                                { staticClass: "number mb-0 text-sm" },
+                                [_vm._v(_vm._s(index + 1))]
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(unit.unit) + " ")]),
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(unit.tipe) + " ")]),
@@ -25817,6 +26288,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-light" }, [
       _c("tr", [
+        _c("th", [_vm._v("No")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Unit")]),
         _vm._v(" "),
         _c("th", [_vm._v("Tipe")]),
@@ -42880,6 +43353,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/Teknisi.vue":
+/*!****************************************!*\
+  !*** ./resources/js/pages/Teknisi.vue ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Teknisi_vue_vue_type_template_id_2570b11c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Teknisi.vue?vue&type=template&id=2570b11c& */ "./resources/js/pages/Teknisi.vue?vue&type=template&id=2570b11c&");
+/* harmony import */ var _Teknisi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Teknisi.vue?vue&type=script&lang=js& */ "./resources/js/pages/Teknisi.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Teknisi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Teknisi_vue_vue_type_template_id_2570b11c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Teknisi_vue_vue_type_template_id_2570b11c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/Teknisi.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Teknisi.vue?vue&type=script&lang=js&":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pages/Teknisi.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Teknisi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Teknisi.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Teknisi.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Teknisi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Teknisi.vue?vue&type=template&id=2570b11c&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pages/Teknisi.vue?vue&type=template&id=2570b11c& ***!
+  \***********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Teknisi_vue_vue_type_template_id_2570b11c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Teknisi.vue?vue&type=template&id=2570b11c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Teknisi.vue?vue&type=template&id=2570b11c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Teknisi_vue_vue_type_template_id_2570b11c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Teknisi_vue_vue_type_template_id_2570b11c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/Unit.vue":
 /*!*************************************!*\
   !*** ./resources/js/pages/Unit.vue ***!
@@ -42966,6 +43508,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
 /* harmony import */ var _pages_Unit_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Unit.vue */ "./resources/js/pages/Unit.vue");
 /* harmony import */ var _pages_Camer_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Camer.vue */ "./resources/js/pages/Camer.vue");
+/* harmony import */ var _pages_Teknisi_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Teknisi.vue */ "./resources/js/pages/Teknisi.vue");
+
 
 
 
@@ -42999,6 +43543,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
     path: '/camer',
     name: 'camer',
     component: _pages_Camer_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    meta: {
+      requiresAuth: true
+    }
+  }, {
+    path: '/teknisi',
+    name: 'teknisi',
+    component: _pages_Teknisi_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     meta: {
       requiresAuth: true
     }
