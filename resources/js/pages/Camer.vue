@@ -20,19 +20,10 @@
                             <form>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <select id="inputState" class="form-control">
-                                            <option selected disabled>Bulan</option>
-                                            <option>...</option>
-                                        </select>
+                                        <input type="month" name="currentMonth" value="currentMonth" v-model="currentMonth">
                                     </div>
                                     <div class="form-group">
-                                        <select id="inputState" class="form-control">
-                                            <option selected disabled>Tahun</option>
-                                            <option>...</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-danger" @click.prevent="getCamer">Validasi Semua</button>
+                                        <button class="btn btn-danger" @click.prevent="validasiSemua(all_camer[0])">Validasi Semua</button>
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-success">Export to Excel <i
@@ -56,7 +47,9 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr v-for="camer, index in all_camer" v-bind:class="{ validated: camer.validasi, fingerCursor: camer }" @click="cekDetail">
+                                    <tr v-for="(camer, index) in all_camer"
+                                        v-bind:class="{ 'validated': camer.validasi, 'finger-cursor': camer }"
+                                        @click.prevent="cekDetail(camer)" :key="camer.id">
                                         <th scope="row">
                                             <div class="media">
                                                 <div class="media-body">
@@ -67,18 +60,19 @@
                                         <td>
                                             <router-link to="">{{camer.unit}}</router-link>
                                         </td>
-                                        <td v-if="camer.pemakaian_listrik"> {{ camer.pemakaian_listrik }} watt </td>
+                                        <td v-if="camer.pemakaian_listrik != null"> {{ camer.pemakaian_listrik }} watt
+                                        </td>
                                         <td v-else> Tidak ada data </td>
-                                        <td v-if="camer.pemakaian_air"> {{ camer.pemakaian_air }} m<sup>3</sup></td>
+                                        <td v-if="camer.pemakaian_air != null"> {{ camer.pemakaian_air }} m<sup>3</sup>
+                                        </td>
                                         <td v-else> Tidak ada data </td>
                                         <td> {{camer.engineer}} </td>
                                         <td> {{camer.validator}} </td>
                                         <td> {{camer.bulan_tahun}} </td>
                                         <td v-if="camer.validasi"> Tervalidasi </td>
                                         <td v-else>
-                                            <div class="col-lg-6 col-5 text-right">
-                                                <a href="/adddatateknisi" class="btn btn-sm btn-success">Validasi</a>
-                                            </div>
+                                            <a href="/camer" @click.prevent.stop="validasi(camer)"
+                                                class="btn btn-sm btn-success">Validasi</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -95,6 +89,88 @@
                 </div>
             </div>
         </div>
+        <b-modal id="bv-modal" size="lg" hide-backdrop hide-header hide-footer>
+            <div class="row">
+                <div class="col-md ml-auto mr-auto">
+                    <div class="card card-upgrade mb-0">
+                        <div class="card-header text-center pt-4 pb-1 border-bottom-0">
+                            <h3 class="card-title">Detail Lengkap Catatan Meter</h3>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            <div class="table-responsive table-upgrade">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Unit</td>
+                                            <td>: {{currentItem.unit}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Standmeter Listrik (Bulan ini)</td>
+                                            <td>: {{currentItem.pencatatan_listrik}} watt </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Standmeter Listrik (Sebulan lalu)</td>
+                                            <td v-if="currentItem.pencatatan_listrik_bulan_lalu">:
+                                                {{currentItem.pencatatan_listrik_bulan_lalu}} watt </td>
+                                            <td v-else>: Tidak ada data </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pemakaian Listrik</td>
+                                            <td v-if="currentItem.pemakaian_listrik !=null">: <strong>
+                                                    {{currentItem.pemakaian_listrik}} watt </strong></td>
+                                            <td v-else>: Tidak ada data </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Standmeter Air (Bulan ini)</td>
+                                            <td>: {{currentItem.pencatatan_air}} m<sup>3</sup> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Standmeter Air (Sebulan lalu)</td>
+                                            <td v-if="currentItem.pencatatan_air_bulan_lalu">:
+                                                {{currentItem.pencatatan_air_bulan_lalu}} m<sup>3</sup> </td>
+                                            <td v-else>: Tidak ada data </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pemakaian Air</td>
+                                            <td v-if="currentItem.pemakaian_air !=null">: <strong>
+                                                    {{currentItem.pemakaian_air}} m<sup>3</sup> </strong></td>
+                                            <td v-else>: Tidak ada data </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama Teknisi</td>
+                                            <td>: <strong> {{currentItem.engineer}} </strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tgl Upload Data</td>
+                                            <td>: <strong> {{currentItem.tanggal_upload}} </strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lampiran Foto</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right pt-3 pb-3 pr-1">
+                                                <img src="img/IMG_20150714_061948.jpg" height="150px" width="250px;">
+                                            </td>
+                                            <td class="pl-1 pt-3 pb-3">
+                                                <img src="img/IMG_20150715_055904.jpg" height="150px" width="250px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div v-if="!currentItem.validasi" @click="validasiDetail(currentItem)"
+                            class="text-center finger-cursor rounded-bottom p-2 btn-success">
+                            <strong>V A L I D A S I</strong>
+                        </div>
+                        <div v-else class="text-center p-2 rounded-bottom btn-info">
+                            <strong>T E R V A L I D A S I</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
     </div>
 </template>
 
@@ -104,48 +180,58 @@
         mapActions
     } from 'vuex'
     export default {
+        data() {
+            return {
+                currentItem: {},
+                currentMonth: ''
+            }
+        },
         computed: {
             ...mapState('camer', {
                 all_camer: state => state.camer
-            })
+            }),
         },
         methods: {
             ...mapActions('camer', ['getCamer']),
-            confirm() {
+            ...mapActions('camer', ['validation']),
+            ...mapActions('camer', ['validation_per_month']),
+
+            cekDetail(camer) {
+                this.$bvModal.show('bv-modal')
+                this.currentItem = camer
+            },
+            validasi(camer) {
                 swal.fire({
-                    title: '<strong>HTML <u>example</u></strong>',
-                    icon: 'info',
-                    html: 'You can use <b>bold text</b>, ' +
-                        '<a href="//sweetalert2.github.io">links</a> ' +
-                        'and other HTML tags',
-                    showCloseButton: true,
+                    title: 'Apakah kamu yakin?',
+                    text: "Kamu akan melakukan validasi.",
+                    icon: 'warning',
                     showCancelButton: true,
-                    focusConfirm: false,
-                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
-                    confirmButtonAriaLabel: 'Thumbs up, great!',
-                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-                    cancelButtonAriaLabel: 'Thumbs down'
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#f5365c',
+                    cancelButtonText: 'Tidak, jangan',
+                    confirmButtonText: 'Iya, lakukan validasi!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.validation(camer)
+                        this.getCamer()
+                    }
                 })
             },
-            cekDetail() {
-                swal.fire({
-                    title: '<strong>HTML <u>example</u></strong>',
-                    icon: 'info',
-                    html: 'You can use <b>bold text</b>, ' +
-                        '<a href="//sweetalert2.github.io">links</a> ' +
-                        'and other HTML tags',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                    focusConfirm: false,
-                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
-                    confirmButtonAriaLabel: 'Thumbs up, great!',
-                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-                    cancelButtonAriaLabel: 'Thumbs down'
-                })
+            validasiDetail(camer) {
+                this.validation(camer)
+                this.$bvModal.hide('bv-modal')
+                this.getCamer()
+            },
+            validasiSemua(camer) {
+                this.validation_per_month(camer)
+                this.getCamer()
             }
         },
         created() {
             this.getCamer()
+            let month_year = new Date().toISOString().split('-')
+            month_year = month_year[0] + "-" + month_year[1]
+            this.currentMonth = month_year
         }
     }
 </script>

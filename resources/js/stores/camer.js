@@ -45,6 +45,22 @@ const actions = {
                 resolve(response.data)
             })
         })
+    },
+    validation({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.patch('/camer', payload)
+            .then((response) => {
+                resolve(response.data)
+            })
+        })
+    },
+    validation_per_month({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.patch('camer_per_month', payload)
+            .then((response) => {
+                resolve(response.data)
+            })
+        })
     }
 }
 

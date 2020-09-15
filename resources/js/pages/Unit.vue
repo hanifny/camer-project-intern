@@ -6,7 +6,7 @@
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit {{units.length}} </h6>
+                            <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit {{floor}} </h6>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                                     <div class="form-group">
                                         <select id="inputState" class="form-control" v-model="floor">
                                             <option selected @click="getAllUnit">Semua</option>
-                                            <option v-for="i in 12" @click="clickUnitPerFloor">Lantai {{i}}</option>
+                                            <option v-for="i in 12" @click.prevent="clickUnitPerFloor">Lantai {{i}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-center mb-0">
-                                    <pagination v-if="floor == 'Semua'" :data="units" @pagination-change-page="getAllUnit"></pagination>
+                                    <!-- <pagination v-if="floor == 'Semua'" :data="units" @pagination-change-page="getAllUnit"></pagination> -->
                                 </ul>
                             </nav>
                         </div>
@@ -93,6 +93,7 @@
             clickUnitPerFloor() {
                 let floor = this.floor.split(" ")
                 this.getUnitPerFloor(floor[1])
+                console.log('ok');
             }
         },
         created() {

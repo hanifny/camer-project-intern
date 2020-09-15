@@ -3,8 +3,11 @@ import router from './router.js'
 import store from './store.js'
 import swal from 'sweetalert2'
 import App from './App.vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 window.swal = swal
+
+Vue.use(BootstrapVue)
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 const toast = swal.mixin({

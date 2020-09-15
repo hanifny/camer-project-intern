@@ -2194,6 +2194,13 @@ pre code
 
     border-top: 1px solid #e9ecef;
 }
+.modal td {
+    color: black;
+    padding-block: 0.3rem;
+}
+.modal td:first-child {
+    font-weight: bold;
+}
 .table thead th
 {
     vertical-align: bottom;
@@ -8049,7 +8056,7 @@ a.close.disabled
 {
     position: relative;
 
-    padding: 1.5rem; 
+    /* padding: 1.5rem;  */
 
     flex: 1 1 auto;
 }
@@ -8122,7 +8129,7 @@ a.close.disabled
     .modal-lg,
     .modal-xl
     {
-        max-width: 800px;
+        max-width: 700px;
     }
 }
 
@@ -23835,7 +23842,7 @@ textarea[resize='horizontal']
     background-color: #ade498;
 }
 
-.fingerCursor {
+.finger-cursor {
     cursor: pointer;
 }
 

@@ -1,34 +1,32 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Route::post('/login', 'Auth\LoginController');
 
 Route::post('login', 'AuthController@login');
 Route::post('refresh', 'AuthController@refresh');
 
-
 Route::middleware('auth:api')->group(function () {
+    // {{ AUTH }} \\
     // Get user info
     Route::post('me', 'AuthController@me');
-
     // Logout user from application
     Route::post('logout', 'AuthController@logout');
 
+    //  {{ UNIT }}  \\
     // Get lantai
-    Route::get('floor', 'CamerController@floor');
-
+    Route::get('floor', 'UnitController@floor');
     // Get nama unit per lantai
-    Route::get('floor/{id}', 'CamerController@unit_per_floor');
-
-    // Get detail camer unit per lantai
-    Route::get('floor/{id}/{unit}', 'CamerController@camer_unit');
-
-    Route::post('floor/{id}/{unit}', 'CamerController@store');
-
+    Route::get('floor/{id}', 'UnitController@unit_per_floor');
     // Get semua unit
-    Route::get('unit', 'CamerController@all_unit');
+    Route::get('unit', 'UnitController@all_unit');
 
-    Route::get('camer', 'CamerController@camer');
+    // {{ CAMER }} \\
+    // store camer
+    Route::post('floor/{id}/{unit}', 'CamerController@store');
+    // get camer
+    Route::get('camer', 'CamerController@all');
+    // validasi
+    Route::patch('camer', 'CamerController@validation');
+    // validasi semua perbulan
+    Route::patch('camer_per_month', 'CamerController@validation_per_month');
 });
