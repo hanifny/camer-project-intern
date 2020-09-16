@@ -33,12 +33,12 @@
                                 <span class="nav-link-text">Data Teknisi</span>
                             </router-link>
                         </li>
-                        <li class="nav-item" @click="activate('invalid')">
+                        <!-- <li class="nav-item" @click="activate('invalid')">
                             <a class="nav-link" href="" :class="{ active : active_el == 5 }">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Data Invalid</span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

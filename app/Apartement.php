@@ -12,6 +12,7 @@ class Apartement extends Model
     use Uuid;
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $guarded = [];
     public function type() {
         return $this->belongsTo(Type::class);
     }

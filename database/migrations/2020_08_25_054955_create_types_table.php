@@ -15,7 +15,7 @@ class CreateTypesTable extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('type')->unique();
+            $table->string('tipe')->unique();
             $table->double('luas');
             $table->integer('daya_ampere');
             $table->timestamps();

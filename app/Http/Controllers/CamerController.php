@@ -13,6 +13,12 @@ class CamerController extends Controller
         return response()->json($camer);
     }
 
+    public function camer_per_month(Request $request) {
+        // return $request->month_year;
+        $camer = CamerResource::collection(Meter::where('bulan_tahun', $request->month_year)->orderBy('validasi', 'asc')->get());
+        return response()->json($camer);
+    }
+
     public function store(Request $request) {
         $this->validate($request, [
             'file1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

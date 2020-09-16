@@ -16,8 +16,8 @@ class CreateApartementsTable extends Migration
         Schema::create('apartements', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('unit')->unique();
-            $table->uuid('type_id')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->uuid('tipe_id')->onDelete('cascade');
+            $table->foreign('tipe_id')->references('id')->on('types');
             $table->timestamps();
         });
     }

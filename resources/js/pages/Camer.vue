@@ -5,7 +5,7 @@
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Catatan Meter</h6>
+                            <h6 class="h2 text-white d-inline-block mb-0">Catatan Meter {{reverseYearMonth}} </h6>
                         </div>
                     </div>
                 </div>
@@ -16,14 +16,16 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header border-0 d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Rekap Data Catatan Meter</h3>
+                            <h3 class="mb-0">Rekap Data Catatan Meter {{currentMonth}}</h3>
                             <form>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <input type="month" name="currentMonth" value="currentMonth" v-model="currentMonth">
+                                        <input type="month" name="currentMonth" value="currentMonth"
+                                            v-model="currentMonth">
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-danger" @click.prevent="validasiSemua(all_camer[0])">Validasi Semua</button>
+                                        <button class="btn btn-danger"
+                                            @click.prevent="validasiSemua(all_camer[0])">Validasi Semua</button>
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-success">Export to Excel <i
@@ -89,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="bv-modal" size="lg" hide-backdrop hide-header hide-footer>
+        <b-modal id="bv-modal" size="lg" hide-header hide-footer>
             <div class="row">
                 <div class="col-md ml-auto mr-auto">
                     <div class="card card-upgrade mb-0">
@@ -190,9 +192,14 @@
             ...mapState('camer', {
                 all_camer: state => state.camer
             }),
+            reverseYearMonth: function () {
+                let rym = this.currentMonth.split("-").reverse().join(" ")
+                this.getCamerPerMonth(rym)
+            }
         },
         methods: {
             ...mapActions('camer', ['getCamer']),
+            ...mapActions('camer', ['getCamerPerMonth']),
             ...mapActions('camer', ['validation']),
             ...mapActions('camer', ['validation_per_month']),
 
@@ -214,6 +221,7 @@
                     if (result.isConfirmed) {
                         this.validation(camer)
                         this.getCamer()
+                        this.bulan_tahun()
                     }
                 })
             },
@@ -221,17 +229,25 @@
                 this.validation(camer)
                 this.$bvModal.hide('bv-modal')
                 this.getCamer()
+                this.bulan_tahun()
             },
             validasiSemua(camer) {
                 this.validation_per_month(camer)
                 this.getCamer()
+                this.bulan_tahun()
+            },
+            camer_per_month() {
+                console.log("Hai");
+            },
+            bulan_tahun() {
+                let month_year = new Date().toISOString().split('-')
+                month_year = month_year[0] + "-" + month_year[1]
+                this.currentMonth = month_year
             }
         },
         created() {
             this.getCamer()
-            let month_year = new Date().toISOString().split('-')
-            month_year = month_year[0] + "-" + month_year[1]
-            this.currentMonth = month_year
+            this.bulan_tahun()
         }
     }
 </script>

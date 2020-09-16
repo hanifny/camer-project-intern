@@ -14,7 +14,11 @@ class RolesTableSeeder extends Seeder
     {
         Role::create([
             'id'   => '78e83712-9bfe-4bd2-9689-886324a48acb',
-            'nama' => 'SuperAdmin',
+            'nama' => 'Admin',
+        ]);
+        Role::create([
+            'id' => '2db7170e-7d23-4b16-98a0-095f4c3c1f6a',
+            'nama' => 'Engineer',
         ]);
     }
 }

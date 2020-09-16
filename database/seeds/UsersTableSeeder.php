@@ -13,7 +13,12 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            // 'id'       => '4f41d354-10b4-4a23-b8cf-e9b4e1b202ab',
+            'nama'     => 'Hanif Nuryanto',
+            'email'    => 'hanif@uaf.com',
+            'password' => bcrypt('secret'),
+            'role_id'  => '2db7170e-7d23-4b16-98a0-095f4c3c1f6a'
+        ]);
+        User::create([
             'nama'     => 'Moch Dicky',
             'email'    => 'dicky@uaf.com',
             'password' => bcrypt('secret'),

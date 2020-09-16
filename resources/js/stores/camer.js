@@ -3,6 +3,7 @@ import { reject } from 'lodash'
 
 const state = () => ({
     unit: {},
+    type: {},
     camer: {},
 })
 
@@ -16,9 +17,17 @@ const mutations = {
     GET_CAMER(state, payload) {
         state.camer = payload
     },
+    GET_TYPE(state, payload) {
+        state.type = payload
+    }
 }
 
 const actions = {
+    storeNewUnit({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post('/unit', payload)
+        })
+    },
     getAllUnit({ commit }, payload) {
         return new Promise((resolve, reject) => {
             $axios.get('/unit?page='+payload)
@@ -30,9 +39,18 @@ const actions = {
     },
     getUnitPerFloor({ commit }, payload ) {
         return new Promise((resolve, reject) => {
-            $axios.get('/floor/'+payload)
+            $axios.get('/floor/' + payload)
             .then((response) => {
                 commit('GET_UNIT_PER_FLOOR', response.data)
+                resolve(response.data)
+            })
+        })
+    },
+    getType({commit}) {
+        return new Promise((resolve, reject) => {
+            $axios.get('/type/')
+            .then((response) => {
+                commit('GET_TYPE', response.data)
                 resolve(response.data)
             })
         })
@@ -40,6 +58,15 @@ const actions = {
     getCamer({ commit }) {
         return new Promise((resolve, reject) => {
             $axios.get('/camer')
+            .then((response) => {
+                commit('GET_CAMER', response.data)
+                resolve(response.data)
+            })
+        })
+    },
+    getCamerPerMonth({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.get('/camer/' + payload) 
             .then((response) => {
                 commit('GET_CAMER', response.data)
                 resolve(response.data)
@@ -56,7 +83,7 @@ const actions = {
     },
     validation_per_month({commit}, payload) {
         return new Promise((resolve, reject) => {
-            $axios.patch('camer_per_month', payload)
+            $axios.patch('/camer_per_month', payload)
             .then((response) => {
                 resolve(response.data)
             })
