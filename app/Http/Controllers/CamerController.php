@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Apartement;
 use Illuminate\Http\Request;
 use App\Http\Resources\CamerResource;
+use App\Http\Resources\EngineerResource;
 use App\Meter;
+use App\User;
 
 class CamerController extends Controller
 {
@@ -78,11 +81,27 @@ class CamerController extends Controller
         $validasi->validasi = 1;
         $validasi->validator_id = $request->user()->id;
         $validasi->save();
-        return $validasi;
+        return response()->json(['status' => 'success']);
     }
 
     public function validation_per_month(Request $request) {
         $validasi = Meter::where(['bulan_tahun' => $request->bulan_tahun, 'validasi' => 0])
                     ->update(['validasi' => 1, 'validator_id' => $request->user()->id]);
+    }
+
+    public function get_engineer() {
+        $role = EngineerResource::collection(User::where('role_id', '2db7170e-7d23-4b16-98a0-095f4c3c1f6a')->get());
+        return response()->json($role);
+    }
+
+    public function count() {
+        $count_camer_invalid = Meter::where('validasi', 0)->count();
+        $count_engineer = User::where('role_id', '2db7170e-7d23-4b16-98a0-095f4c3c1f6a')->count();
+        $count_unit = Apartement::count();
+        return response()->json([
+            'camer_invalid' => $count_camer_invalid,
+            'engineer' => $count_engineer,
+            'unit' => $count_unit,
+        ]); 
     }
 }

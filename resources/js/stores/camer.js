@@ -5,6 +5,7 @@ const state = () => ({
     unit: {},
     type: {},
     camer: {},
+    count: {}
 })
 
 const mutations = {
@@ -19,6 +20,9 @@ const mutations = {
     },
     GET_TYPE(state, payload) {
         state.type = payload
+    },
+    GET_COUNT(state, payload) {
+        state.count = payload
     }
 }
 
@@ -85,6 +89,15 @@ const actions = {
         return new Promise((resolve, reject) => {
             $axios.patch('/camer_per_month', payload)
             .then((response) => {
+                resolve(response.data)
+            })
+        })
+    },
+    getCount({commit}) {
+        return new Promise((resolve, reject) => {
+            $axios.get('/count')
+            .then((response) => {
+                commit('GET_COUNT', response.data)
                 resolve(response.data)
             })
         })

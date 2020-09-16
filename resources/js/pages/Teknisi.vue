@@ -7,9 +7,9 @@
                         <div class="col-lg-6 col-7">
                             <h6 class="h2 text-white d-inline-block mb-0">Data Teknisi</h6>
                         </div>
-                        <div class="col-lg-6 col-5 text-right">
+                        <!-- <div class="col-lg-6 col-5 text-right">
                             <a href="" class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -26,31 +26,32 @@
                             <table class="table align-items-center text-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col" class="sort" data-sort="number">No</th>
-                                        <th scope="col" class="sort" data-sort="idteknisi">Id Teknisi</th>
-                                        <th scope="col" class="sort" data-sort="namateknisi">Nama Teknisi</th>
-                                        <th scope="col" class="sort" data-sort="aksi">Aksi</th>
+                                        <th>No</th>
+                                        <th>ID</th>
+                                        <th>Email</th>
+                                        <th>Nama</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr>
+                                    <tr v-for="engineer, index in engineers">
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <div class="media-body">
-                                                    <span class="number mb-0 text-sm">1</span>
+                                                    <span class="number mb-0 text-sm"> {{index+1}} </span>
                                                 </div>
                                             </div>
                                         </th>
-                                        <td class="idteknisi">
-                                            000001
-                                        </td>
-                                        <td class="namateknisi">
-                                            Hanif
+                                        <td> {{engineer.id}} </td>
+                                        <td>
+                                            {{engineer.email}}
                                         </td>
                                         <td>
+                                            {{engineer.nama}}
+                                        </td>
+                                        <!-- <td>
                                             <a href="/editdatateknisi" class="btn btn-sm btn-warning">Edit</a>
                                             <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
+                                        </td> -->
                                     </tr>
 
                                 </tbody>
@@ -68,11 +69,22 @@
 </template>
 
 <script>
+    import { mapActions, mapState } from 'vuex';
     export default {
+        computed: {
+            ...mapState('user', {
+                engineers: state => state.engineer
+            })
+        },
         methods: {
+            ...mapActions('user', ['getEngineer']),
+
             formAdd() {
                 console.log('Ok');
             }
+        },
+        created() {
+            this.getEngineer()
         }
     }
 </script>
