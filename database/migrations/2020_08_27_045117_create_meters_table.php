@@ -16,18 +16,19 @@ class CreateMetersTable extends Migration
         Schema::create('meters', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->double('pencatatan_listrik');
-            $table->double('pemakaian_listrik');
+            $table->double('pemakaian_listrik')->nullable();
             $table->double('pencatatan_air');
-            $table->double('pemakaian_air');
-            $table->date('bulan_tahun');
-            $table->string('bukti_gambar');
-            $table->boolean('validasi');
+            $table->double('pemakaian_air')->nullable();
+            $table->string('bulan_tahun');
+            $table->boolean('validasi')->default(0);
+            $table->string('gambar1');
+            $table->string('gambar2');
             $table->uuid('engineer_id');
-            $table->uuid('validator_id');
+            $table->uuid('validator_id')->nullable();
             $table->uuid('apartement_id');
-            $table->foreign('engineer_id')->references('id')->on('users');
-            $table->foreign('validator_id')->references('id')->on('users')->default('null');
-            $table->foreign('apartement_id')->references('id')->on('apartements');
+            $table->foreign('engineer_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('validator_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('apartement_id')->references('id')->on('apartements')->onUpdate('cascade');
             $table->timestamps();
         });
     }

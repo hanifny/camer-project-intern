@@ -27,7 +27,7 @@ Route::middleware('auth:api')->group(function () {
 
     // {{ CAMER }} \\
     // store camer
-    Route::post('floor/{id}/{unit}', 'CamerController@store');
+    Route::post('floor/{id}/{unit_id}', 'CamerController@store');
     // get camer
     Route::get('camer', 'CamerController@all');
     // get camer per month

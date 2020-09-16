@@ -12,7 +12,7 @@ class UnitController extends Controller
     public function store(Request $request) {
         $new_unit = Apartement::create([
             'unit' => $request->unit,
-            'type_id' => $request->type_id,
+            'tipe_id' => $request->tipe_id,
             'lantai' => $request->lantai,
         ]);
         return response()->json($new_unit);
@@ -29,12 +29,12 @@ class UnitController extends Controller
     }
 
     public function all_unit() {
-        $unit = UnitResource::collection(Apartement::orderBy('lantai', 'desc')->paginate(100));
+        $unit = UnitResource::collection(Apartement::orderBy('lantai', 'asc')->paginate(100));
         return response()->json($unit);
     }
 
     public function all_type() {
-        $tipe = Type::orderBy('type', 'asc')->get();
+        $tipe = Type::orderBy('tipe', 'asc')->get();
         return response()->json($tipe);
     }
 }

@@ -87,21 +87,21 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            <label class="form-control-label" for="input-username">Unit</label>
-                            <input type="text" v-model="newUnit.unit" class="form-control">
+                            <label class="form-control-label" for="unit">Unit</label>
+                            <input id="unit" type="text" v-model="newUnit.unit" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="lantai">Lantai</label>
 
-                            <select class="form-control" v-model="newUnit.lantai">
+                            <select id="lantai" class="form-control" v-model="newUnit.lantai">
                                 <option v-for="i in 12"> {{i}} </option>
                             </select>
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="tipe">Tipe</label>
 
-                            <select class="form-control" v-model="newUnit.type_id">
-                                <option v-for="unit in types" :value=unit.id> {{unit.type}} </option>
+                            <select id="tipe" class="form-control" v-model="newUnit.tipe_id">
+                                <option v-for="unit in types" :value=unit.id> {{unit.tipe}} </option>
                             </select>
                         </div>
                         <div class="mt-3 text-right mb-0">

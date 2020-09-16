@@ -12,6 +12,7 @@ class Meter extends Model
     use Uuid;
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $guarded = [];
     public function validator() {
         return $this->belongsTo(User::class, 'validator_id');
     }

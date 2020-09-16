@@ -41,12 +41,12 @@ class CamerController extends Controller
         
         // dd(date('m Y', strtotime("last month")));
         $data_bulan_lalu = Meter::where(
-            ['apartement_id' => $request->unit,
+            ['apartement_id' => $request->unit_id,
             'bulan_tahun' => date('m Y', strtotime("last month")),
             'validasi' => 1]
         )->select('pencatatan_listrik', 'pencatatan_air')->first();
         $data_bulan_ini = Meter::where(
-            ['apartement_id' => $request->unit,
+            ['apartement_id' => $request->unit_id,
             'bulan_tahun' => date('m Y'),
             ]
         )->first();
@@ -56,7 +56,7 @@ class CamerController extends Controller
         $camer->engineer_id = $request->user()->id;
         $camer->pencatatan_listrik = $request->pencatatan_listrik;
         $camer->pencatatan_air = $request->pencatatan_air;
-        $camer->apartement_id = $request->unit;
+        $camer->apartement_id = $request->unit_id;
         $camer->validasi = 0;
         $camer->gambar1 = $bukti_gambar1;
         $camer->gambar2 = $bukti_gambar2;

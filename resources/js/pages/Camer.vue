@@ -152,10 +152,10 @@
                                         </tr>
                                         <tr>
                                             <td class="text-right pt-3 pb-3 pr-1">
-                                                <img src="img/IMG_20150714_061948.jpg" height="150px" width="250px;">
+                                                <img :src="'/img/camer/' + currentItem.gambar1" height="150px" width="250px;">
                                             </td>
                                             <td class="pl-1 pt-3 pb-3">
-                                                <img src="img/IMG_20150715_055904.jpg" height="150px" width="250px;">
+                                                <img :src="'/img/camer/' + currentItem.gambar2" height="150px" width="250px;">
                                             </td>
                                         </tr>
                                     </tbody>

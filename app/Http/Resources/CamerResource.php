@@ -31,6 +31,8 @@ class CamerResource extends JsonResource
                 'pemakaian_air' => $this->pemakaian_air,
                 'unit' => $this->unit->unit,
                 'validasi' => $this->validasi,
+                'gambar1' => $this->gambar1,
+                'gambar2' => $this->gambar2,
                 'bulan_tahun' => $this->bulan_tahun,
                 'validator' => $this->when($this->validator, function() {
                     return $this->validator->nama;
@@ -48,6 +50,8 @@ class CamerResource extends JsonResource
                 'pemakaian_air' => $this->pemakaian_air,
                 'unit' => $this->unit->unit,
                 'validasi' => $this->validasi,
+                'gambar1' => $this->gambar1,
+                'gambar2' => $this->gambar2,
                 'bulan_tahun' => $this->bulan_tahun,
                 'validator' => $this->when($this->validator, function() {
                     return $this->validator->nama;

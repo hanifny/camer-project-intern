@@ -26,7 +26,7 @@ class TypeTableSeeder extends Seeder
 
         Type::create([
             'tipe' => '1BDT',
-            'luas' => null,
+            // 'luas' => null,
             'daya_ampere' => 16
         ]);
 
@@ -158,7 +158,7 @@ class TypeTableSeeder extends Seeder
 
         Type::create([
             'tipe' => '3BCDT',
-            'luas' => null,
+            // 'luas' => null,
             'daya_ampere' => 40
         ]);
 
@@ -272,7 +272,7 @@ class TypeTableSeeder extends Seeder
 
         Type::create([
             'tipe' => 'SINARMAS',
-            'luas' => null,
+            // 'luas' => null,
             'daya_ampere' => 40
         ]);
     }

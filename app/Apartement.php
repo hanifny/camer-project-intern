@@ -14,6 +14,6 @@ class Apartement extends Model
     public $incrementing = false;
     protected $guarded = [];
     public function type() {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class, 'tipe_id');
     }
 }
