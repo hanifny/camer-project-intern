@@ -17,7 +17,7 @@ const mutations = {
 const actions = {
     getUserLogin({ commit }) {
         return new Promise((resolve, reject) => {
-            $axios.get('/me')
+            $axios.post('/me')
             .then((response) => {
                 commit('ASSIGN_USER_AUTH', response.data)
                 resolve(response.data)

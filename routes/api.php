@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'AuthController@login');
 Route::post('refresh', 'AuthController@refresh');
 
-Route::group(['middleware' => ['web', 'auth:api', 'roles']], function() {
+Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // {{ AUTH }} \\
         // Get user info
-        Route::get('me', 'AuthController@me');
+        Route::post('me', 'AuthController@me');
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
         //GET TEKNISI
