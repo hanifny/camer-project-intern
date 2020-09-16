@@ -19,18 +19,12 @@
         <div class="container-fluid mt--6">
             <div class="row">
                 <div class="col">
-                    <div class="card">
+                    <div class="card" v-bind="getUnit">
                         <div class="card-header border-0 d-flex align-items-center justify-content-between">
                             <h3 class="mb-0">Daftar Unit Apartement Capitol Park</h3>
-                            <form>
-                                <div class="form-row" v-bind="getUnit">
-                                    <div class="form-group">
-                                        <select id="inputState" class="form-control" v-model="floor">
-                                            <option selected>Semua</option>
-                                            <option v-for="i in 12">Lantai {{i}}</option>
-                                        </select>
-                                    </div>
-                                </div>
+                            <form class="form-inline d-flex justify-content-end">
+                                <label class="form-control-label" for="lantai">Lantai &nbsp; </label>
+                                <input id="lantai" type="text" class="form-control col-4" v-model="floor">
                             </form>
                         </div>
                         <div class="table-responsive">
@@ -92,10 +86,7 @@
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="lantai">Lantai</label>
-
-                            <select id="lantai" class="form-control" v-model="newUnit.lantai">
-                                <option v-for="i in 12"> {{i}} </option>
-                            </select>
+                            <input id="lantai" type="text" class="form-control" v-model="newUnit.lantai">
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="tipe">Tipe</label>
@@ -135,12 +126,11 @@
                 types: state => state.type
             }),
             getUnit: function () {
-                if (this.floor == "Semua") {
+                if (this.floor == "Semua" || this.floor == "") {
                     this.getAllUnit('1')
-                    // this.getAllUnit(1)
                 } else {
-                    let floor = this.floor.split(" ")
-                    this.getUnitPerFloor(floor[1])
+                    // let floor = this.floor.split(" ")
+                    this.getUnitPerFloor(this.floor)
                 }
             },
         },
