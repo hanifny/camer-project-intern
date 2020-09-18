@@ -11,13 +11,14 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::post('me', 'AuthController@me');
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
-        //GET TEKNISI
-        Route::get('engineer', [
-            'uses' => 'CamerController@get_engineer',
-            'roles' => ['Admin']
-        ]);
+        // GET TEKNISI
+        Route::get('engineer', 'UserController@all');
+        // POST TEKNISI
+        Route::post('engineer', 'UserController@store');
 
         //  {{ UNIT }}  \\
+        // Get all unit where camer is invalid
+        Route::get('invalid', 'UnitController@invalid'); 
         // Get lantai
         Route::get('floor', 'UnitController@floor');
         // Get nama unit per lantai
@@ -29,6 +30,15 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // Store unit baru
         Route::post('unit', [
             'uses' => 'UnitController@store',
+            'roles' => ['Admin']
+        ]);
+        // Update unit baru
+        Route::put('unit', [
+            'uses' => 'UnitController@update',
+            'roles' => ['Admin']
+        ]);
+        Route::delete('unit/{id}', [
+            'uses' => 'UnitController@destroy',
             'roles' => ['Admin']
         ]);
 
@@ -54,4 +64,6 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         ]);
         // Get count data
         Route::get('count', 'CamerController@count');
+        // Resend camer invalid
+        Route::put('invalid', 'CamerController@update');
 });

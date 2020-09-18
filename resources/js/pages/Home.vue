@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Perlu Validasi</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{count.camer_invalid}}</span>
+                                    <span class="h2 font-weight-bold mb-0">{{count.camer_validation}}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -60,13 +60,13 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-xl-3 col-md-6">
+                <div class="col-xl-3 col-md-6">
                     <div class="card card-stats">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Data Invalid</h5>
-                                    <span class="h2 font-weight-bold mb-0">31</span>
+                                    <span class="h2 font-weight-bold mb-0">{{count.camer_invalid}}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-danger text-white rounded-circle shadow">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>

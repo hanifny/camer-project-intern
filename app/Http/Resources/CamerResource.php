@@ -17,12 +17,13 @@ class CamerResource extends JsonResource
     {
         $data_bulan_lalu = Meter::where(
             ['apartement_id' => $this->apartement_id,
-            'bulan_tahun' => date('m Y', strtotime("last month")),
+            'bulan_tahun' => $this->bulan_lalu($this->bulan_tahun),
             'validasi' => 1]
         )->first();
         if($data_bulan_lalu) {
             return [
                 'id' => $this->id,
+                'bulan_lalu' => $data_bulan_lalu->bulan_tahun,
                 'pencatatan_listrik' => $this->pencatatan_listrik,
                 'pencatatan_listrik_bulan_lalu' => $data_bulan_lalu->pencatatan_listrik,
                 'pemakaian_listrik' => $this->pemakaian_listrik,
@@ -44,6 +45,7 @@ class CamerResource extends JsonResource
         else {
             return [
                 'id' => $this->id,
+                'bulan_lalu' => $this->bulan_lalu($this->bulan_tahun),
                 'pencatatan_listrik' => $this->pencatatan_listrik,
                 'pemakaian_listrik' => $this->pemakaian_listrik,
                 'pencatatan_air' => $this->pencatatan_air,
@@ -60,5 +62,12 @@ class CamerResource extends JsonResource
                 'tanggal_upload' => $this->created_at->format('d M Y'),
             ];
         }   
+    }
+
+    public function bulan_lalu($date) {
+        $tmp = [];
+        $tmp = explode(" ", $date);
+        $date = $tmp[1] . "-" . $tmp[0];
+        return Date("m Y", strtotime($date . " -1 Month"));
     }
 }

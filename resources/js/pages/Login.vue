@@ -8,7 +8,9 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                            <img src="img/white.png" alt="CAMER" class="brand-image">
+                            <div class="bg-white rounded p-3">
+                                <img src="img/logo.png" alt="CAMER" class="brand-image">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,10 +105,10 @@
                     if (this.isAuth) {
                         this.CLEAR_ERRORS()
                         //MAKA AKAN DI-DIRECT KE ROUTE DENGAN NAME home
-                        // toast.fire({
-                        //     icon: 'success',
-                        //     title: 'Signed in successfully'
-                        // })
+                        toast.fire({
+                            icon: 'success',
+                            title: 'Signed in successfully'
+                        })
                         this.$router.push({
                             name: 'home'
                         })
@@ -114,9 +116,5 @@
                 })
             }
         },
-        // destroyed() {
-            // this.getUserLogin() 
-            // Menyimpan informasi user yang sudah login
-        // }
     }
 </script>

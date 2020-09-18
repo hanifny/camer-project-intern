@@ -5,8 +5,9 @@
         <div class="main-content" id="panel">
             <app-topbar v-if="isAuth"></app-topbar>
             <router-view></router-view>
+            <app-footer v-if="isAuth"></app-footer>
         </div>
-        <app-footer v-if="isAuth"></app-footer>
+        
 </div>
 </template>
 <script>

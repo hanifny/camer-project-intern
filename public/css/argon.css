@@ -6951,7 +6951,8 @@ a.badge:focus
 {
     position: relative;
 
-    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    /* margin-bottom: 1rem; */
     padding: 1rem 1.5rem;
 
     border: 1px solid transparent;
@@ -15465,7 +15466,7 @@ button.bg-darker:focus
     .pb-lg-5,
     .py-lg-5
     {
-        padding-bottom: 3rem !important;
+        /* padding-bottom: 3rem !important; */
     }
     .pl-lg-5,
     .px-lg-5
@@ -19957,9 +19958,10 @@ a.btn-icon-only
 .footer
 {
     padding: 30px 0; 
-
-    background: #f8f9fe;
+    
+    background: transparent;
 }
+
 .footer .col-footer .heading
 {
     font-size: .875rem;
@@ -21421,7 +21423,7 @@ textarea[resize='horizontal']
 .navbar-vertical .navbar-brand > img
 {
     max-width: 100%;
-    max-height: 3rem;
+    max-height: 4rem;
 }
 @media (min-width: 768px)
 {
@@ -22267,6 +22269,11 @@ textarea[resize='horizontal']
     {
         transition: none;
     }
+}
+.nav-link-text {
+    color: #0f3460;
+    font-weight: 601;
+    opacity: 1;
 }
 
 .g-sidenav-show .sidenav .nav-link-text
@@ -23854,6 +23861,10 @@ textarea[resize='horizontal']
     background-color: #ade498;
 }
 
+.invalid {
+    background-color: #ffcbcb;
+}
+
 .finger-cursor {
     cursor: pointer;
 }
@@ -24198,7 +24209,7 @@ button.bg-lighter:focus
 
 .bg-gradient-success
 {
-    background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+    background: linear-gradient(87deg, #4F85DF 0, #2dcecc 100%) !important;
 }
 
 .bg-gradient-info
@@ -24554,7 +24565,7 @@ button.section-darker:focus
 
 .bg-gradient-success
 {
-    background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+    background: linear-gradient(87deg, #4F85DF 0, #2dcecc 100%) !important;
 }
 
 .bg-gradient-info
@@ -29872,4 +29883,14 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 .bootstrap-datetimepicker-widget.dropdown-black table td .btn[data-action='togglePeriod']
 {
     background: transparent;
+}
+
+.kotak img {
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
+ 
+.zoom-effect:hover .kotak img {
+  -webkit-transform: scale(1.21);
+  transform: scale(1.21);
 }

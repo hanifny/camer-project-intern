@@ -7,9 +7,9 @@
                         <div class="col-lg-6 col-7">
                             <h6 class="h2 text-white d-inline-block mb-0">Data Teknisi</h6>
                         </div>
-                        <!-- <div class="col-lg-6 col-5 text-right">
+                        <div v-if="user.role == 'Admin'" class="col-lg-6 col-5 text-right">
                             <a href="" class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,22 +65,75 @@
                 </div>
             </div>
         </div>
+        <b-modal id="formAdd" hide-footer hide-header size="sm" centered>
+            <div class="card mb-0">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Tambah Data Teknisi</h3>
+                        </div>
+                        <div class="col-4 text-right">
+                            <a href="#!" @click.prevent="closeModal" class="btn btn-sm btn-danger">x</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="form-control-label" for="nama">Nama</label>
+                            <input id="nama" type="text" v-model="engineer.nama" class="form-control"> 
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-control-label" for="email">Email</label>
+                            <input id="email" type="email" class="form-control" v-model="engineer.email">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-control-label" for="tipe">Password</label>
+                            <input id="password" type="password" class="form-control" v-model="engineer.password">
+                        </div>
+                        <div class="mt-3 text-right mb-0">
+                            <a href="#!" class="btn btn-sm btn-success" @click.prevent="storeEngineer">Submit</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </b-modal>
     </div>
 </template>
 
 <script>
-    import { mapActions, mapState } from 'vuex';
+    import {
+        mapActions,
+        mapState
+    } from 'vuex';
     export default {
+        data() {
+            return {
+                engineer: {}
+            }
+        },
         computed: {
             ...mapState('user', {
                 engineers: state => state.engineer
+            }),
+            ...mapState('user', {
+                user: state => state.authenticated   
             })
         },
         methods: {
             ...mapActions('user', ['getEngineer']),
+            ...mapActions('user', ['addEngineer']),
 
             formAdd() {
-                console.log('Ok');
+                this.$bvModal.show('formAdd')
+            },
+            closeModal() {
+                this.$bvModal.hide('formAdd')
+            },
+            storeEngineer() {
+                this.addEngineer(this.engineer)
+                this.getEngineer()
+                this.$bvModal.hide('formAdd')
             }
         },
         created() {

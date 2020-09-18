@@ -9,7 +9,8 @@
                             <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit </h6>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="" class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
+                            <a href="" v-if="user.role == 'Admin'" class="btn btn-sm btn-success"
+                                @click.prevent="formAdd">Add</a>
                         </div>
                     </div>
                 </div>
@@ -35,6 +36,7 @@
                                         <th>Unit</th>
                                         <th>Tipe</th>
                                         <th>Lantai</th>
+                                        <th v-if="user.role == 'Admin'">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
@@ -49,6 +51,12 @@
                                         <td> {{unit.unit}} </td>
                                         <td> {{unit.tipe}} </td>
                                         <td> {{unit.lantai}} </td>
+                                        <td v-if="user.role == 'Admin'">
+                                            <button href="" class="btn btn-sm btn-warning"
+                                                @click.stop="formEdit(unit)">Edit</button>
+                                            <button href="" class="btn btn-sm btn-danger"
+                                                @click.stop="deleteUnit(unit.id)">Delete</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -90,13 +98,14 @@
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="tipe">Tipe</label>
-
                             <select id="tipe" class="form-control" v-model="newUnit.tipe_id">
-                                <option v-for="unit in types" :value=unit.id> {{unit.tipe}} </option>
+                                <option v-if="newUnit.tipe != unit.tipe" v-for="unit in types" :value=unit.id> {{unit.tipe}} </option>
+                                <option :value=newUnit.tipe_id> {{newUnit.tipe}} </option>
                             </select>
                         </div>
                         <div class="mt-3 text-right mb-0">
-                            <a href="#!" class="btn btn-sm btn-success" @click.prevent="storeUnit">Submit</a>
+                            <a v-if="newUnit.id" href="#!" class="btn btn-sm btn-warning" @click.prevent="updateUnit">Edit</a>
+                            <a v-else href="#!" class="btn btn-sm btn-success" @click.prevent="storeUnit">Submit</a>
                         </div>
                     </form>
                 </div>
@@ -125,11 +134,13 @@
             ...mapState('camer', {
                 types: state => state.type
             }),
+            ...mapState('user', {
+                user: state => state.authenticated
+            }),
             getUnit: function () {
                 if (this.floor == "Semua" || this.floor == "") {
                     this.getAllUnit('1')
                 } else {
-                    // let floor = this.floor.split(" ")
                     this.getUnitPerFloor(this.floor)
                 }
             },
@@ -139,8 +150,11 @@
             ...mapActions('camer', ['getUnitPerFloor']),
             ...mapActions('camer', ['getType']),
             ...mapActions('camer', ['storeNewUnit']),
+            ...mapActions('camer', ['editUnit']),
+            ...mapActions('camer', ['destroyUnit']),
 
             formAdd() {
+                this.newUnit = {}
                 this.$bvModal.show('bv-modal')
                 this.getType()
             },
@@ -152,7 +166,20 @@
                 this.storeNewUnit(this.newUnit)
                 this.getAllUnit(1)
                 this.closeModal()
-                this.newUnit = {}
+            },
+            formEdit(unit) {
+                this.newUnit = unit
+                this.getType()
+                this.$bvModal.show('bv-modal')
+            },
+            updateUnit() {
+                this.editUnit(this.newUnit)
+                this.getAllUnit(1)
+                this.closeModal()
+            },
+            deleteUnit(id) {
+                this.destroyUnit(id)
+                this.getAllUnit(1)
             }
         },
         created() {

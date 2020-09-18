@@ -23,11 +23,11 @@
                                         <input type="month" name="currentMonth" value="currentMonth"
                                             v-model="currentMonth">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-if="user.role == 'Admin'">
                                         <button class="btn btn-danger"
                                             @click.prevent="validasiSemua(all_camer[0])">Validasi Semua</button>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-if="user.role == 'Admin'">
                                         <button class="btn btn-success">Export to Excel <i
                                                 class="fas fa-file-excel"></i></button>
                                     </div>
@@ -50,7 +50,7 @@
                                 </thead>
                                 <tbody class="list">
                                     <tr v-for="(camer, index) in all_camer"
-                                        v-bind:class="{ 'validated': camer.validasi, 'finger-cursor': camer }"
+                                        v-bind:class="{ 'validated': camer.validasi == 1, 'invalid': camer.validasi == 2, 'finger-cursor': camer }"
                                         @click.prevent="cekDetail(camer)" :key="camer.id">
                                         <th scope="row">
                                             <div class="media">
@@ -71,10 +71,14 @@
                                         <td> {{camer.engineer}} </td>
                                         <td> {{camer.validator}} </td>
                                         <td> {{camer.bulan_tahun}} </td>
-                                        <td v-if="camer.validasi"> Tervalidasi </td>
+                                        <td v-if="camer.validasi == 1"> <strong> Tervalidasi </strong> </td>
+                                        <td v-else-if="camer.validasi == 2"> <strong> Tidak Tervalidasi </strong> </td>
+                                        <td v-else-if="user.role == 'Engineer' && camer.validasi == 0">
+                                            <strong>Belum Tervalidasi</strong>
+                                        </td>
                                         <td v-else>
                                             <a href="/camer" @click.prevent.stop="validasi(camer)"
-                                                class="btn btn-sm btn-success">Validasi</a>
+                                                class="btn btn-sm btn-success"> <strong> Validasi </strong> </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -107,11 +111,17 @@
                                             <td>: {{currentItem.unit}} </td>
                                         </tr>
                                         <tr>
-                                            <td>Standmeter Listrik (Bulan ini)</td>
-                                            <td>: {{currentItem.pencatatan_listrik}} watt </td>
+                                            <td>Stand Akhir Listrik</td>
+                                            <td v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">:
+                                                {{currentItem.pencatatan_listrik}} watt
+                                            <td v-else class="d-flex justify-content-start">: &nbsp;
+                                                <input v-model="currentItem.pencatatan_listrik" type="text"
+                                                    class="col-3"> &nbsp;
+                                                watt
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Standmeter Listrik (Sebulan lalu)</td>
+                                            <td>Stand Awal Listrik</td>
                                             <td v-if="currentItem.pencatatan_listrik_bulan_lalu">:
                                                 {{currentItem.pencatatan_listrik_bulan_lalu}} watt </td>
                                             <td v-else>: Tidak ada data </td>
@@ -123,11 +133,17 @@
                                             <td v-else>: Tidak ada data </td>
                                         </tr>
                                         <tr>
-                                            <td>Standmeter Air (Bulan ini)</td>
-                                            <td>: {{currentItem.pencatatan_air}} m<sup>3</sup> </td>
+                                            <td>Stand Akhir Air</td>
+                                            <td v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">:
+                                                {{currentItem.pencatatan_air}} m<sup style="margin-top:10px;">3</sup>
+                                            <td v-else class="d-flex justify-content-start">: &nbsp;
+                                                <input type="text" class="col-3" v-model="currentItem.pencatatan_air">
+                                                &nbsp;
+                                                m<sup style="margin-top:10px;">3</sup>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Standmeter Air (Sebulan lalu)</td>
+                                            <td>Stand Awal Air</td>
                                             <td v-if="currentItem.pencatatan_air_bulan_lalu">:
                                                 {{currentItem.pencatatan_air_bulan_lalu}} m<sup>3</sup> </td>
                                             <td v-else>: Tidak ada data </td>
@@ -152,22 +168,37 @@
                                         </tr>
                                         <tr>
                                             <td class="text-right pt-3 pb-3 pr-1">
-                                                <img :src="'/img/camer/' + currentItem.gambar1" height="150px" width="250px;">
+                                                <div class="zoom-effect">
+                                                    <div class="kotak">
+                                                        <img :src="'/img/camer/' + currentItem.gambar1" height="150px"
+                                                            width="250px;">
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="pl-1 pt-3 pb-3">
-                                                <img :src="'/img/camer/' + currentItem.gambar2" height="150px" width="250px;">
+                                                <div class="zoom-effect">
+                                                    <div class="kotak">
+                                                        <img :src="'/img/camer/' + currentItem.gambar2" height="150px"
+                                                            width="250px;">
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div v-if="!currentItem.validasi" @click="validasiDetail(currentItem)"
-                            class="text-center finger-cursor rounded-bottom p-2 btn-success">
-                            <strong>V A L I D A S I</strong>
+                        <div v-if="currentItem.validasi == 0 && user.role == 'Admin'" @click="validasiDetail(currentItem)" class="text-center">
+                            <strong @click.stop="invalid(currentItem)" class="finger-cursor rounded p-2 btn-danger">D A
+                                T A &nbsp; T I D A K &nbsp; V A L I D</strong>
+                            <strong @click.stop="validasiDetail(currentItem)"
+                                class="finger-cursor rounded p-2 btn-success">V A L I D A S I</strong>
                         </div>
-                        <div v-else class="text-center p-2 rounded-bottom btn-info">
+                        <div v-else-if="currentItem.validasi == 1" class="text-center p-2 rounded-bottom btn-info">
                             <strong>T E R V A L I D A S I</strong>
+                        </div>
+                        <div v-else-if="currentItem.validasi == 2" class="text-center p-2 rounded-bottom btn-danger">
+                            <strong>T I D A K &nbsp; T E R V A L I D A S I</strong>
                         </div>
                     </div>
                 </div>
@@ -191,6 +222,9 @@
         computed: {
             ...mapState('camer', {
                 all_camer: state => state.camer
+            }),
+            ...mapState('user', {
+                user: state => state.authenticated
             }),
             reverseYearMonth: function () {
                 let rym = this.currentMonth.split("-").reverse().join(" ")
@@ -243,6 +277,13 @@
                 let month_year = new Date().toISOString().split('-')
                 month_year = month_year[0] + "-" + month_year[1]
                 this.currentMonth = month_year
+            },
+            invalid(camer) {
+                camer.status = "invalid"
+                this.validation(camer)
+                this.$bvModal.hide('bv-modal')
+                this.getCamer()
+                this.bulan_tahun()
             }
         },
         created() {

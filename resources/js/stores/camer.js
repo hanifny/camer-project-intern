@@ -27,9 +27,19 @@ const mutations = {
 }
 
 const actions = {
+    destroyUnit({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.delete('/unit/' + payload)
+        })
+    },
     storeNewUnit({commit}, payload) {
         return new Promise((resolve, reject) => {
             $axios.post('/unit', payload)
+        })
+    },
+    editUnit({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.put('/unit', payload)
         })
     },
     getAllUnit({ commit }, payload) {

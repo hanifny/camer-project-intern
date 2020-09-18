@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -22,17 +23,20 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized', 'status' => 'failed']);
         }
         $data = $this->respondWithToken($token)->original['access_token'];
-        // $updateApi = auth()->user()->where('id', auth()->user()->id)->update(['api_token' => $data]);
+        $role  = auth()->user()->role->nama;
         //KEMUDIAN KIRIM RESPONSENYA KE CLIENT UNTUK DIPROSES LEBIH LANJUT
         return response()->json([
             'status' => 'success', 
             'data' => $data, 
+            'role' => $role,
         ], 200);
     }
 
     public function me()
     {
-        return response()->json(auth()->user());
+        $role  = auth()->user()->have_role->nama;
+        $nama = auth()->user()->nama;
+        return response()->json(['role' => $role, 'nama' => $nama]);
     }
 
     public function logout()

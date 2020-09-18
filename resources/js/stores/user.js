@@ -32,6 +32,11 @@ const actions = {
                 resolve(response.data)
             })
         })
+    },
+    addEngineer({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post('/engineer', payload)
+        })
     }
 }
 
