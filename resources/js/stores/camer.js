@@ -5,7 +5,8 @@ const state = () => ({
     unit: {},
     type: {},
     camer: {},
-    count: {}
+    count: {},
+    camer_invalid: {} 
 })
 
 const mutations = {
@@ -23,10 +24,29 @@ const mutations = {
     },
     GET_COUNT(state, payload) {
         state.count = payload
-    }
+    },
+    GET_CAMER_INVALID(state, payload) {
+        state.camer_invalid = payload
+    },
 }
 
 const actions = {
+    exportToExcel({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios({
+                url: 'camer/export', //your url
+                method: 'GET',
+                responseType: 'blob', // important
+              }).then((response) => {
+                 const url = window.URL.createObjectURL(new Blob([response.data]));
+                 const link = document.createElement('a');
+                 link.href = url;
+                 link.setAttribute('download', 'Camer.xlsx'); //or any other extension
+                 document.body.appendChild(link);
+                 link.click();
+              });
+        })
+    },
     destroyUnit({ commit }, payload) {
         return new Promise((resolve, reject) => {
             $axios.delete('/unit/' + payload)
@@ -74,6 +94,15 @@ const actions = {
             $axios.get('/camer')
             .then((response) => {
                 commit('GET_CAMER', response.data)
+                resolve(response.data)
+            })
+        })
+    },
+    getCamerInvalid({ commit }) {
+        return new Promise((resolve, reject) => {
+            $axios.get('/invalid')
+            .then((response) => {
+                commit('GET_CAMER_INVALID', response.data)
                 resolve(response.data)
             })
         })

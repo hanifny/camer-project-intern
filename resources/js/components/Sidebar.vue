@@ -1,10 +1,10 @@
 <template>
     <nav class="sidenav navbar navbar-vertical fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
         <div class="scrollbar-inner">
-            <div class="sidenav-header align-items-center">
-                <a class="navbar-brand pt-5" href="javascript:void(0)">
+            <div class="sidenav-header align-items-center" @click="activate('home')">
+                <router-link class="navbar-brand pt-5" to="/">
                     <img src="img/logo.png" class="navbar-brand-img" alt="...">
-                </a>
+                </router-link>
             </div>
             <div class="navbar-inner">
                 <div class="collapse navbar-collapse" id="sidenav-collapse-main">
@@ -34,10 +34,10 @@
                             </router-link>
                         </li>
                         <li class="nav-item" @click="activate('invalid')">
-                            <a class="nav-link" href="" :class="{ active : active_el == 5 }">
+                            <router-link class="nav-link" to="/invalid" :class="{ active : active_el == 'invalid' }">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Data Invalid</span>
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                 </div>

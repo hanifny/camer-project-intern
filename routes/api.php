@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'AuthController@login');
 Route::post('refresh', 'AuthController@refresh');
-
 Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // {{ AUTH }} \\
         // Get user info
@@ -15,6 +14,8 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::get('engineer', 'UserController@all');
         // POST TEKNISI
         Route::post('engineer', 'UserController@store');
+        // Edit Password
+        Route::put('user', 'UserController@changePassword');
 
         //  {{ UNIT }}  \\
         // Get all unit where camer is invalid
@@ -43,6 +44,11 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         ]);
 
         // {{ CAMER }} \\
+        // export 
+        Route::get('camer/export/', [
+            'uses' => 'CamerController@export',
+            'roles' => ['Admin']
+        ]);
         // store camer
         Route::post('floor/{id}/{unit_id}', [
             'uses' => 'CamerController@store',
@@ -65,5 +71,5 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // Get count data
         Route::get('count', 'CamerController@count');
         // Resend camer invalid
-        Route::put('invalid', 'CamerController@update');
+        Route::post('invalid', 'CamerController@update');
 });

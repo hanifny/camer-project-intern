@@ -79,7 +79,8 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Tambah Data Unit</h3>
+                            <h3 v-if="newUnit.id" class="mb-0">Edit Data Unit</h3>
+                            <h3 v-else class="mb-0">Tambah Data Unit</h3>
                         </div>
                         <div class="col-4 text-right">
                             <a href="#!" @click.prevent="closeModal" class="btn btn-sm btn-danger">x</a>
@@ -89,12 +90,12 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            <label class="form-control-label" for="unit">Unit</label>
+                            <label class="form-control-label" for="unit">Unit</label> 
                             <input id="unit" type="text" v-model="newUnit.unit" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="lantai">Lantai</label>
-                            <input id="lantai" type="text" class="form-control" v-model="newUnit.lantai">
+                            <input id="lantai" type="number" class="form-control" v-model="newUnit.lantai">
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="tipe">Tipe</label>

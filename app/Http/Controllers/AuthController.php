@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
-use App\User;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -36,7 +32,8 @@ class AuthController extends Controller
     {
         $role  = auth()->user()->have_role->nama;
         $nama = auth()->user()->nama;
-        return response()->json(['role' => $role, 'nama' => $nama]);
+        $email = auth()->user()->email;
+        return response()->json(['role' => $role, 'nama' => $nama, 'email' => $email]);
     }
 
     public function logout()

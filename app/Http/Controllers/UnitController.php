@@ -31,13 +31,16 @@ class UnitController extends Controller
     }
 
     public function update(Request $request) {
-        dd($request->all());
-        $new_unit = Apartement::find($request->id)
-        ->update([
+        $unit = Apartement::find($request->id);
+        $new_unit = $unit->update([
             'unit' => $request->unit,
-            'tipe_id' => $request->tipe_id,
             'lantai' => $request->lantai,
         ]);
+        if($request->tipe_id) {
+            $new_unit = $unit->update([
+                'tipe_id' => $request->tipe_id,
+            ]);
+        }
         return response()->json($new_unit);
     }
 

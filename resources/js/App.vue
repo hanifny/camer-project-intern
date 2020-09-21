@@ -7,7 +7,6 @@
             <router-view></router-view>
             <app-footer v-if="isAuth"></app-footer>
         </div>
-        
 </div>
 </template>
 <script>

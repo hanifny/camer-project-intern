@@ -25,10 +25,10 @@
                                     </div>
                                     <div class="form-group" v-if="user.role == 'Admin'">
                                         <button class="btn btn-danger"
-                                            @click.prevent="validasiSemua(all_camer[0])">Validasi Semua</button>
+                                            @click.prevent="validasiSemua(all_camer)">Validasi Semua</button>
                                     </div>
                                     <div class="form-group" v-if="user.role == 'Admin'">
-                                        <button class="btn btn-success">Export to Excel <i
+                                        <button @click.prevent="exportExcel" class="btn btn-success">Export to Excel <i
                                                 class="fas fa-file-excel"></i></button>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                         <th>Engineer</th>
                                         <th>Validator</th>
                                         <th>Bulan</th>
-                                        <th>Validasi</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
@@ -77,8 +77,7 @@
                                             <strong>Belum Tervalidasi</strong>
                                         </td>
                                         <td v-else>
-                                            <a href="/camer" @click.prevent.stop="validasi(camer)"
-                                                class="btn btn-sm btn-success"> <strong> Validasi </strong> </a>
+                                            <strong> Belum Tervalidasi </strong>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -112,11 +111,12 @@
                                         </tr>
                                         <tr>
                                             <td>Stand Akhir Listrik</td>
-                                            <td v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">:
+                                            <td
+                                                v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
+                                                :
                                                 {{currentItem.pencatatan_listrik}} watt
-                                            <td v-else class="d-flex justify-content-start">: &nbsp;
-                                                <input v-model="currentItem.pencatatan_listrik" type="text"
-                                                    class="col-3"> &nbsp;
+                                            <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
+                                                <input v-model="currentItem.pencatatan_listrik" type="number"> &nbsp;
                                                 watt
                                             </td>
                                         </tr>
@@ -134,10 +134,12 @@
                                         </tr>
                                         <tr>
                                             <td>Stand Akhir Air</td>
-                                            <td v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">:
+                                            <td
+                                                v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
+                                                :
                                                 {{currentItem.pencatatan_air}} m<sup style="margin-top:10px;">3</sup>
-                                            <td v-else class="d-flex justify-content-start">: &nbsp;
-                                                <input type="text" class="col-3" v-model="currentItem.pencatatan_air">
+                                            <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
+                                                <input type="number" v-model="currentItem.pencatatan_air">
                                                 &nbsp;
                                                 m<sup style="margin-top:10px;">3</sup>
                                             </td>
@@ -188,11 +190,14 @@
                                 </table>
                             </div>
                         </div>
-                        <div v-if="currentItem.validasi == 0 && user.role == 'Admin'" @click="validasiDetail(currentItem)" class="text-center">
-                            <strong @click.stop="invalid(currentItem)" class="finger-cursor rounded p-2 btn-danger">D A
+                        <div v-if="currentItem.validasi == 0 && user.role == 'Admin'"
+                            class="text-center d-flex bd-highlight pr-5 pl-5 pb-3">
+                            <strong @click="invalid(currentItem)"
+                                class="finger-cursor rounded p-2 btn-danger flex-fill bd-highlight">D A
                                 T A &nbsp; T I D A K &nbsp; V A L I D</strong>
-                            <strong @click.stop="validasiDetail(currentItem)"
-                                class="finger-cursor rounded p-2 btn-success">V A L I D A S I</strong>
+                            <strong @click="validasi(currentItem)"
+                                class="finger-cursor rounded ml-2 p-2 btn-success flex-fill bd-highlight">V A L I D A S
+                                I</strong>
                         </div>
                         <div v-else-if="currentItem.validasi == 1" class="text-center p-2 rounded-bottom btn-info">
                             <strong>T E R V A L I D A S I</strong>
@@ -236,7 +241,11 @@
             ...mapActions('camer', ['getCamerPerMonth']),
             ...mapActions('camer', ['validation']),
             ...mapActions('camer', ['validation_per_month']),
+            ...mapActions('camer', ['exportToExcel']),
 
+            exportExcel() {
+                this.exportToExcel()
+            },
             cekDetail(camer) {
                 this.$bvModal.show('bv-modal')
                 this.currentItem = camer
@@ -250,28 +259,43 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#f5365c',
                     cancelButtonText: 'Tidak, jangan',
-                    confirmButtonText: 'Iya, lakukan validasi!'
+                    confirmButtonText: 'Ya, lakukan validasi!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        swal.fire(
+                            'Berhasil!',
+                            'Kamu telah melakukan validasi.',
+                            'success'
+                        )
                         this.validation(camer)
+                        this.getCamer()
+                        this.bulan_tahun()
+                        this.$bvModal.hide('bv-modal')
+                    }
+                })
+            },
+            validasiSemua(camer) {
+                swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "Kamu akan melakukan validasi untuk semua data di bulan ini",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, saya sangat yakin!',
+                    cancelButtonText: 'Tidak, jangan!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        swal.fire(
+                            'Berhasil!',
+                            'Kamu telah melakukan validasi.',
+                            'success'
+                        )
+                        this.validation_per_month(camer)
                         this.getCamer()
                         this.bulan_tahun()
                     }
                 })
-            },
-            validasiDetail(camer) {
-                this.validation(camer)
-                this.$bvModal.hide('bv-modal')
-                this.getCamer()
-                this.bulan_tahun()
-            },
-            validasiSemua(camer) {
-                this.validation_per_month(camer)
-                this.getCamer()
-                this.bulan_tahun()
-            },
-            camer_per_month() {
-                console.log("Hai");
             },
             bulan_tahun() {
                 let month_year = new Date().toISOString().split('-')
@@ -279,11 +303,29 @@
                 this.currentMonth = month_year
             },
             invalid(camer) {
-                camer.status = "invalid"
-                this.validation(camer)
-                this.$bvModal.hide('bv-modal')
-                this.getCamer()
-                this.bulan_tahun()
+                swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "Data ini kamu anggap tidak valid",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, saya sangat yakin!',
+                    cancelButtonText: 'Tidak, jangan!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        swal.fire(
+                            'Berhasil!',
+                            'Kamu menyatakan data ini tidak valid.',
+                            'success'
+                        )
+                        camer.status = "invalid"
+                        this.validation(camer)
+                        this.$bvModal.hide('bv-modal')
+                        this.getCamer()
+                        this.bulan_tahun()
+                    }
+                })
             }
         },
         created() {

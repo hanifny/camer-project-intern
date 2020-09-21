@@ -6,6 +6,7 @@ import Login from './pages/Login.vue'
 import Unit from './pages/Unit.vue'
 import Camer from './pages/Camer.vue'
 import Teknisi from './pages/Teknisi.vue'
+import Invalid from './pages/Invalid.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,12 @@ const router = new Router({
             path: '/teknisi',
             name: 'teknisi',
             component: Teknisi,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/invalid',
+            name: 'invalid',
+            component: Invalid,
             meta: { requiresAuth: true }
         },
     ]
