@@ -39,6 +39,20 @@
                                 <span class="nav-link-text">Data Invalid</span>
                             </router-link>
                         </li>
+
+                        <li class="nav-item" @click="activate('chat')">
+                            <router-link class="nav-link" to="/chat" :class="{ active : active_el == 'chat' }">
+                                <i class="fas fa-comments"></i>
+                                <span class="nav-link-text">Chat</span>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item" @click="activate('pembayaran')">
+                            <router-link class="nav-link" to="/pembayaran" :class="{ active : active_el == 'pembayaran' }">
+                                <i class="fas fa-credit-card"></i>
+                                <span class="nav-link-text">Pembayaran</span>
+                            </router-link>
+                        </li>
                     </ul>
                 </div>
             </div>

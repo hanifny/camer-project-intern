@@ -72,4 +72,10 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::get('count', 'CamerController@count');
         // Resend camer invalid
         Route::post('invalid', 'CamerController@update');
+
+        // Chat
+        Route::get('messages', 'ChatsController@fetchMessages');
+        Route::post('messages', 'ChatsController@sendMessage');
+
+        Route::post('payment/store', 'PaymentController@store'); 
 });

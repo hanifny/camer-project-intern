@@ -2,6 +2,11 @@
 
 return [
 
+    'midtrans' => [
+        'server_key' => env('MIDTRANS_SERVER_KEY', null),
+        'base_uri' => env('MIDTRANS_BASE_URI', null)
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -172,7 +177,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,

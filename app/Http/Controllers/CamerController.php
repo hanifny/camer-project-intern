@@ -61,7 +61,7 @@ class CamerController extends Controller
         $camer->gambar1 = $bukti_gambar1;
         $camer->gambar2 = $bukti_gambar2;
         $camer->bulan_tahun = date('m Y');
-        if(!$data_bulan_ini || $data_bulan_ini->validasi == 2) {
+        if(!$data_bulan_ini) {
             if($data_bulan_lalu) {
                 // Otomatis menghitung pemakaian listrik dan air
                 $camer->pemakaian_listrik = $request->pencatatan_listrik - $data_bulan_lalu->pencatatan_listrik;

@@ -7,6 +7,8 @@ import Unit from './pages/Unit.vue'
 import Camer from './pages/Camer.vue'
 import Teknisi from './pages/Teknisi.vue'
 import Invalid from './pages/Invalid.vue'
+import Chat from './pages/Chat.vue'
+import Pembayaran from './pages/Pembayaran.vue'
 
 Vue.use(Router)
 
@@ -47,6 +49,18 @@ const router = new Router({
             path: '/invalid',
             name: 'invalid',
             component: Invalid,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/chat',
+            name: 'chat',
+            component: Chat,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/pembayaran',
+            name: 'pembayaran',
+            component: Pembayaran,
             meta: { requiresAuth: true }
         },
     ]

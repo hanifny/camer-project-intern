@@ -62,7 +62,7 @@
                                         <td>
                                             <router-link to="">{{camer.unit}}</router-link>
                                         </td>
-                                        <td v-if="camer.pemakaian_listrik != null"> {{ camer.pemakaian_listrik }} watt
+                                        <td v-if="camer.pemakaian_listrik != null"> {{ camer.pemakaian_listrik }} kwh
                                         </td>
                                         <td v-else> Tidak ada data </td>
                                         <td v-if="camer.pemakaian_air != null"> {{ camer.pemakaian_air }} m<sup>3</sup>
@@ -114,22 +114,22 @@
                                             <td
                                                 v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
                                                 :
-                                                {{currentItem.pencatatan_listrik}} watt
+                                                {{currentItem.pencatatan_listrik}} kwh
                                             <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
                                                 <input v-model="currentItem.pencatatan_listrik" type="number"> &nbsp;
-                                                watt
+                                                kwh
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Stand Awal Listrik</td>
                                             <td v-if="currentItem.pencatatan_listrik_bulan_lalu">:
-                                                {{currentItem.pencatatan_listrik_bulan_lalu}} watt </td>
+                                                {{currentItem.pencatatan_listrik_bulan_lalu}} kwh </td>
                                             <td v-else>: Tidak ada data </td>
                                         </tr>
                                         <tr>
                                             <td>Pemakaian Listrik</td>
                                             <td v-if="currentItem.pemakaian_listrik !=null">: <strong>
-                                                    {{currentItem.pemakaian_listrik}} watt </strong></td>
+                                                    {{currentItem.pemakaian_listrik}} kwh </strong></td>
                                             <td v-else>: Tidak ada data </td>
                                         </tr>
                                         <tr>
