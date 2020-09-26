@@ -30,9 +30,6 @@ const store = new Vuex.Store({
         isAuth: state => {
             return state.token != "null" && state.token != null
         },
-        changedPassword: state => {
-            return state.errors == [] 
-        }
     },
     mutations: {
         //SEBUAH MUTATIONS YANG BERFUNGSI UNTUK MEMANIPULASI VALUE DARI STATE token

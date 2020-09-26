@@ -10,12 +10,14 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::post('me', 'AuthController@me');
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
-        // GET TEKNISI
-        Route::get('engineer', 'UserController@all');
-        // POST TEKNISI
-        Route::post('engineer', 'UserController@store');
+        // GET User
+        Route::get('user', 'UserController@all');
+        // POST User
+        Route::post('user', 'UserController@store');
         // Edit Password
-        Route::put('user', 'UserController@changePassword');
+        Route::patch('user', 'UserController@changePassword');
+        Route::put('user', 'UserController@update');
+        Route::delete('user/{id}', 'UserController@destroy');
 
         //  {{ UNIT }}  \\
         // Get all unit where camer is invalid

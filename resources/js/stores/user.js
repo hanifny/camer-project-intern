@@ -2,15 +2,15 @@ import $axios from '../api.js'
 
 const state = () => ({
     authenticated: [],
-    engineer: {},
+    user: {},
 })
 
 const mutations = {
     ASSIGN_USER_AUTH(state, payload) {
         state.authenticated = payload
     },
-    GET_ENGINEER(state, payload){
-        state.engineer = payload
+    GET_USER(state, payload){
+        state.user = payload
     }, 
 }
 
@@ -24,37 +24,74 @@ const actions = {
             })
         })
     },
-    getEngineer({commit}) {
+    getUser({commit}) {
         return new Promise((resolve, reject) => {
-            $axios.get('/engineer')
+            $axios.get('/user')
             .then((response) => {
-                commit('GET_ENGINEER', response.data)
+                commit('GET_USER', response.data)
                 resolve(response.data)
             })
         })
     },
-    addEngineer({ commit }, payload) {
+    addUser({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.post('/engineer', payload)
+            $axios.post('/user', payload)
+            .then((response) => {
+                console.log(response.data);
+                    swal.fire(
+                        'Berhasil!',
+                        'Kamu telah menambah user ' + response.data.nama,
+                        'success'
+                    )
+            })
+            .catch((error) => {
+                console.log(error.response);
+                swal.fire(
+                    'Failed!',
+                    error.response.data.message,
+                    'error'
+                )
+            })
         })
     },
-    changePassword({commit}, payload) {
+    editUser({commit}, payload) {
         return new Promise((resolve, reject) => {
             $axios.put('/user', payload)
             .then((response) => {
-                if (response.data.message == 'Your current password does not matches with the password you provided. Please try again.') {
-                    commit('SET_ERRORS', { invalid: response.data.message}, { root: true })
-                    console.log("err");
-                } else if (response.data.status == 'success') {
-                    console.log("success");
-                    commit('SET_ERRORS', {invalid: "null"}, { root: true })
-                }
+                console.log(response.data);
+                    swal.fire(
+                        'Berhasil!',
+                        'Kamu telah mengedit user.',
+                        'success'
+                    )
             })
             .catch((error) => {
-                if (error.response.status == 422) {
-                    console.log("erq");
-                    commit('SET_ERRORS', { invalid: error.response.data.errors.password[0]}, { root: true })
-                }
+                console.log(error.response);
+                swal.fire(
+                    'Failed!',
+                    error.response.data.message,
+                    'error'
+                )
+            })
+        })
+    },
+    removeUser({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.delete('/user/' + payload.id)
+            .then((response) => {
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah menghapus user ' + response.data.nama,
+                    'success'
+                )
+            })
+            .catch((error) => {
+                console.log(error.response);
+                swal.fire(
+                    'Failed!',
+                    error.response.data.message,
+                    'error'
+                )
             })
         })
     }

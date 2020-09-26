@@ -43,10 +43,10 @@
                             <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Welcome!</h6>
                             </div>
-                            <!-- <a href="#!" @click="editPassword(authenticated)" class="dropdown-item">
+                            <a href="#!" @click="editPassword(authenticated)" class="dropdown-item">
                                 <i class="ni ni-single-02"></i>
                                 <span>Edit Password</span>
-                            </a> -->
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" @click="logout" class="dropdown-item">
                                 <i class="ni ni-user-run"></i>
@@ -58,7 +58,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <!-- <b-modal id="edit-password" size="sm" centered hide-footer hide-header>
+        <b-modal id="edit-password" size="sm" centered hide-footer hide-header>
             <div class="card mb-0">
                 <div class="card-header">
                     <div class="row align-items-center">
@@ -87,23 +87,22 @@
                                 class="form-control">
                         </div>
                         <div class="custom-control custom-control-alternative text-center alert alert-danger"
-                            v-if="errors.invalid">
-                            {{ errors.invalid }}
+                            v-if="errors">
+                            {{ errors }}
                         </div>
                         <div class="mt-3 text-right mb-0">
-                            {{errors}}
-                            <a href="#!" @click.prevent="submitPassword(errors)"
-                                class="btn btn-sm btn-success">Submit</a>
+                            <a href="#!" @click.prevent="submitPassword" class="btn btn-sm btn-success">Submit</a>
                         </div>
                     </form>
                 </div>
             </div>
-        </b-modal> -->
+        </b-modal>
         <!-- END MODAL -->
     </nav>
 </template>
 
 <script>
+    import $axios from '../api.js'
     import {
         mapActions,
         mapMutations,
@@ -113,23 +112,20 @@
     export default {
         data() {
             return {
-                user: {}
+                user: {},
+                errors: []
             }
         },
         computed: {
             ...mapState('user', {
                 authenticated: state => state.authenticated
             }),
-            ...mapState(['errors']),
-            ...mapGetters(['changedPassword']), //MENGAMBIL GETTERS changedPassword DARI VUEX
         },
         created() {
             this.getUserLogin()
         },
         methods: {
             ...mapActions('user', ['getUserLogin']),
-            ...mapActions('user', ['changePassword']),
-            ...mapMutations(['CLEAR_ERRORS']),
 
             logout() {
                 return new Promise((resolve, reject) => {
@@ -146,29 +142,39 @@
             },
             editPassword(authenticated) {
                 this.user = authenticated
-                this.CLEAR_ERRORS()
+                this.errors = ''
                 this.$bvModal.show('edit-password')
             },
             closeModal() {
                 this.$bvModal.hide('edit-password')
             },
-            // submitPassword(errors) {
-            //     console.log(errors.invalid);
-            //     this.CLEAR_ERRORS()
-            //     console.log(errors.invalid);
-            //     console.log(this.changedPassword);
-            //     this.changePassword(this.user)
-
-            //     if (this.changedPassword) {
-            //         swal.fire(
-            //             'Berhasil!',
-            //             'Password telah diubah.',
-            //             'success'
-            //         )
-            //         // this.$bvModal.hide('edit-password')
-            //     }
-            //     console.log(this.changedPassword);
-            // }
+            submitPassword() {
+                $axios.patch('/user', this.user)
+                    .then((response) => {
+                        if (response.data.message ==
+                            'Your current password does not matches with the password you provided. Please try again.'
+                            ) {
+                            this.errors = response.data.message
+                        } else if (response.data.status == 'success') {
+                            this.errors = response.data.message
+                            swal.fire(
+                                'Berhasil!',
+                                'Kamu telah merubah password.',
+                                'success'
+                            )
+                            this.user.password_confirmation = undefined
+                            this.user.password = undefined
+                            this.user.old_password = undefined
+                            this.closeModal()
+                        }
+                    })
+                    .catch((error) => {
+                        if (error.response.status == 422) {
+                            console.log(error.response.data.errors.password[0]);
+                            this.errors = error.response.data.errors.password[0]
+                        }
+                    })
+            }
         }
     }
 </script>

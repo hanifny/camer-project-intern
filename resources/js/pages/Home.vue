@@ -32,9 +32,9 @@
                     </router-link>
                 
                 </div>
-                <div class="col-xl-3 col-md-6" @click="activate('teknisi')">
+                <div class="col-xl-3 col-md-6" @click="activate('user')">
 
-                    <router-link class="nav-link" to="/teknisi" :class="{ active : activeEl == 'teknisi'}">
+                    <router-link class="nav-link" to="/user" :class="{ active : activeEl == 'user'}">
 
                         <div class="card card-stats">
                             <div class="card-body">

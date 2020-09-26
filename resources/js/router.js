@@ -5,7 +5,7 @@ import Home from './pages/Home.vue'
 import Login from './pages/Login.vue'
 import Unit from './pages/Unit.vue'
 import Camer from './pages/Camer.vue'
-import Teknisi from './pages/Teknisi.vue'
+import User from './pages/User.vue'
 import Invalid from './pages/Invalid.vue'
 import Chat from './pages/Chat.vue'
 import Pembayaran from './pages/Pembayaran.vue'
@@ -40,9 +40,9 @@ const router = new Router({
             meta: { requiresAuth: true }
         },
         {
-            path: '/teknisi',
-            name: 'teknisi',
-            component: Teknisi,
+            path: '/user',
+            name: 'user',
+            component: User,
             meta: { requiresAuth: true }
         },
         {

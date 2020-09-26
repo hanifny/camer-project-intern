@@ -27,10 +27,10 @@
                                 <span class="nav-link-text">Data Apartement Unit</span>
                             </router-link>
                         </li>
-                        <li class="nav-item" @click="activate('teknisi')">
-                            <router-link class="nav-link" to="/teknisi" :class="{ active : activeEl == 'teknisi' }">
+                        <li class="nav-item" @click="activate('user')">
+                            <router-link class="nav-link" to="/user" :class="{ active : activeEl == 'user' }">
                                 <i class="ni ni-single-02 text-yellow"></i>
-                                <span class="nav-link-text">Data Teknisi</span>
+                                <span class="nav-link-text">Data User</span>
                             </router-link>
                         </li>
                         <li class="nav-item" @click="activate('invalid')">
@@ -40,7 +40,7 @@
                             </router-link>
                         </li>
 
-                        <li class="nav-item" @click="activate('chat')">
+                        <!-- <li class="nav-item" @click="activate('chat')">
                             <router-link class="nav-link" to="/chat" :class="{ active : activeEl == 'chat' }">
                                 <i class="fas fa-comments"></i>
                                 <span class="nav-link-text">Chat</span>
@@ -52,7 +52,7 @@
                                 <i class="fas fa-credit-card"></i>
                                 <span class="nav-link-text">Pembayaran</span>
                             </router-link>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

@@ -5,9 +5,9 @@
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Data Teknisi</h6>
+                            <h6 class="h2 text-white d-inline-block mb-0">Data User</h6>
                         </div>
-                        <div v-if="user.role == 'Admin'" class="col-lg-6 col-5 text-right">
+                        <div v-if="authenticated.role == 'Admin' || authenticated.role == 'SuperAdmin'" class="col-lg-6 col-5 text-right">
                             <a href="" class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
                         </div>
                     </div>
@@ -20,20 +20,21 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header border-0 d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Data Teknisi</h3>
+                            <h3 class="mb-0">Data User</h3>
                         </div>
                         <div class="table-responsive">
                             <table class="table align-items-center text-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>No</th>
-                                        <th>ID</th>
+                                        <th>Role</th>
                                         <th>Email</th>
                                         <th>Nama</th>
+                                        <th v-if="authenticated.role == 'SuperAdmin'">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr v-for="engineer, index in engineers">
+                                    <tr v-for="user, index in users">
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <div class="media-body">
@@ -41,12 +42,18 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        <td> {{engineer.id}} </td>
+                                        <td> {{user.role}} </td>
                                         <td>
-                                            {{engineer.email}}
+                                            {{user.email}}
                                         </td>
                                         <td>
-                                            {{engineer.nama}}
+                                            {{user.nama}}
+                                        </td>
+                                        <td v-if="authenticated.role == 'SuperAdmin'">
+                                            <button href="" class="btn btn-sm btn-warning"
+                                                @click.stop="formEdit(user)">Edit</button>
+                                            <button href="" class="btn btn-sm btn-danger"
+                                                @click.stop="deleteUser(user)">Delete</button>
                                         </td>
                                     </tr>
 
@@ -61,12 +68,13 @@
                 </div>
             </div>
         </div>
-        <b-modal id="formAdd" hide-footer hide-header size="sm" centered>
+        <b-modal id="form" hide-footer hide-header size="sm" centered>
             <div class="card mb-0">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Tambah Data Teknisi</h3>
+                            <h3 v-if="user.id" class="mb-0">Edit Data User</h3>
+                            <h3 v-else class="mb-0">Tambah Data User</h3>
                         </div>
                         <div class="col-4 text-right">
                             <a href="#!" @click.prevent="closeModal" class="btn btn-sm btn-danger">x</a>
@@ -77,18 +85,26 @@
                     <form>
                         <div class="form-group">
                             <label class="form-control-label" for="nama">Nama</label>
-                            <input id="nama" type="text" v-model="engineer.nama" class="form-control"> 
+                            <input id="nama" type="text" v-model="user.nama" class="form-control"> 
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="email">Email</label>
-                            <input id="email" type="email" class="form-control" v-model="engineer.email">
+                            <input id="email" type="email" class="form-control" v-model="user.email">
                         </div>
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="tipe">Password</label>
-                            <input id="password" type="password" class="form-control" v-model="engineer.password">
+                            <input id="password" type="password" class="form-control" v-model="user.password">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-control-label" for="role"> Role </label>
+                            <select id="role" class="form-control" v-model="user.role">
+                                <option value="admin"> Admin </option>
+                                <option value="engineer"> Teknisi </option>
+                            </select>
                         </div>
                         <div class="mt-3 text-right mb-0">
-                            <a href="#!" class="btn btn-sm btn-success" @click.prevent="storeEngineer">Submit</a>
+                            <a v-if="user.id" href="#!" class="btn btn-sm btn-success" @click.prevent="updateUser">Edit</a>
+                            <a v-else href="#!" class="btn btn-sm btn-success" @click.prevent="storeUser">Submit</a>
                         </div>
                     </form>
                 </div>
@@ -98,6 +114,7 @@
 </template>
 
 <script>
+    import $axios from '../api.js'
     import {
         mapActions,
         mapState
@@ -105,35 +122,65 @@
     export default {
         data() {
             return {
-                engineer: {}
+                user: {}
             }
         },
         computed: {
             ...mapState('user', {
-                engineers: state => state.engineer
+                users: state => state.user
             }),
             ...mapState('user', {
-                user: state => state.authenticated   
+                authenticated: state => state.authenticated   
             })
         },
         methods: {
-            ...mapActions('user', ['getEngineer']),
-            ...mapActions('user', ['addEngineer']),
+            ...mapActions('user', ['getUser']),
+            ...mapActions('user', ['addUser']),
+            ...mapActions('user', ['editUser']),
+            ...mapActions('user', ['removeUser']),
 
             formAdd() {
-                this.$bvModal.show('formAdd')
+                this.user = {}
+                this.$bvModal.show('form')
             },
             closeModal() {
-                this.$bvModal.hide('formAdd')
+                this.$bvModal.hide('form')
             },
-            storeEngineer() {
-                this.addEngineer(this.engineer)
-                this.getEngineer()
-                this.$bvModal.hide('formAdd')
+            storeUser() {
+                this.addUser(this.user)
+                this.getUser()
+                console.log(this.user);
+                this.closeModal()
+            },
+            formEdit(user) {
+                this.$bvModal.show('form')
+                this.user = user
+            },
+            updateUser() {
+                this.editUser(this.user)
+                this.getUser()                                                      
+                this.closeModal()
+            },
+            deleteUser(user) {
+                swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "Kamu akan menghapus user " + user.nama,
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, saya sangat yakin!',
+                    cancelButtonText: 'Tidak, jangan!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.removeUser(user)
+                        this.getUser()
+                    }
+                })
             }
         },
         created() {
-            this.getEngineer()
+            this.getUser()
         }
     }
 </script>

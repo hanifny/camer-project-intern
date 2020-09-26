@@ -3,27 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\EngineerResource;
+use App\Http\Resources\AdminEngineerResource;
 use App\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function all() {
-        $role = EngineerResource::collection(User::where('role_id', '2db7170e-7d23-4b16-98a0-095f4c3c1f6a')->get());
+        $role = AdminEngineerResource::collection(User::orderBy('role_id', 'desc')->get());
         return response()->json($role);
     }
 
     public function store(Request $request) {
-        $engineer = new User;
-        $engineer->nama = $request->nama;
-
-        $engineer->password = bcrypt($request->password);
-        $engineer->role_id = '2db7170e-7d23-4b16-98a0-095f4c3c1f6a';
-        $engineer->save();
-        return response()->json($engineer);
+        $user = new User;
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        if ($request->role == 'admin') {
+            $user->role_id = '78e83712-9bfe-4bd2-9689-886324a48acb';
+        } elseif ($request->role == 'engineer') {
+            $user->role_id = '2db7170e-7d23-4b16-98a0-095f4c3c1f6a';
+        }
+        $user->save();
+        return response()->json($user);
     }   
 
+    public function update(Request $request) {
+        $user = User::find($request->id);
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        if ($request->role == 'admin') {
+            $user->role_id = '78e83712-9bfe-4bd2-9689-886324a48acb';
+        } elseif ($request->role == 'engineer') {
+            $user->role_id = '2db7170e-7d23-4b16-98a0-095f4c3c1f6a';
+        } 
+        $user->save();
+        return response()->json($user);
+    }
+
+    public function destroy($id) {
+        $user = User::find($id); 
+        if ($user->role->nama != 'SuperAdmin') {
+            $user->delete();
+        }   
+        return response()->json($user);
+    }
 
     public function changePassword(Request $request) {
         $this->validate($request, [

@@ -18,7 +18,7 @@ class CreateMessagesTable extends Migration
             $table->uuid('user_id');
             $table->text('message');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
           });
     }
 
