@@ -9,73 +9,93 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-3 col-md-6">
-                    <div class="card card-stats">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Unit</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{count.unit}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                        <i class="fas fa-building"></i>
+                <div class="col-xl-3 col-md-6" @click="activate('unit')">
+
+                    <router-link class="nav-link" to="/unit" :class="{ active : activeEl == 'unit'}">
+                                
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Unit</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{count.unit}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="fas fa-building"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    </router-link>
+                
                 </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card card-stats">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Teknisi</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{count.engineer}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
-                                        <i class="fas fa-wrench"></i>
+                <div class="col-xl-3 col-md-6" @click="activate('teknisi')">
+
+                    <router-link class="nav-link" to="/teknisi" :class="{ active : activeEl == 'teknisi'}">
+
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Teknisi</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{count.engineer}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
+                                            <i class="fas fa-wrench"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    </router-link>
+
                 </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card card-stats">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Perlu Validasi</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{count.camer_validation}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                        <i class="fas fa-check-circle"></i>
+                <div class="col-xl-3 col-md-6" @click="activate('camer')">
+                    
+                    <router-link class="nav-link" to="/camer" :class="{ active : activeEl == 'camer'}">
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Perlu Validasi</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{count.camer_validation}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
+
                 </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card card-stats">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Data Invalid</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{count.camer_invalid}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-gradient-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-times-circle"></i>
+                 <div class="col-xl-3 col-md-6" @click="activate('invalid')">
+                 
+                    <router-link class="nav-link" to="/invalid" :class="{ active : activeEl == 'invalid'}">
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Data Invalid</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{count.camer_invalid}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-danger text-white rounded-circle shadow">
+                                            <i class="fas fa-times-circle"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
+
                 </div>
             </div>
         </div>
@@ -83,7 +103,7 @@
 </template>
 
 <script>
-    import {mapActions, mapState} from 'vuex'
+    import {mapActions, mapState, mapMutations} from 'vuex'
     export default {
         computed: {
             ...mapState('camer', {
@@ -92,6 +112,11 @@
         },
         methods: {
             ...mapActions('camer', ['getCount']),
+            ...mapMutations(['SET_ACTIVEEL']),
+
+            activate: function (el) {
+                this.SET_ACTIVEEL(el)
+            }
         },
         created() {
             this.getCount()

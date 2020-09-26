@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     state: {
         //VARIABLE TOKEN MENGAMBIL VALUE DARI LOCAL STORAGE token
         token: localStorage.getItem('token'),
-        errors: []
+        errors: [],
+        activeEl: 'home'
     },
     getters: {
         //KITA MEMBUAT SEBUAH GETTERS DENGAN NAMA isAuth
@@ -43,6 +44,9 @@ const store = new Vuex.Store({
         },
         CLEAR_ERRORS(state) {
             state.errors = []
+        },
+        SET_ACTIVEEL(state, payload) {
+            state.activeEl = payload
         }
     }
 })
