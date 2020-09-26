@@ -1,4 +1,4 @@
-<template>
+-<template>
     <div class="main-content">
 
         <div class="header bg-gradient-success pb-6">
@@ -33,7 +33,21 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>No</th>
-                                        <th>Unit</th>
+
+                                        <th><div class="dropdown">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Unit
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#">Tower 1</a>
+                                                <a class="dropdown-item" href="#">Tower 2</a>
+                                                <a class="dropdown-item" href="#">Tower 3</a>
+                                            </div>
+                                            </div>
+                                        </th>
+
+                                
                                         <th>Tipe</th>
                                         <th>Lantai</th>
                                         <th v-if="user.role == 'Admin'">Aksi</th>

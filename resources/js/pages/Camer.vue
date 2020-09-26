@@ -4,8 +4,34 @@
             <div class="container-fluid">
                 <div class="header-body">
                     <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
+                        <div class="col-lg-6">
                             <h6 class="h2 text-white d-inline-block mb-0">Catatan Meter {{reverseYearMonth}} </h6>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card card-stats mb-0" style="margin-bottom">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0" style="line-height:30px; font-size:12px;">belum tervalidasi <span class="h2 font-weight-bold mb-0 d-inline-block float-right" >90</span></h5>
+                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card card-stats mb-0" style="margin-bottom">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0" style="line-height:30px; font-size:12px;">Hari ini <span>Tervalidasi</span> <span class="h2 font-weight-bold mb-0 d-inline-block float-right" >90</span></h5>
+                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,7 +65,18 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>No</th>
-                                        <th>Unit</th>
+                                        <th><div class="dropdown">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Unit
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#">Tower 1</a>
+                                                <a class="dropdown-item" href="#">Tower 2</a>
+                                                <a class="dropdown-item" href="#">Tower 3</a>
+                                            </div>
+                                            </div>
+                                        </th>
                                         <th>Pemakaian Listrik</th>
                                         <th>Pemakaian Air</th>
                                         <th>Engineer</th>
