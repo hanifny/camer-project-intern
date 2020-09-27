@@ -5,22 +5,40 @@ namespace App\Http\Controllers;
 use App\Apartement;
 use Illuminate\Http\Request;
 use App\Http\Resources\CamerResource;
+use App\Http\Resources\CamerPerTowerResource;
 use App\Meter;
 use App\User;
 use Illuminate\Support\Facades\File;
 use App\Exports\CamerExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Carbon;
 
 class CamerController extends Controller
 {
     public function all() {
-        $camer = CamerResource::collection(Meter::where('bulan_tahun', date('m Y'))->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->get());
-        return response()->json($camer);
+        $camer = Meter::where('bulan_tahun', date('m Y'))->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(2);
+        return CamerResource::collection($camer)->response()->getData(true);
+    }
+
+    public function camer_per_tower(Request $request) {
+        $camer = Meter::where('bulan_tahun', $request->month_year)->where('validasi', '!=', 2)->orderBy('validasi', 'asc');
+        if ($request->tower === "T") {
+            $camer = $camer->whereHas('unit', function ($query) {
+                return $query->where('unit', 'like', 'T%');
+            })->paginate(2);
+        } elseif ($request->tower === "U") {
+            $camer = $camer->whereHas('unit', function ($query) {
+                return $query->where('unit', 'like', 'U%');
+            })->paginate(2);
+        } else {
+            $camer = $camer->paginate(2);
+        }
+        return CamerPerTowerResource::collection($camer)->response()->getData(true);
     }
 
     public function camer_per_month(Request $request) {
-        $camer = CamerResource::collection(Meter::where('bulan_tahun', $request->month_year)->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->get());
-        return response()->json($camer);
+        $camer = Meter::where('bulan_tahun', $request->month_year)->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(2);
+        return CamerResource::collection($camer)->response()->getData(true);
     }
 
     public function store(Request $request) {
@@ -162,18 +180,25 @@ class CamerController extends Controller
         ])->update(['validasi' => 1, 
                     'validator_id' => $request->user()->id,
                     ]);
+        if($validasi) {
+            return response()->json(['status' => 'success'], 200);
+        } else {
+            return response()->json(['status' => 'failed'], 422);
+        }
     }
 
     public function count() {
         $count_camer_validation = Meter::where('validasi', 0)->count();
         $count_camer_invalid = Meter::where('validasi', 2)->count();
         $count_engineer = User::where('role_id', '2db7170e-7d23-4b16-98a0-095f4c3c1f6a')->count();
+        $count_camer_today_validation = Meter::whereDate('updated_at', Carbon::today())->where('validasi', 1)->count();
         $count_unit = Apartement::count();
         return response()->json([
             'camer_validation' => $count_camer_validation,
             'camer_invalid' => $count_camer_invalid, 
             'engineer' => $count_engineer,
             'unit' => $count_unit,
+            'camer_today_validation' => $count_camer_today_validation
         ]); 
     }
 

@@ -47,8 +47,8 @@ const actions = {
             .catch((error) => {
                 console.log(error.response);
                 swal.fire(
-                    'Failed!',
-                    error.response.data.message,
+                    'Gagal!',
+                    'Maaf, tidak dapat menambahkan user ini',
                     'error'
                 )
             })
@@ -68,8 +68,8 @@ const actions = {
             .catch((error) => {
                 console.log(error.response);
                 swal.fire(
-                    'Failed!',
-                    error.response.data.message,
+                    'Gagal!',
+                    'Maaf, user tidak dapat diedit.',
                     'error'
                 )
             })
@@ -88,8 +88,8 @@ const actions = {
             .catch((error) => {
                 console.log(error.response);
                 swal.fire(
-                    'Failed!',
-                    error.response.data.message,
+                    'Gagal!',
+                    'Maaf, user ini tidak dapat dihapus.',
                     'error'
                 )
             })

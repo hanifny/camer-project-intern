@@ -12,10 +12,14 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0" style="line-height:30px; font-size:12px;">belum tervalidasi <span class="h2 font-weight-bold mb-0 d-inline-block float-right" >90</span></h5>
-                            
+                                            <h5 class="card-title text-uppercase text-muted mb-0"
+                                                style="line-height:30px; font-size:12px;">Belum Tervalidasi <span
+                                                    class="h2 font-weight-bold mb-0 d-inline-block float-right">
+                                                    {{count.camer_validation}} </span>
+                                            </h5>
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -25,10 +29,15 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0" style="line-height:30px; font-size:12px;">Hari ini <span>Tervalidasi</span> <span class="h2 font-weight-bold mb-0 d-inline-block float-right" >90</span></h5>
-                            
+                                            <h5 class="card-title text-uppercase text-muted mb-0"
+                                                style="line-height:30px; font-size:12px;">Hari ini
+                                                <span>Tervalidasi</span> <span
+                                                    class="h2 font-weight-bold mb-0 d-inline-block float-right">
+                                                    {{count.camer_today_validation}} </span>
+                                            </h5>
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -49,11 +58,11 @@
                                         <input type="month" name="currentMonth" value="currentMonth"
                                             v-model="currentMonth">
                                     </div>
-                                    <div class="form-group" v-if="user.role == 'Admin'">
+                                    <div class="form-group" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
                                         <button class="btn btn-danger"
                                             @click.prevent="validasiSemua(all_camer)">Validasi Semua</button>
                                     </div>
-                                    <div class="form-group" v-if="user.role == 'Admin'">
+                                    <div class="form-group" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
                                         <button @click.prevent="exportExcel" class="btn btn-success">Export to Excel <i
                                                 class="fas fa-file-excel"></i></button>
                                     </div>
@@ -65,16 +74,22 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>No</th>
-                                        <th><div class="dropdown">
-                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Unit
-                                            </a>
+                                        <th>
+                                            <div class="dropdown">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Unit
+                                                </a>
 
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#">Tower 1</a>
-                                                <a class="dropdown-item" href="#">Tower 2</a>
-                                                <a class="dropdown-item" href="#">Tower 3</a>
-                                            </div>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#"
+                                                        @click="camerPerTower('Semua')">Semua</a>
+                                                    <a class="dropdown-item" href="#" @click="camerPerTower('T')">Tower
+                                                        T</a>
+                                                    <a class="dropdown-item" href="#" @click="camerPerTower('U')">Tower
+                                                        U</a>
+                                                </div>
                                             </div>
                                         </th>
                                         <th>Pemakaian Listrik</th>
@@ -86,7 +101,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr v-for="(camer, index) in all_camer"
+                                    <tr v-for="(camer, index) in all_camer.data"
                                         v-bind:class="{ 'validated': camer.validasi == 1, 'invalid': camer.validasi == 2, 'finger-cursor': camer }"
                                         @click.prevent="cekDetail(camer)" :key="camer.id">
                                         <th scope="row">
@@ -120,13 +135,20 @@
                                 </tbody>
                             </table>
                         </div>
+                        <!-- PAGINATION -->
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-end mb-0">
-
+                                    <pagination v-if="activePagination == 'ac'" :data="all_camer"
+                                        @pagination-change-page="getCamer"></pagination>
+                                    <pagination v-else-if="activePagination == 'pt'" :data="all_camer"
+                                        @pagination-change-page="paginationPerTower"></pagination>
+                                    <pagination v-else-if="activePagination == 'pm'" :data="all_camer"
+                                        @pagination-change-page="paginationPerMonth"></pagination>
                                 </ul>
                             </nav>
                         </div>
+                        <!-- END PAGINATION -->
                     </div>
                 </div>
             </div>
@@ -227,7 +249,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div v-if="currentItem.validasi == 0 && user.role == 'Admin'"
+                        <div v-if="currentItem.validasi == 0 && (user.role == 'Admin' || user.role == 'SuperAdmin')"
                             class="text-center d-flex bd-highlight pr-5 pl-5 pb-3">
                             <strong @click="invalid(currentItem)"
                                 class="finger-cursor rounded p-2 btn-danger flex-fill bd-highlight">D A
@@ -258,10 +280,15 @@
         data() {
             return {
                 currentItem: {},
-                currentMonth: ''
+                currentMonth: '',
+                activePagination: 'ac',
+                currentTower: ''
             }
         },
         computed: {
+            ...mapState('camer', {
+                count: state => state.count
+            }),
             ...mapState('camer', {
                 all_camer: state => state.camer
             }),
@@ -270,7 +297,8 @@
             }),
             reverseYearMonth: function () {
                 let rym = this.currentMonth.split("-").reverse().join(" ")
-                this.getCamerPerMonth(rym)
+                this.activePagination = 'pm'
+                this.getCamerPerMonth({bulan: rym, page: 1})
             }
         },
         methods: {
@@ -279,7 +307,31 @@
             ...mapActions('camer', ['validation']),
             ...mapActions('camer', ['validation_per_month']),
             ...mapActions('camer', ['exportToExcel']),
+            ...mapActions('camer', ['getCount']),
+            ...mapActions('camer', ['getCamerPerTower']),
 
+            paginationPerTower(page) {
+                this.getCamerPerTower({
+                    bulan: this.currentMonth.split("-").reverse().join(" "),
+                    tower: this.currentTower,
+                    page: page
+                });
+            },
+            paginationPerMonth(page) {
+                this.getCamerPerTower({
+                    bulan: this.currentMonth.split("-").reverse().join(" "),
+                    page: page
+                });
+            },
+            camerPerTower(id) {
+                this.currentTower = id
+                this.activePagination = 'pt'
+                this.getCamerPerTower({
+                    bulan: this.currentMonth.split("-").reverse().join(" "),
+                    tower: id,
+                    page: 1
+                });
+            },
             exportExcel() {
                 this.exportToExcel()
             },
@@ -305,7 +357,8 @@
                             'success'
                         )
                         this.validation(camer)
-                        this.getCamer()
+                        this.getCamer(1)
+                        this.getCount()
                         this.bulan_tahun()
                         this.$bvModal.hide('bv-modal')
                     }
@@ -323,13 +376,9 @@
                     cancelButtonText: 'Tidak, jangan!',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        swal.fire(
-                            'Berhasil!',
-                            'Kamu telah melakukan validasi.',
-                            'success'
-                        )
                         this.validation_per_month(camer)
-                        this.getCamer()
+                        this.getCamer(1)
+                        this.getCount()
                         this.bulan_tahun()
                     }
                 })
@@ -359,14 +408,16 @@
                         camer.status = "invalid"
                         this.validation(camer)
                         this.$bvModal.hide('bv-modal')
-                        this.getCamer()
+                        this.getCamer(1)
                         this.bulan_tahun()
+                        this.getCount()
                     }
                 })
             }
         },
         created() {
-            this.getCamer()
+            this.getCamer(1)
+            this.getCount()
             this.bulan_tahun()
         }
     }

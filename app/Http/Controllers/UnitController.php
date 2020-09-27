@@ -11,6 +11,17 @@ use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
+    public function tower(Request $request) {
+        if ($request->tower === "T") {
+            $unit = Apartement::where('unit', 'like', 'T%')->paginate(1);
+        } elseif ($request->tower === "U") {
+            $unit = Apartement::where('unit', 'like', 'U%')->paginate(1);
+        } else {
+            $unit = Apartement::orderBy('lantai', 'asc')->paginate(1);
+        }
+        return UnitResource::collection($unit)->response()->getData(true);
+    }
+
     public function invalid(Request $request) {
         $allInvalid = UnitCamerResource::collection(Meter::where('validasi', 2)->get());
         return response()->json($allInvalid);
@@ -50,13 +61,13 @@ class UnitController extends Controller
     }
 
     public function unit_per_floor($id) {
-        $unit_per_floor = UnitResource::collection(Apartement::where('lantai', $id)->get());
-        return response()->json($unit_per_floor);
+        $unit_per_floor = Apartement::where('lantai', $id)->paginate(3);
+        return UnitResource::collection($unit_per_floor)->response()->getData(true);
     }
 
     public function all_unit() {
-        $unit = UnitResource::collection(Apartement::orderBy('lantai', 'asc')->paginate(100));
-        return response()->json($unit);
+        $unit = Apartement::orderBy('lantai', 'asc')->paginate(2);
+        return UnitResource::collection($unit)->response()->getData(true);
     }
 
     public function all_type() {

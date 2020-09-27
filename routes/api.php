@@ -28,28 +28,30 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::get('floor/{id}', 'UnitController@unit_per_floor');
         // Get semua unit
         Route::get('unit', 'UnitController@all_unit');
+        // Get unit per tower
+        Route::get('unit/tower/{tower}', 'UnitController@tower');
         // Get tipe
         Route::get('type', 'UnitController@all_type');
         // Store unit baru
         Route::post('unit', [
             'uses' => 'UnitController@store',
-            'roles' => ['Admin']
+            'roles' => ['Admin', 'SuperAdmin']
         ]);
         // Update unit baru
         Route::put('unit', [
             'uses' => 'UnitController@update',
-            'roles' => ['Admin']
+            'roles' => ['Admin', 'SuperAdmin']
         ]);
         Route::delete('unit/{id}', [
             'uses' => 'UnitController@destroy',
-            'roles' => ['Admin']
+            'roles' => ['Admin', 'SuperAdmin']
         ]);
 
         // {{ CAMER }} \\
         // export 
         Route::get('camer/export/', [
             'uses' => 'CamerController@export',
-            'roles' => ['Admin']
+            'roles' => ['Admin', 'SuperAdmin']
         ]);
         // store camer
         Route::post('floor/{id}/{unit_id}', [
@@ -58,17 +60,19 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         ]);
         // get camer
         Route::get('camer', 'CamerController@all');
+        // get camer
+        Route::get('camer/{month_year}/{tower}', 'CamerController@camer_per_tower');
         // get camer per month
         Route::get('camer/{month_year}', 'CamerController@camer_per_month');    
         // validasi
         Route::patch('camer', [
             'uses' => 'CamerController@validation',
-            'roles' => ['Admin']
+            'roles' => ['Admin', 'SuperAdmin']
         ]);
         // validasi semua perbulan
         Route::patch('camer_per_month', [
             'uses' => 'CamerController@validation_per_month',
-            'roles' => ['Admin']
+            'roles' => ['Admin', 'SuperAdmin']
         ]);
         // Get count data
         Route::get('count', 'CamerController@count');

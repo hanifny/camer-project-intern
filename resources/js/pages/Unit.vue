@@ -9,8 +9,8 @@
                             <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit </h6>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="" v-if="user.role == 'Admin'" class="btn btn-sm btn-success"
-                                @click.prevent="formAdd">Add</a>
+                            <a href="" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
+                                class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
                         </div>
                     </div>
                 </div>
@@ -34,27 +34,30 @@
                                     <tr>
                                         <th>No</th>
 
-                                        <th><div class="dropdown">
-                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Unit
-                                            </a>
+                                        <th>
+                                            <div class="dropdown">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Unit
+                                                </a>
 
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#">Tower 1</a>
-                                                <a class="dropdown-item" href="#">Tower 2</a>
-                                                <a class="dropdown-item" href="#">Tower 3</a>
-                                            </div>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#" @click="getTower('Semua')">Semua</a>
+                                                    <a class="dropdown-item" href="#" @click="getTower('T')">Tower T</a>
+                                                    <a class="dropdown-item" href="#" @click="getTower('U')">Tower U</a>
+                                                </div>
                                             </div>
                                         </th>
 
-                                
+
                                         <th>Tipe</th>
                                         <th>Lantai</th>
-                                        <th v-if="user.role == 'Admin'">Aksi</th>
+                                        <th v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    <tr v-for="(unit, index) in units" :key="unit.id">
+                                    <tr v-for="(unit, index) in units.data" :key="unit.id">
                                         <th scope="row">
                                             <div class="media">
                                                 <div class="media-body">
@@ -65,7 +68,7 @@
                                         <td> {{unit.unit}} </td>
                                         <td> {{unit.tipe}} </td>
                                         <td> {{unit.lantai}} </td>
-                                        <td v-if="user.role == 'Admin'">
+                                        <td v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
                                             <button href="" class="btn btn-sm btn-warning"
                                                 @click.stop="formEdit(unit)">Edit</button>
                                             <button href="" class="btn btn-sm btn-danger"
@@ -78,8 +81,9 @@
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-center mb-0">
-                                    <pagination v-if="floor == 'Semua'" :data="units"
-                                        @pagination-change-page="getAllUnit"></pagination>
+                                    <pagination v-if="activePagination == 'au'" :data=units @pagination-change-page="getAllUnit"></pagination>
+                                    <pagination v-else-if="activePagination == 'pt'" :data=units @pagination-change-page="pcpUnitPerTower"></pagination>
+                                    <pagination v-else-if="activePagination == 'pf'" :data=units @pagination-change-page="pcpUnitPerFloor"></pagination>
                                 </ul>
                             </nav>
                         </div>
@@ -104,7 +108,7 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            <label class="form-control-label" for="unit">Unit</label> 
+                            <label class="form-control-label" for="unit">Unit</label>
                             <input id="unit" type="text" v-model="newUnit.unit" class="form-control">
                         </div>
                         <div class="form-group mt-2">
@@ -114,12 +118,14 @@
                         <div class="form-group mt-2">
                             <label class="form-control-label" for="tipe">Tipe</label>
                             <select id="tipe" class="form-control" v-model="newUnit.tipe_id">
-                                <option v-if="newUnit.tipe != unit.tipe" v-for="unit in types" :value=unit.id> {{unit.tipe}} </option>
+                                <option v-if="newUnit.tipe != unit.tipe" v-for="unit in types" :value=unit.id>
+                                    {{unit.tipe}} </option>
                                 <option :value=newUnit.tipe_id> {{newUnit.tipe}} </option>
                             </select>
                         </div>
                         <div class="mt-3 text-right mb-0">
-                            <a v-if="newUnit.id" href="#!" class="btn btn-sm btn-warning" @click.prevent="updateUnit">Edit</a>
+                            <a v-if="newUnit.id" href="#!" class="btn btn-sm btn-warning"
+                                @click.prevent="updateUnit">Edit</a>
                             <a v-else href="#!" class="btn btn-sm btn-success" @click.prevent="storeUnit">Submit</a>
                         </div>
                     </form>
@@ -139,7 +145,9 @@
         data() {
             return {
                 floor: 'Semua',
-                newUnit: {}
+                newUnit: {},
+                tower: '',
+                activePagination: ''
             }
         },
         computed: {
@@ -154,9 +162,10 @@
             }),
             getUnit: function () {
                 if (this.floor == "Semua" || this.floor == "") {
-                    this.getAllUnit('1')
+                    this.getAllUnit({floor: 1})
                 } else {
-                    this.getUnitPerFloor(this.floor)
+                    this.activePagination = 'pf'
+                    this.getUnitPerFloor({floor: this.floor})
                 }
             },
         },
@@ -167,7 +176,16 @@
             ...mapActions('camer', ['storeNewUnit']),
             ...mapActions('camer', ['editUnit']),
             ...mapActions('camer', ['destroyUnit']),
+            ...mapActions('camer', ['getUnitPerTower']),
 
+            pcpUnitPerFloor(x) {
+                this.getUnitPerFloor({floor: this.floor, page: x})
+                
+            },
+            pcpUnitPerTower(x) {
+                this.getUnitPerTower({tower: this.tower, page: x})
+                
+            },
             formAdd() {
                 this.newUnit = {}
                 this.$bvModal.show('bv-modal')
@@ -193,11 +211,32 @@
                 this.closeModal()
             },
             deleteUnit(id) {
-                this.destroyUnit(id)
-                this.getAllUnit(1)
+                swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "Kamu akan menghapus unit ini.",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#f5365c',
+                    cancelButtonText: 'Tidak, jangan',
+                    confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.destroyUnit(id)
+                        this.getAllUnit(1)
+                    }
+                })
+            },
+            getTower(id) {
+                console.log(id);
+                this.tower = id;
+                this.floor = ''
+                this.activePagination = 'pt'
+                this.getUnitPerTower({tower: id, page: 1})
             }
         },
         created() {
+            this.activePagination = 'au'
             this.getAllUnit(1)
         }
     }

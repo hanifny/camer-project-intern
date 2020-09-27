@@ -49,8 +49,10 @@ class UserController extends Controller
         $user = User::find($id); 
         if ($user->role->nama != 'SuperAdmin') {
             $user->delete();
-        }   
-        return response()->json($user);
+            return response()->json($user);
+        } else {
+            return response()->json(['status' => 'failed'], 422);
+        }
     }
 
     public function changePassword(Request $request) {

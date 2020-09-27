@@ -7,7 +7,7 @@
                         <div class="col-lg-6 col-7">
                             <h6 class="h2 text-white d-inline-block mb-0">Data User</h6>
                         </div>
-                        <div v-if="authenticated.role == 'Admin' || authenticated.role == 'SuperAdmin'" class="col-lg-6 col-5 text-right">
+                        <div v-if="authenticated.role == 'SuperAdmin'" class="col-lg-6 col-5 text-right">
                             <a href="" class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                                         <td v-if="authenticated.role == 'SuperAdmin'">
                                             <button href="" class="btn btn-sm btn-warning"
                                                 @click.stop="formEdit(user)">Edit</button>
-                                            <button href="" class="btn btn-sm btn-danger"
+                                            <button v-if="user.role != 'SuperAdmin'" href="" class="btn btn-sm btn-danger"
                                                 @click.stop="deleteUser(user)">Delete</button>
                                         </td>
                                     </tr>

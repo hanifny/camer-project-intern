@@ -31,6 +31,15 @@ const mutations = {
 }
 
 const actions = {
+    getUnitPerTower({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.get('/unit/tower/' + payload.tower + '?page=' + payload.page)
+            .then((response) => {
+                commit('GET_ALL_UNIT', response.data)
+                resolve(response.data)
+            })
+        })
+    },
     exportToExcel({ commit }, payload) {
         return new Promise((resolve, reject) => {
             $axios({
@@ -50,16 +59,54 @@ const actions = {
     destroyUnit({ commit }, payload) {
         return new Promise((resolve, reject) => {
             $axios.delete('/unit/' + payload)
+            .then((response) => {
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah menghapus unit ini.',
+                    'success'
+                )
+            })
+            .catch((error) => {
+                console.log(error.response);
+                swal.fire(
+                    'Gagal!',
+                    'Maaf, unit ini tidak dapat dihapus.',
+                    'error'
+                )
+            })
         })
     },
     storeNewUnit({commit}, payload) {
         return new Promise((resolve, reject) => {
             $axios.post('/unit', payload)
+            .then((response) => {
+                console.log(response.data);
+                    swal.fire(
+                        'Berhasil!',
+                        'Kamu telah menambah unit.',
+                        'success'
+                    )
+            })
+            .catch((error) => {
+                console.log(error.response);
+                swal.fire(
+                    'Gagal!',
+                    'Maaf, tidak dapat menambahkan unit ini.',
+                    'error'
+                )
+            })
         })
     },
     editUnit({commit}, payload) {
         return new Promise((resolve, reject) => {
             $axios.put('/unit', payload)
+            .then((response) => {
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah mengedit unit ini.',
+                    'success'
+                )
+            })
         })
     },
     getAllUnit({ commit }, payload) {
@@ -73,7 +120,7 @@ const actions = {
     },
     getUnitPerFloor({ commit }, payload ) {
         return new Promise((resolve, reject) => {
-            $axios.get('/floor/' + payload)
+            $axios.get('/floor/' + payload.floor + '?page=' + payload.page)
             .then((response) => {
                 commit('GET_UNIT_PER_FLOOR', response.data)
                 resolve(response.data)
@@ -89,9 +136,9 @@ const actions = {
             })
         })
     },
-    getCamer({ commit }) {
+    getCamer({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.get('/camer')
+            $axios.get('/camer?page=' + payload)
             .then((response) => {
                 commit('GET_CAMER', response.data)
                 resolve(response.data)
@@ -109,7 +156,16 @@ const actions = {
     },
     getCamerPerMonth({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.get('/camer/' + payload) 
+            $axios.get('/camer/' + payload.bulan + '?page=' + payload.page) 
+            .then((response) => {
+                commit('GET_CAMER', response.data)
+                resolve(response.data)
+            })
+        })
+    },
+    getCamerPerTower({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.get('/camer/' + payload.bulan + '/' + payload.tower + '?page=' + payload.page) 
             .then((response) => {
                 commit('GET_CAMER', response.data)
                 resolve(response.data)
@@ -129,6 +185,18 @@ const actions = {
             $axios.patch('/camer_per_month', payload)
             .then((response) => {
                 resolve(response.data)
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah melakukan validasi.',
+                    'success'
+                )
+            })
+            .catch((error) => {
+                swal.fire(
+                    'Gagal!',
+                    'Maaf, data sudah tervalidasi.',
+                    'error'
+                )
             })
         })
     },
