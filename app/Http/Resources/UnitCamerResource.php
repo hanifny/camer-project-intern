@@ -40,7 +40,7 @@ class UnitCamerResource extends JsonResource
                 return $this->validator->nama;
             }),
             'engineer' => $this->engineer->nama,
-            'tanggal_upload' => $this->created_at->format('d M Y'),
+            // 'tanggal_upload' => $this->created_at->format('d M Y'),
         ];
     }
 }

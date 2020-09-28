@@ -16,9 +16,7 @@ class UnitController extends Controller
             $unit = Apartement::where('unit', 'like', 'T%')->paginate(1);
         } elseif ($request->tower === "U") {
             $unit = Apartement::where('unit', 'like', 'U%')->paginate(1);
-        } else {
-            $unit = Apartement::orderBy('lantai', 'asc')->paginate(1);
-        }
+        } 
         return UnitResource::collection($unit)->response()->getData(true);
     }
 
@@ -60,8 +58,13 @@ class UnitController extends Controller
         return response()->json($lantai);
     }
 
+    public function unitName_per_floor($id) {
+        $unit_per_floor = UnitResource::collection(Apartement::where('lantai', $id)->get());
+        return response()->json($unit_per_floor);
+    }
+
     public function unit_per_floor($id) {
-        $unit_per_floor = Apartement::where('lantai', $id)->paginate(3);
+        $unit_per_floor = Apartement::where('lantai', $id)->get();
         return UnitResource::collection($unit_per_floor)->response()->getData(true);
     }
 

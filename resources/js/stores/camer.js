@@ -1,5 +1,4 @@
 import $axios from '../api.js'
-import { reject } from 'lodash'
 
 const state = () => ({
     unit: {},
@@ -67,7 +66,6 @@ const actions = {
                 )
             })
             .catch((error) => {
-                console.log(error.response);
                 swal.fire(
                     'Gagal!',
                     'Maaf, unit ini tidak dapat dihapus.',
@@ -76,19 +74,20 @@ const actions = {
             })
         })
     },
-    storeNewUnit({commit}, payload) {
+    storeNewUnit({commit, dispatch}, payload) {
         return new Promise((resolve, reject) => {
             $axios.post('/unit', payload)
             .then((response) => {
-                console.log(response.data);
-                    swal.fire(
-                        'Berhasil!',
-                        'Kamu telah menambah unit.',
-                        'success'
-                    )
+                dispatch('getAllUnit', 1).then(() => {
+                    resolve(response.data)
+                })
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah menambah unit.',
+                    'success'
+                )
             })
             .catch((error) => {
-                console.log(error.response);
                 swal.fire(
                     'Gagal!',
                     'Maaf, tidak dapat menambahkan unit ini.',
@@ -97,30 +96,42 @@ const actions = {
             })
         })
     },
-    editUnit({commit}, payload) {
+    editUnit({commit, dispatch}, payload) {
         return new Promise((resolve, reject) => {
             $axios.put('/unit', payload)
             .then((response) => {
+                dispatch('getAllUnit', 1).then(() => {
+                    resolve(response.data)
+                })
                 swal.fire(
                     'Berhasil!',
                     'Kamu telah mengedit unit ini.',
                     'success'
                 )
             })
-        })
-    },
-    getAllUnit({ commit }, payload) {
-        return new Promise((resolve, reject) => {
-            $axios.get('/unit?page='+payload)
-            .then((response) => {
-                commit('GET_ALL_UNIT', response.data)
-                resolve(response.data)
+            .catch((error) => {
+                swal.fire(
+                    'Gagal!',
+                    'Maaf, unit ini tidak dapat diedit.',
+                    'error'
+                )
             })
         })
     },
+    getAllUnit({ commit }, payload) {
+        setTimeout(function() {
+            return new Promise((resolve, reject) => {
+                $axios.get('/unit?page='+payload)
+                .then((response) => {
+                    commit('GET_ALL_UNIT', response.data)
+                    resolve(response.data)
+                })
+            })
+        }, 100)
+    },
     getUnitPerFloor({ commit }, payload ) {
         return new Promise((resolve, reject) => {
-            $axios.get('/floor/' + payload.floor + '?page=' + payload.page)
+            $axios.get('/unit/' + payload.floor + '?page=' + payload.page)
             .then((response) => {
                 commit('GET_UNIT_PER_FLOOR', response.data)
                 resolve(response.data)
@@ -137,13 +148,15 @@ const actions = {
         })
     },
     getCamer({ commit }, payload) {
-        return new Promise((resolve, reject) => {
-            $axios.get('/camer?page=' + payload)
-            .then((response) => {
-                commit('GET_CAMER', response.data)
-                resolve(response.data)
+        setTimeout(function() {
+            return new Promise((resolve, reject) => {
+                $axios.get('/camer?page=' + payload)
+                .then((response) => {
+                    commit('GET_CAMER', response.data)
+                    resolve(response.data)
+                })
             })
-        })
+        }, 100)
     },
     getCamerInvalid({ commit }) {
         return new Promise((resolve, reject) => {
@@ -172,11 +185,13 @@ const actions = {
             })
         })
     },
-    validation({ commit }, payload) {
+    validation({ commit, dispatch }, payload) {
         return new Promise((resolve, reject) => {
             $axios.patch('/camer', payload)
             .then((response) => {
-                resolve(response.data)
+                dispatch('getCamer', 1).then(() => {
+                    resolve(response.data)
+                })
             })
         })
     },
@@ -184,7 +199,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             $axios.patch('/camer_per_month', payload)
             .then((response) => {
-                resolve(response.data)
                 swal.fire(
                     'Berhasil!',
                     'Kamu telah melakukan validasi.',

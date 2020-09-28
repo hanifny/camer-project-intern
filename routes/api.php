@@ -25,7 +25,9 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // Get lantai
         Route::get('floor', 'UnitController@floor');
         // Get nama unit per lantai
-        Route::get('floor/{id}', 'UnitController@unit_per_floor');
+        Route::get('floor/{id}', 'UnitController@unitName_per_floor');
+        // Get unit per lantai
+        Route::get('unit/{id}', 'UnitController@unit_per_floor');
         // Get semua unit
         Route::get('unit', 'UnitController@all_unit');
         // Get unit per tower

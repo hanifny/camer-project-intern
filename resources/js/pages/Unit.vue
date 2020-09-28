@@ -146,7 +146,7 @@
             return {
                 floor: 'Semua',
                 newUnit: {},
-                tower: '',
+                tower: 'Semua',
                 activePagination: ''
             }
         },
@@ -161,11 +161,12 @@
                 user: state => state.authenticated
             }),
             getUnit: function () {
-                if (this.floor == "Semua" || this.floor == "") {
-                    this.getAllUnit({floor: 1})
-                } else {
+                if ((this.floor == "Semua" || this.floor == "") && this.tower == "Semua") {
+                    this.getAllUnit(1)
+                    this.activePagination = 'au'
+                } else if (this.floor != "") {
                     this.activePagination = 'pf'
-                    this.getUnitPerFloor({floor: this.floor})
+                    this.getUnitPerFloor({floor: this.floor, page: 1})
                 }
             },
         },
@@ -195,9 +196,7 @@
                 this.$bvModal.hide('bv-modal')
             },
             storeUnit() {
-                console.log(this.newUnit);
                 this.storeNewUnit(this.newUnit)
-                this.getAllUnit(1)
                 this.closeModal()
             },
             formEdit(unit) {
@@ -207,7 +206,6 @@
             },
             updateUnit() {
                 this.editUnit(this.newUnit)
-                this.getAllUnit(1)
                 this.closeModal()
             },
             deleteUnit(id) {
@@ -224,15 +222,20 @@
                     if (result.isConfirmed) {
                         this.destroyUnit(id)
                         this.getAllUnit(1)
+                        this.activePagination = 'au'
                     }
                 })
             },
             getTower(id) {
-                console.log(id);
-                this.tower = id;
                 this.floor = ''
-                this.activePagination = 'pt'
-                this.getUnitPerTower({tower: id, page: 1})
+                this.tower = id;
+                if (id == "Semua") {
+                    this.getAllUnit(1)
+                    this.activePagination = 'au'
+                } else if (id == "T" || id == "U") {
+                    this.getUnitPerTower({tower: id, page: 1})
+                    this.activePagination = 'pt'
+                }
             }
         },
         created() {

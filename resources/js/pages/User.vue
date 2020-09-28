@@ -148,8 +148,6 @@
             },
             storeUser() {
                 this.addUser(this.user)
-                this.getUser()
-                console.log(this.user);
                 this.closeModal()
             },
             formEdit(user) {
@@ -158,7 +156,6 @@
             },
             updateUser() {
                 this.editUser(this.user)
-                this.getUser()                                                      
                 this.closeModal()
             },
             deleteUser(user) {

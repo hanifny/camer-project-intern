@@ -25,24 +25,28 @@ const actions = {
         })
     },
     getUser({commit}) {
-        return new Promise((resolve, reject) => {
-            $axios.get('/user')
-            .then((response) => {
-                commit('GET_USER', response.data)
-                resolve(response.data)
+        setTimeout(function() {
+            return new Promise((resolve, reject) => {
+                $axios.get('/user')
+                .then((response) => {
+                    commit('GET_USER', response.data)
+                    resolve(response.data)
+                })
             })
-        })
+        }, 100)
     },
-    addUser({ commit }, payload) {
+    addUser({ commit, dispatch }, payload) {
         return new Promise((resolve, reject) => {
             $axios.post('/user', payload)
             .then((response) => {
-                console.log(response.data);
-                    swal.fire(
-                        'Berhasil!',
-                        'Kamu telah menambah user ' + response.data.nama,
-                        'success'
-                    )
+                dispatch('getUser').then(() => {
+                    resolve(response.data)
+                })
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah menambah user ' + response.data.nama,
+                    'success'
+                )
             })
             .catch((error) => {
                 console.log(error.response);
@@ -54,16 +58,18 @@ const actions = {
             })
         })
     },
-    editUser({commit}, payload) {
+    editUser({commit, dispatch}, payload) {
         return new Promise((resolve, reject) => {
             $axios.put('/user', payload)
             .then((response) => {
-                console.log(response.data);
-                    swal.fire(
-                        'Berhasil!',
-                        'Kamu telah mengedit user.',
-                        'success'
-                    )
+                dispatch('getUser').then(() => {
+                    resolve(response.data)
+                })
+                swal.fire(
+                    'Berhasil!',
+                    'Kamu telah mengedit user.',
+                    'success'
+                )
             })
             .catch((error) => {
                 console.log(error.response);

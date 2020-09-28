@@ -153,7 +153,6 @@ class CamerController extends Controller
     }
 
     public function validation(Request $request) {
-        // dd($request->all());
         $validasi = Meter::find($request->id);
         $validasi->pencatatan_air = $request->pencatatan_air;
         $validasi->pencatatan_listrik = $request->pencatatan_listrik;
@@ -175,7 +174,7 @@ class CamerController extends Controller
 
     public function validation_per_month(Request $request) {
         $validasi = Meter::where([
-            'bulan_tahun' => $request->all()[0]['bulan_tahun'], 
+            'bulan_tahun' => $request->all()['data'][0]['bulan_tahun'], 
             'validasi' => 0,
         ])->update(['validasi' => 1, 
                     'validator_id' => $request->user()->id,

@@ -318,7 +318,7 @@
                 });
             },
             paginationPerMonth(page) {
-                this.getCamerPerTower({
+                this.getCamerPerMonth({
                     bulan: this.currentMonth.split("-").reverse().join(" "),
                     page: page
                 });
@@ -357,7 +357,6 @@
                             'success'
                         )
                         this.validation(camer)
-                        this.getCamer(1)
                         this.getCount()
                         this.bulan_tahun()
                         this.$bvModal.hide('bv-modal')
@@ -416,7 +415,7 @@
             }
         },
         created() {
-            this.getCamer(1)
+            // this.getCamer(1)
             this.getCount()
             this.bulan_tahun()
         }
