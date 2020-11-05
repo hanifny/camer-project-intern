@@ -2,7 +2,7 @@
 <div id="app">
         <app-sidebar v-if="isAuth"></app-sidebar>
         <!-- Main content -->
-        <div class="main-content" id="panel">
+        <div class="wrapper" id="panel">
             <app-topbar v-if="isAuth"></app-topbar>
             <router-view></router-view>
             <app-footer v-if="isAuth"></app-footer>

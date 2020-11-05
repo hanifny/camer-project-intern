@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function all() {
-        $role = AdminEngineerResource::collection(User::orderBy('role_id', 'desc')->get());
+        $role = AdminEngineerResource::collection(User::orderBy('role_id', 'asc')->get());
         return response()->json($role);
     }
 
@@ -23,7 +23,7 @@ class UserController extends Controller
         if ($request->role == 'admin') {
             $user->role_id = '78e83712-9bfe-4bd2-9689-886324a48acb';
         } elseif ($request->role == 'engineer') {
-            $user->role_id = '2db7170e-7d23-4b16-98a0-095f4c3c1f6a';
+            $user->role_id = '9db7170e-7d23-4b16-98a0-095f4c3c1f6a';
         }
         $user->save();
         return response()->json($user);
@@ -39,7 +39,7 @@ class UserController extends Controller
         if ($request->role == 'admin') {
             $user->role_id = '78e83712-9bfe-4bd2-9689-886324a48acb';
         } elseif ($request->role == 'engineer') {
-            $user->role_id = '2db7170e-7d23-4b16-98a0-095f4c3c1f6a';
+            $user->role_id = '9db7170e-7d23-4b16-98a0-095f4c3c1f6a';
         } 
         $user->save();
         return response()->json($user);

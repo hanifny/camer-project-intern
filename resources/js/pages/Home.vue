@@ -1,109 +1,121 @@
 <template>
-    <div class="header bg-gradient-success pb-6">
-        <div class="container-fluid">
-            <div class="header-body">
-                <div class="row align-items-center py-4">
-                    <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Dashboard</h6>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dasbor</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dasbor</li>
+                        </ol>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-3 col-md-6" @click="activate('unit')">
-
-                    <router-link class="nav-link" to="/unit" :class="{ active : activeEl == 'unit'}">
-                                
-                        <div class="card card-stats">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">Unit</h5>
-                                        <span class="h2 font-weight-bold mb-0">{{count.unit}}</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                            <i class="fas fa-building"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </router-link>
-                
-                </div>
-                <div class="col-xl-3 col-md-6" @click="activate('user')">
-
-                    <router-link class="nav-link" to="/user" :class="{ active : activeEl == 'user'}">
-
-                        <div class="card card-stats">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">Teknisi</h5>
-                                        <span class="h2 font-weight-bold mb-0">{{count.engineer}}</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
-                                            <i class="fas fa-wrench"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </router-link>
-
-                </div>
-                <div class="col-xl-3 col-md-6" @click="activate('camer')">
-                    
-                    <router-link class="nav-link" to="/camer" :class="{ active : activeEl == 'camer'}">
-                        <div class="card card-stats">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">Perlu Validasi</h5>
-                                        <span class="h2 font-weight-bold mb-0">{{count.camer_validation}}</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </router-link>
-
-                </div>
-                 <div class="col-xl-3 col-md-6" @click="activate('invalid')">
-                 
-                    <router-link class="nav-link" to="/invalid" :class="{ active : activeEl == 'invalid'}">
-                        <div class="card card-stats">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">Data Invalid</h5>
-                                        <span class="h2 font-weight-bold mb-0">{{count.camer_invalid}}</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-danger text-white rounded-circle shadow">
-                                            <i class="fas fa-times-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </router-link>
-
-                </div>
-            </div>
         </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-6"  @click="activate('invalid')"> 
+                        <!-- small box -->
+                        <router-link to="invalid" class="small-box bg-danger">
+                            <div class="inner">
+                                <h3> {{count.camer_invalid}} </h3>
+
+                                <p>Invalid</p>
+                            </div>
+                            <div class="icon">  
+                                <i class="nav-icon far fa-times-circle"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Lebih lanjut <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </router-link>
+                    </div>
+
+                    <div class="col-lg-3 col-6" @click="activate('camer')">
+                        <!-- small box -->
+                        <router-link to="camer" class="small-box bg-warning">
+                            <div class="inner">
+                                <h3> {{count.camer_must_validation}} </h3>
+
+                                <p>Belum Tervalidasi</p>
+                            </div>
+                            <div class="icon">
+                                <i class="nav-icon fas fa-exclamation-circle"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Lebih lanjut <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </router-link>
+                    </div>
+                    <div class="col-lg-3 col-6" @click="activate('camer')">
+                        <!-- small box -->
+                        <router-link to="camer" class="small-box bg-success">
+                            <div class="inner">
+                                <h3> {{count.camer_validated}} </h3>
+
+                                <p>Tervalidasi</p>
+                            </div>
+                            <div class="icon">
+                                <i class="nav-icon fas fa-check-circle"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Lebih lanjut <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </router-link>
+                    </div>
+
+                    <div class="col-lg-3 col-6" @click="activate('user')">
+                        <!-- small box -->
+                        <router-link to="user" class="small-box bg-info">
+                            <div class="inner">
+                                <h3> {{count.engineer}} </h3>
+
+                                <p>Teknisi</p>
+                            </div>
+                            <div class="icon">
+                                <i class="nav-icon fas fa-user-ninja"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Lebih lanjut <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </router-link>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6" @click="activate('unit')">
+                        <!-- small box -->
+                        <router-link to="unit" class="small-box bg-info">
+                            <div class="inner">
+                                <h3> {{count.unit}} </h3>
+
+                                <p>Unit</p>
+                            </div>
+                            <div class="icon">
+                                <i class="nav-icon fas fa-home"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Lebih lanjut <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </router-link>
+                    </div>
+                </div>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        </section>
     </div>
 </template>
 
 <script>
-    import {mapActions, mapState, mapMutations} from 'vuex'
+    import {
+        mapActions,
+        mapState,
+        mapMutations
+    } from 'vuex'
     export default {
         computed: {
             ...mapState('camer', {

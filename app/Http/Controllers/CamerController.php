@@ -16,7 +16,7 @@ use Illuminate\Support\Carbon;
 class CamerController extends Controller
 {
     public function all() {
-        $camer = Meter::where('bulan_tahun', date('m Y'))->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(2);
+        $camer = Meter::where('bulan_tahun', date('m Y'))->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(100);
         return CamerResource::collection($camer)->response()->getData(true);
     }
 
@@ -25,19 +25,19 @@ class CamerController extends Controller
         if ($request->tower === "T") {
             $camer = $camer->whereHas('unit', function ($query) {
                 return $query->where('unit', 'like', 'T%');
-            })->paginate(2);
+            })->paginate(100);
         } elseif ($request->tower === "U") {
             $camer = $camer->whereHas('unit', function ($query) {
                 return $query->where('unit', 'like', 'U%');
-            })->paginate(2);
+            })->paginate(100);
         } else {
-            $camer = $camer->paginate(2);
+            $camer = $camer->paginate(100);
         }
         return CamerPerTowerResource::collection($camer)->response()->getData(true);
     }
 
     public function camer_per_month(Request $request) {
-        $camer = Meter::where('bulan_tahun', $request->month_year)->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(2);
+        $camer = Meter::where('bulan_tahun', $request->month_year)->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(100);
         return CamerResource::collection($camer)->response()->getData(true);
     }
 
@@ -187,13 +187,24 @@ class CamerController extends Controller
     }
 
     public function count() {
-        $count_camer_validation = Meter::where('validasi', 0)->count();
+        $count_camer_must_validation = Meter::where([
+            'validasi' => 0,
+            'bulan_tahun' => date('m Y')
+        ])->count();
+        $count_camer_validated = Meter::where([
+            'validasi' => 1,
+            'bulan_tahun' => date('m Y')
+        ])->count();
         $count_camer_invalid = Meter::where('validasi', 2)->count();
-        $count_engineer = User::where('role_id', '2db7170e-7d23-4b16-98a0-095f4c3c1f6a')->count();
-        $count_camer_today_validation = Meter::whereDate('updated_at', Carbon::today())->where('validasi', 1)->count();
+        $count_engineer = User::where('role_id', '9db7170e-7d23-4b16-98a0-095f4c3c1f6a')->count();
+        $count_camer_today_validation = Meter::whereDate('updated_at', Carbon::today())->where([
+            'validasi' => 1,
+            'bulan_tahun' => date('m Y')
+        ])->count();
         $count_unit = Apartement::count();
         return response()->json([
-            'camer_validation' => $count_camer_validation,
+            'camer_must_validation' => $count_camer_must_validation,
+            'camer_validated' => $count_camer_validated,
             'camer_invalid' => $count_camer_invalid, 
             'engineer' => $count_engineer,
             'unit' => $count_unit,

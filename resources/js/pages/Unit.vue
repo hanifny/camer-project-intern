@@ -1,145 +1,166 @@
--<template>
-    <div class="main-content">
-
-        <div class="header bg-gradient-success pb-6">
+<template>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
             <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0"> Data Apartement Unit </h6>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                            <a href="" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
-                                class="btn btn-sm btn-success" @click.prevent="formAdd">Add</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Data Unit</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item" @click="activate('home')"><router-link to="/">Dasbor</router-link></li>
+                            <li class="breadcrumb-item active">Data Unit</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
+        <!-- /.content-header -->
 
-        <div class="container-fluid mt--6">
-            <div class="row">
-                <div class="col">
-                    <div class="card" v-bind="getUnit">
-                        <div class="card-header border-0 d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Daftar Unit Apartement Capitol Park</h3>
-                            <form class="form-inline d-flex justify-content-end">
-                                <label class="form-control-label" for="lantai">Lantai &nbsp; </label>
-                                <input id="lantai" type="text" class="form-control col-4" v-model="floor">
-                            </form>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table align-items-center table-flush text-center">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>No</th>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col">
+                        <div class="card" v-bind="getUnit">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <form class="form-inline mr-1">
+                                        <label class="form-control-label" for="lantai">Lantai &nbsp; </label>
+                                        <input id="lantai" type="text" class="text-center form-control"
+                                            v-model="floor">
+                                    </form>
+                                    |
+                                    <a href="#" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
+                                        class="btn btn-sm btn-success ml-1" @click.prevent="formAdd">
+                                        <i class="nav-icon fas fa-plus-circle"></i>
+                                        Tambah
+                                    </a>
+                                </div>
+                                <!-- <h5 class="mb-0">Daftar Unit Apartement Capitol Park</h5> -->
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush text-center">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>No</th>
 
-                                        <th>
-                                            <div class="dropdown">
-                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Unit
-                                                </a>
+                                            <th>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                        id="dropdownMenuLink" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        Unit
+                                                    </a>
 
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#" @click="getTower('Semua')">Semua</a>
-                                                    <a class="dropdown-item" href="#" @click="getTower('T')">Tower T</a>
-                                                    <a class="dropdown-item" href="#" @click="getTower('U')">Tower U</a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="#"
+                                                            @click="getTower('Semua')">Semua</a>
+                                                        <a class="dropdown-item" href="#" @click="getTower('T')">Tower
+                                                            T</a>
+                                                        <a class="dropdown-item" href="#" @click="getTower('U')">Tower
+                                                            U</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
+                                            </th>
 
 
-                                        <th>Tipe</th>
-                                        <th>Lantai</th>
-                                        <th v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="list">
-                                    <tr v-for="(unit, index) in units.data" :key="unit.id">
-                                        <th scope="row">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span class="number mb-0 text-sm">{{index+1}}</span>
+                                            <th>Tipe</th>
+                                            <th>Lantai</th>
+                                            <th v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        <tr v-for="(unit, index) in units.data" :key="unit.id">
+                                            <th scope="row">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <span class="number mb-0 text-sm">{{index+1}}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <td> {{unit.unit}} </td>
-                                        <td> {{unit.tipe}} </td>
-                                        <td> {{unit.lantai}} </td>
-                                        <td v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
-                                            <button href="" class="btn btn-sm btn-warning"
-                                                @click.stop="formEdit(unit)">Edit</button>
-                                            <button href="" class="btn btn-sm btn-danger"
-                                                @click.stop="deleteUnit(unit.id)">Delete</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer py-4">
-                            <nav aria-label="...">
-                                <ul class="pagination justify-content-center mb-0">
-                                    <pagination v-if="activePagination == 'au'" :data=units @pagination-change-page="getAllUnit"></pagination>
-                                    <pagination v-else-if="activePagination == 'pt'" :data=units @pagination-change-page="pcpUnitPerTower"></pagination>
-                                    <pagination v-else-if="activePagination == 'pf'" :data=units @pagination-change-page="pcpUnitPerFloor"></pagination>
-                                </ul>
-                            </nav>
+                                            </th>
+                                            <td> {{unit.unit}} </td>
+                                            <td> {{unit.tipe}} </td>
+                                            <td> {{unit.lantai}} </td>
+                                            <td v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
+                                                <button href="" class="btn btn-sm btn-warning"
+                                                    @click.stop="formEdit(unit)">Edit</button>
+                                                <button href="" class="btn btn-sm btn-danger"
+                                                    @click.stop="deleteUnit(unit.id)">Hapus</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer py-4">
+                                <nav aria-label="...">
+                                    <ul class="pagination justify-content-center mb-0">
+                                        <pagination v-if="activePagination == 'au'" :data=units
+                                            @pagination-change-page="getAllUnit"></pagination>
+                                        <pagination v-else-if="activePagination == 'pt'" :data=units
+                                            @pagination-change-page="pcpUnitPerTower"></pagination>
+                                        <pagination v-else-if="activePagination == 'pf'" :data=units
+                                            @pagination-change-page="pcpUnitPerFloor"></pagination>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Modal -->
-        <b-modal id="bv-modal" size="sm" centered hide-header hide-footer>
-            <div class="card mb-0">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 v-if="newUnit.id" class="mb-0">Edit Data Unit</h3>
-                            <h3 v-else class="mb-0">Tambah Data Unit</h3>
-                        </div>
-                        <div class="col-4 text-right">
-                            <a href="#!" @click.prevent="closeModal" class="btn btn-sm btn-danger">x</a>
+            <!-- Modal -->
+            <b-modal id="bv-modal" size="sm" centered hide-header hide-footer>
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h5 v-if="newUnit.id" class="mb-0">Edit Data Unit</h5>
+                                <h5 v-else class="mb-0">Tambah Data Unit</h5>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="#!" @click.prevent="closeModal" class="btn btn-sm btn-danger">x</a>
+                            </div>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="form-control-label" for="unit">Unit</label>
+                                <input id="unit" type="text" v-model="newUnit.unit" class="form-control">
+                            </div>
+                            <div class="form-group mt-2">
+                                <label class="form-control-label" for="lantai">Lantai</label>
+                                <input id="lantai" type="number" class="form-control" v-model="newUnit.lantai">
+                            </div>
+                            <div class="form-group mt-2">
+                                <label class="form-control-label" for="tipe">Tipe</label>
+                                <select id="tipe" class="form-control" v-model="newUnit.tipe_id">
+                                    <option v-if="newUnit.tipe != unit.tipe" v-for="unit in types" :value=unit.id>
+                                        {{unit.tipe}} </option>
+                                    <option :value=newUnit.tipe_id> {{newUnit.tipe}} </option>
+                                </select>
+                            </div>
+                            <div class="mt-3 text-right mb-0">
+                                <a v-if="newUnit.id" href="#!" class="btn btn-sm btn-warning"
+                                    @click.prevent="updateUnit">Edit</a>
+                                <a v-else href="#!" class="btn btn-sm btn-success" @click.prevent="storeUnit">Submit</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form>
-                        <div class="form-group">
-                            <label class="form-control-label" for="unit">Unit</label>
-                            <input id="unit" type="text" v-model="newUnit.unit" class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label class="form-control-label" for="lantai">Lantai</label>
-                            <input id="lantai" type="number" class="form-control" v-model="newUnit.lantai">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label class="form-control-label" for="tipe">Tipe</label>
-                            <select id="tipe" class="form-control" v-model="newUnit.tipe_id">
-                                <option v-if="newUnit.tipe != unit.tipe" v-for="unit in types" :value=unit.id>
-                                    {{unit.tipe}} </option>
-                                <option :value=newUnit.tipe_id> {{newUnit.tipe}} </option>
-                            </select>
-                        </div>
-                        <div class="mt-3 text-right mb-0">
-                            <a v-if="newUnit.id" href="#!" class="btn btn-sm btn-warning"
-                                @click.prevent="updateUnit">Edit</a>
-                            <a v-else href="#!" class="btn btn-sm btn-success" @click.prevent="storeUnit">Submit</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </b-modal>
-        <!-- END MODAL -->
+            </b-modal>
+            <!-- END MODAL -->
+        </section>
     </div>
 </template>
 
 <script>
     import {
         mapState,
-        mapActions
+        mapActions,
+        mapMutations,
     } from 'vuex';
     export default {
         data() {
@@ -166,7 +187,10 @@
                     this.activePagination = 'au'
                 } else if (this.floor != "") {
                     this.activePagination = 'pf'
-                    this.getUnitPerFloor({floor: this.floor, page: 1})
+                    this.getUnitPerFloor({
+                        floor: this.floor,
+                        page: 1
+                    })
                 }
             },
         },
@@ -178,14 +202,25 @@
             ...mapActions('camer', ['editUnit']),
             ...mapActions('camer', ['destroyUnit']),
             ...mapActions('camer', ['getUnitPerTower']),
+            ...mapMutations(['SET_ACTIVEEL']),
+
+            activate: function (el) {
+                this.SET_ACTIVEEL(el)
+            },
 
             pcpUnitPerFloor(x) {
-                this.getUnitPerFloor({floor: this.floor, page: x})
-                
+                this.getUnitPerFloor({
+                    floor: this.floor,
+                    page: x
+                })
+
             },
             pcpUnitPerTower(x) {
-                this.getUnitPerTower({tower: this.tower, page: x})
-                
+                this.getUnitPerTower({
+                    tower: this.tower,
+                    page: x
+                })
+
             },
             formAdd() {
                 this.newUnit = {}
@@ -233,7 +268,10 @@
                     this.getAllUnit(1)
                     this.activePagination = 'au'
                 } else if (id == "T" || id == "U") {
-                    this.getUnitPerTower({tower: id, page: 1})
+                    this.getUnitPerTower({
+                        tower: id,
+                        page: 1
+                    })
                     this.activePagination = 'pt'
                 }
             }

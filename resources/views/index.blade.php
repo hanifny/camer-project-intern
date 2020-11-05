@@ -8,26 +8,30 @@
     <title>Camer</title>
     <!-- Vuejs -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <!-- Style -->
-    <link rel="icon" href="{{ asset('img/favicon-removebg-preview.png') }}" type="image/png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-    <link rel="stylesheet" href="{{ asset('vendor/nucleo/css/nucleo.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('css/argon.css?v=1.2.0') }}" type="text/css">
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/381a841f7d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
 </head>
 
-<body class="bg-default">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div id="app">
         <app></app>
     </div>
-    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/js-cookie/js.cookie.js') }}"></script>
-    <script src="{{ asset('vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
-    <script src="{{ asset('js/argon.js?v=1.2.0') }}"></script>
+    <!-- jQuery -->
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 </body>
 
 </html>

@@ -1,63 +1,83 @@
 <template>
-    <nav class="sidenav navbar navbar-vertical fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-        <div class="scrollbar-inner">
-            <div class="sidenav-header align-items-center" @click="activate('home')">
-                <router-link class="navbar-brand pt-5" to="/">
-                    <img src="img/logo.png" class="navbar-brand-img" alt="...">
-                </router-link>
-            </div>
-            <div class="navbar-inner">
-                <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                    <ul class="navbar-nav">
-                        <li class="nav-item" @click="activate('home')">
-                            <router-link class="nav-link" to="/" :class="{ active : activeEl == 'home' || activeEl == 'login' }">
-                                <i class="ni ni-tv-2 text-primary"></i>
-                                <span class="nav-link-text">Dashboard</span>
-                            </router-link>
-                        </li>
-                        <li class="nav-item" @click="activate('camer')">
-                            <router-link class="nav-link" to="/camer" :class="{ active : activeEl == 'camer' }">
-                                <i class="ni ni-box-2 text-primary"></i>
-                                <span class="nav-link-text">Catatan Meter</span>
-                            </router-link>
-                        </li>
-                        <li class="nav-item" @click="activate('unit')">
-                            <router-link class="nav-link" to="/unit" :class="{ active : activeEl == 'unit' }">
-                                <i class="ni ni-archive-2 text-orange"></i>
-                                <span class="nav-link-text">Data Apartement Unit</span>
-                            </router-link>
-                        </li>
-                        <li class="nav-item" @click="activate('user')">
-                            <router-link class="nav-link" to="/user" :class="{ active : activeEl == 'user' }">
-                                <i class="ni ni-single-02 text-yellow"></i>
-                                <span class="nav-link-text">Data User</span>
-                            </router-link>
-                        </li>
-                        <li class="nav-item" @click="activate('invalid')">
-                            <router-link class="nav-link" to="/invalid" :class="{ active : activeEl == 'invalid' }">
-                                <i class="ni ni-bullet-list-67 text-default"></i>
-                                <span class="nav-link-text">Data Invalid</span>
-                            </router-link>
-                        </li>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="index3.html" class="brand-link">
+            <img src="img/favicon-removebg-preview.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+            <span class="brand-text"><b>CAMER</b></span>
+        </a>
 
-                        <!-- <li class="nav-item" @click="activate('chat')">
-                            <router-link class="nav-link" to="/chat" :class="{ active : activeEl == 'chat' }">
-                                <i class="fas fa-comments"></i>
-                                <span class="nav-link-text">Chat</span>
-                            </router-link>
-                        </li>
-
-                        <li class="nav-item" @click="activate('pembayaran')">
-                            <router-link class="nav-link" to="/pembayaran" :class="{ active : activeEl == 'pembayaran' }">
-                                <i class="fas fa-credit-card"></i>
-                                <span class="nav-link-text">Pembayaran</span>
-                            </router-link>
-                        </li> -->
-                    </ul>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="https://images.unsplash.com/photo-1580724780391-e4772f8c9401?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block"> {{authenticated.nama}} </a>
                 </div>
             </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item" @click="activate('home')">
+                        <router-link to="/" class="nav-link"
+                            :class="{ active : activeEl == 'home' || activeEl == 'login' }">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dasbor
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item" @click="activate('camer')">
+                        <router-link to="/camer" class="nav-link" :class="{ active : activeEl == 'camer' }">
+                            <i class="nav-icon far fa-folder"></i>
+                            <p>
+                                Catatan Meter
+                                <span class="badge badge-warning right"> {{count.camer_must_validation}} </span>
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item" @click="activate('unit')">
+                        <router-link to="/unit" class="nav-link" :class="{ active : activeEl == 'unit' }">
+                            <i class="nav-icon far fa-building"></i>
+                            <p>
+                                Data Unit
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item" @click="activate('user')">
+                        <router-link to="/user" class="nav-link" :class="{ active : activeEl == 'user' }">
+                            <i class="nav-icon fas fa-user-astronaut"></i>
+                            <p>
+                                Data User
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item" @click="activate('invalid')">
+                        <router-link to="/invalid" class="nav-link" :class="{ active : activeEl == 'invalid' }">
+                            <i class="nav-icon far fa-times-circle"></i>
+                            <p>
+                                Data Invalid
+                                <span class="badge badge-danger right"> {{count.camer_invalid}} </span>
+                            </p>
+                        </router-link>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
         </div>
-    </nav>
+        <!-- /.sidebar -->
+    </aside>
 </template>
 
 <script>
@@ -69,16 +89,25 @@
     } from 'vuex';
     export default {
         data() {
-            return {
-            }
+            return {}
         },
         computed: {
-            ...mapState(['activeEl'])
+            ...mapState(['activeEl']),
+            ...mapState('camer', {
+                count: state => state.count
+            }),
+            ...mapState('user', {
+                authenticated: state => state.authenticated
+            }),
+        },
+        created() {
+            this.getUserLogin()
         },
         methods: {
+            ...mapActions('user', ['getUserLogin']),
             ...mapActions('auth', ['signout']),
             ...mapMutations(['SET_ACTIVEEL']),
-
+            ...mapActions('camer', ['getCount']),
 
             logout() {
                 this.signout().then(() => {
@@ -89,11 +118,13 @@
             },
             activate: function (el) {
                 this.SET_ACTIVEEL(el)
-            }
+            },
         },
         mounted() {
             this.SET_ACTIVEEL(this.$route.name)
-            // console.log(this.activeEl)  
+        },
+        created() {
+            this.getCount()
         }
     }
 </script>

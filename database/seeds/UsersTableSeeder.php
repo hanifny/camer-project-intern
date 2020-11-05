@@ -28,13 +28,13 @@ class UsersTableSeeder extends Seeder
             'nama'     => 'Danes Novigar',
             'email'    => 'danes@uaf.com',
             'password' => bcrypt('secret'),
-            'role_id'  => '2db7170e-7d23-4b16-98a0-095f4c3c1f6a'
+            'role_id'  => '9db7170e-7d23-4b16-98a0-095f4c3c1f6a'
         ]);
         User::create([
             'nama'     => 'Rizki Akbaraziz',
             'email'    => 'rizki@uaf.com',
             'password' => bcrypt('secret'),
-            'role_id'  => '2db7170e-7d23-4b16-98a0-095f4c3c1f6a'
+            'role_id'  => '9db7170e-7d23-4b16-98a0-095f4c3c1f6a'
         ]);
     }
 }

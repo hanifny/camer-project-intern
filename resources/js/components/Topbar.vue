@@ -1,69 +1,42 @@
 <template>
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-success">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Search form -->
-                <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-                    <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
-                        aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </form>
-                <!-- Navbar links -->
-                <ul class="navbar-nav align-items-center  ml-auto ">
-                    <li class="nav-item d-xl-none">
-                        <!-- Sidenav toggler -->
-                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                            data-target="#sidenav-main">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <div class="media align-items-center">
-                                <span class="avatar avatar-sm rounded-circle">
-                                    <span style="font-size: 1.5em; color: Black;">
-                                        <i class="fas fa-user-secret"></i>
-                                    </span>
-                                </span>
-                                <div class="media-body  ml-2  d-none d-lg-block">
-                                    <span v-if="authenticated" class="mb-0 text-sm  font-weight-bold">
-                                        {{authenticated.nama}} </span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu  dropdown-menu-right ">
-                            <div class="dropdown-header noti-title">
-                                <h6 class="text-overflow m-0">Welcome!</h6>
-                            </div>
-                            <a href="#!" @click="editPassword(authenticated)" class="dropdown-item">
-                                <i class="ni ni-single-02"></i>
-                                <span>Edit Password</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" @click="logout" class="dropdown-item">
-                                <i class="ni ni-user-run"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light d-flex justify-content-between">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link d-flex align-items-center" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span style="font-size: 31px; color: #343a40;">
+                        <i class="nav-icon fas fa-caret-down"></i>
+                    </span>
+                </a>
+                <div class="dropdown-menu  dropdown-menu-right ">
+                    <a href="#!" @click="editPassword(authenticated)" class="dropdown-item">
+                        <i class="nav-icon fas fa-unlock"></i>&nbsp;
+                        <span>Edit Password</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" @click="logout" class="dropdown-item">
+                        <i class="nav-icon fas fa-running"></i>&nbsp;
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+
         <!-- Modal -->
         <b-modal id="edit-password" size="sm" centered hide-footer hide-header>
             <div class="card mb-0">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Edit Password</h3>
+                            <h5 class="mb-0">Edit Password</h5>
                         </div>
                         <div class="col-4 text-right">
                             <a href="#!" @click.prevent="closeModal(authenticated)" class="btn btn-sm btn-danger">x</a>
@@ -99,6 +72,7 @@
         </b-modal>
         <!-- END MODAL -->
     </nav>
+    <!-- /.navbar -->
 </template>
 
 <script>
@@ -153,7 +127,7 @@
                     .then((response) => {
                         if (response.data.message ==
                             'Your current password does not matches with the password you provided. Please try again.'
-                            ) {
+                        ) {
                             this.errors = response.data.message
                         } else if (response.data.status == 'success') {
                             this.errors = response.data.message

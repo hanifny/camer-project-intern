@@ -1,43 +1,44 @@
 <template>
-    <div class="main-content">
-        <div class="header bg-gradient-success pb-6">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
             <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6">
-                            <h6 class="h2 text-white d-inline-block mb-0">Catatan Meter {{reverseYearMonth}} </h6>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="card card-stats mb-0" style="margin-bottom">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0"
-                                                style="line-height:30px; font-size:12px;">Belum Tervalidasi <span
-                                                    class="h2 font-weight-bold mb-0 d-inline-block float-right">
-                                                    {{count.camer_validation}} </span>
-                                            </h5>
-
-                                        </div>
-
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Catatan Meter {{reverseYearMonth}}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item" @click="activate('home')"><router-link to="/">Dasbor</router-link></li>
+                            <li class="breadcrumb-item active">Catatan Meter</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row mb-0 d-flex justify-content-center">
+                    <div class="col-lg-3">
+                        <div class="card card-stats">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="col d-flex align-items-center justify-content-between">
+                                        <h6 class="text-muted text-uppercase"><b>Belum tervalidasi</b></h6>
+                                        <span class="h2 font-weight-bold">
+                                            {{count.camer_must_validation}}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="card card-stats mb-0" style="margin-bottom">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0"
-                                                style="line-height:30px; font-size:12px;">Hari ini
-                                                <span>Tervalidasi</span> <span
-                                                    class="h2 font-weight-bold mb-0 d-inline-block float-right">
-                                                    {{count.camer_today_validation}} </span>
-                                            </h5>
-
-                                        </div>
-
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card card-stats">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="col d-flex align-items-center justify-content-between">
+                                        <h6 class="text-muted text-uppercase"><b>Tervalidasi hari ini</b></h6>
+                                        <span class="h2 font-weight-bold">
+                                            {{count.camer_today_validation}} / {{count.camer_validated}}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -46,235 +47,253 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid mt--6">
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-header border-0 d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Rekap Data Catatan Meter {{currentMonth}}</h3>
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="month" name="currentMonth" value="currentMonth"
-                                            v-model="currentMonth">
-                                    </div>
-                                    <div class="form-group" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
-                                        <button class="btn btn-danger"
-                                            @click.prevent="validasiSemua(all_camer)">Validasi Semua</button>
-                                    </div>
-                                    <div class="form-group" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">
-                                        <button @click.prevent="exportExcel" class="btn btn-success">Export to Excel <i
-                                                class="fas fa-file-excel"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table align-items-center table-flush text-center">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>
-                                            <div class="dropdown">
-                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Unit
-                                                </a>
+        <!-- /.content-header -->
 
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#"
-                                                        @click="camerPerTower('Semua')">Semua</a>
-                                                    <a class="dropdown-item" href="#" @click="camerPerTower('T')">Tower
-                                                        T</a>
-                                                    <a class="dropdown-item" href="#" @click="camerPerTower('U')">Tower
-                                                        U</a>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>Pemakaian Listrik</th>
-                                        <th>Pemakaian Air</th>
-                                        <th>Engineer</th>
-                                        <th>Validator</th>
-                                        <th>Bulan</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="list">
-                                    <tr v-for="(camer, index) in all_camer.data"
-                                        v-bind:class="{ 'validated': camer.validasi == 1, 'invalid': camer.validasi == 2, 'finger-cursor': camer }"
-                                        @click.prevent="cekDetail(camer)" :key="camer.id">
-                                        <th scope="row">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span class="number mb-0 text-sm">{{index+1}}</span>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <router-link to="">{{camer.unit}}</router-link>
-                                        </td>
-                                        <td v-if="camer.pemakaian_listrik != null"> {{ camer.pemakaian_listrik }} kwh
-                                        </td>
-                                        <td v-else> Tidak ada data </td>
-                                        <td v-if="camer.pemakaian_air != null"> {{ camer.pemakaian_air }} m<sup>3</sup>
-                                        </td>
-                                        <td v-else> Tidak ada data </td>
-                                        <td> {{camer.engineer}} </td>
-                                        <td> {{camer.validator}} </td>
-                                        <td> {{camer.bulan_tahun}} </td>
-                                        <td v-if="camer.validasi == 1"> <strong> Tervalidasi </strong> </td>
-                                        <td v-else-if="camer.validasi == 2"> <strong> Tidak Tervalidasi </strong> </td>
-                                        <td v-else-if="user.role == 'Engineer' && camer.validasi == 0">
-                                            <strong>Belum Tervalidasi</strong>
-                                        </td>
-                                        <td v-else>
-                                            <strong> Belum Tervalidasi </strong>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- PAGINATION -->
-                        <div class="card-footer py-4">
-                            <nav aria-label="...">
-                                <ul class="pagination justify-content-end mb-0">
-                                    <pagination v-if="activePagination == 'ac'" :data="all_camer"
-                                        @pagination-change-page="getCamer"></pagination>
-                                    <pagination v-else-if="activePagination == 'pt'" :data="all_camer"
-                                        @pagination-change-page="paginationPerTower"></pagination>
-                                    <pagination v-else-if="activePagination == 'pm'" :data="all_camer"
-                                        @pagination-change-page="paginationPerMonth"></pagination>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- END PAGINATION -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <b-modal id="bv-modal" size="lg" hide-header hide-footer>
-            <div class="row">
-                <div class="col-md ml-auto mr-auto">
-                    <div class="card card-upgrade mb-0">
-                        <div class="card-header text-center pt-4 pb-1 border-bottom-0">
-                            <h3 class="card-title">Detail Lengkap Catatan Meter</h3>
-                        </div>
-                        <div class="card-body pt-0 pb-0">
-                            <div class="table-responsive table-upgrade">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Unit</td>
-                                            <td>: {{currentItem.unit}} </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Stand Akhir Listrik</td>
-                                            <td
-                                                v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
-                                                :
-                                                {{currentItem.pencatatan_listrik}} kwh
-                                            <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
-                                                <input v-model="currentItem.pencatatan_listrik" type="number"> &nbsp;
-                                                kwh
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Stand Awal Listrik</td>
-                                            <td v-if="currentItem.pencatatan_listrik_bulan_lalu">:
-                                                {{currentItem.pencatatan_listrik_bulan_lalu}} kwh </td>
-                                            <td v-else>: Tidak ada data </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pemakaian Listrik</td>
-                                            <td v-if="currentItem.pemakaian_listrik !=null">: <strong>
-                                                    {{currentItem.pemakaian_listrik}} kwh </strong></td>
-                                            <td v-else>: Tidak ada data </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Stand Akhir Air</td>
-                                            <td
-                                                v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
-                                                :
-                                                {{currentItem.pencatatan_air}} m<sup style="margin-top:10px;">3</sup>
-                                            <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
-                                                <input type="number" v-model="currentItem.pencatatan_air">
-                                                &nbsp;
-                                                m<sup style="margin-top:10px;">3</sup>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Stand Awal Air</td>
-                                            <td v-if="currentItem.pencatatan_air_bulan_lalu">:
-                                                {{currentItem.pencatatan_air_bulan_lalu}} m<sup>3</sup> </td>
-                                            <td v-else>: Tidak ada data </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pemakaian Air</td>
-                                            <td v-if="currentItem.pemakaian_air !=null">: <strong>
-                                                    {{currentItem.pemakaian_air}} m<sup>3</sup> </strong></td>
-                                            <td v-else>: Tidak ada data </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nama Teknisi</td>
-                                            <td>: <strong> {{currentItem.engineer}} </strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tgl Upload Data</td>
-                                            <td>: <strong> {{currentItem.tanggal_upload}} </strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lampiran Foto</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-right pt-3 pb-3 pr-1">
-                                                <div class="zoom-effect">
-                                                    <div class="kotak">
-                                                        <img :src="'/img/camer/' + currentItem.gambar1" height="150px"
-                                                            width="250px;">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center justify-content-center">
+                                    <!-- <h3 class="mb-0">Rekap Data Catatan Meter {{currentMonth}}</h3> -->
+                                    <!-- <form> -->
+                                    <input type="month" name="currentMonth" value="currentMonth" v-model="currentMonth"
+                                        class="btn btn-light">
+                                    <button v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
+                                        class="btn btn-danger ml-2 mr-2"
+                                        @click.prevent="validasiSemua(all_camer)">Validasi
+                                        Semua</button>
+                                    <button v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
+                                        @click.prevent="exportExcel" class="btn btn-success">Ekspor ke
+                                        Excel &nbsp;<i class="fas fa-file-excel"></i></button>
+                                    <!-- </form> -->
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-flush text-center">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>
+                                                    <div class="dropdown">
+                                                        <a class="dropdown-toggle" href="#"
+                                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                            Unit
+                                                        </a>
+
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                            <a class="dropdown-item" href="#"
+                                                                @click="camerPerTower('Semua')">Semua</a>
+                                                            <a class="dropdown-item" href="#"
+                                                                @click="camerPerTower('T')">Tower
+                                                                T</a>
+                                                            <a class="dropdown-item" href="#"
+                                                                @click="camerPerTower('U')">Tower
+                                                                U</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="pl-1 pt-3 pb-3">
-                                                <div class="zoom-effect">
-                                                    <div class="kotak">
-                                                        <img :src="'/img/camer/' + currentItem.gambar2" height="150px"
-                                                            width="250px;">
+                                                </th>
+                                                <th>Pemakaian Listrik</th>
+                                                <th>Pemakaian Air</th>
+                                                <th>Engineer</th>
+                                                <th>Validator</th>
+                                                <th>Bulan</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                            <tr v-for="(camer, index) in all_camer.data"
+                                                v-bind:class="{ 'validated': camer.validasi == 1, 'invalid': camer.validasi == 2, 'finger-cursor': camer }"
+                                                @click.prevent="cekDetail(camer)" :key="camer.id">
+                                                <th scope="row">
+                                                    <div class="media">
+                                                        <div class="media-body">
+                                                            <span class="number mb-0 text-sm">{{index+1}}</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </th>
+                                                <td>
+                                                    <router-link to="">{{camer.unit}}</router-link>
+                                                </td>
+                                                <td v-if="camer.pemakaian_listrik != null">
+                                                    {{ camer.pemakaian_listrik }} kwh
+                                                </td>
+                                                <td v-else> Tidak ada data </td>
+                                                <td v-if="camer.pemakaian_air != null"> {{ camer.pemakaian_air }}
+                                                    m<sup>3</sup>
+                                                </td>
+                                                <td v-else> Tidak ada data </td>
+                                                <td> {{camer.engineer}} </td>
+                                                <td> {{camer.validator}} </td>
+                                                <td> {{camer.bulan_tahun}} </td>
+                                                <td v-if="camer.validasi == 1"> <strong> Tervalidasi </strong> </td>
+                                                <td v-else-if="camer.validasi == 2"> <strong> Tidak Tervalidasi
+                                                    </strong> </td>
+                                                <td v-else-if="user.role == 'Engineer' && camer.validasi == 0">
+                                                    <strong>Belum Tervalidasi</strong>
+                                                </td>
+                                                <td v-else>
+                                                    <strong> Belum Tervalidasi </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- PAGINATION -->
+                                <div class="card-footer">
+                                    <nav aria-label="...">
+                                        <ul class="pagination justify-content-end">
+                                            <pagination v-if="activePagination == 'ac'" :data="all_camer"
+                                                @pagination-change-page="getCamer"></pagination>
+                                            <pagination v-else-if="activePagination == 'pt'" :data="all_camer"
+                                                @pagination-change-page="paginationPerTower"></pagination>
+                                            <pagination v-else-if="activePagination == 'pm'" :data="all_camer"
+                                                @pagination-change-page="paginationPerMonth"></pagination>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <!-- END PAGINATION -->
                             </div>
                         </div>
-                        <div v-if="currentItem.validasi == 0 && (user.role == 'Admin' || user.role == 'SuperAdmin')"
-                            class="text-center d-flex bd-highlight pr-5 pl-5 pb-3">
-                            <strong @click="invalid(currentItem)"
-                                class="finger-cursor rounded p-2 btn-danger flex-fill bd-highlight">D A
-                                T A &nbsp; T I D A K &nbsp; V A L I D</strong>
-                            <strong @click="validasi(currentItem)"
-                                class="finger-cursor rounded ml-2 p-2 btn-success flex-fill bd-highlight">V A L I D A S
-                                I</strong>
-                        </div>
-                        <div v-else-if="currentItem.validasi == 1" class="text-center p-2 rounded-bottom btn-info">
-                            <strong>T E R V A L I D A S I</strong>
-                        </div>
-                        <div v-else-if="currentItem.validasi == 2" class="text-center p-2 rounded-bottom btn-danger">
-                            <strong>T I D A K &nbsp; T E R V A L I D A S I</strong>
-                        </div>
                     </div>
                 </div>
+                <b-modal id="bv-modal" size="lg" hide-header hide-footer>
+                    <div class="row">
+                        <div class="col-md ml-auto mr-auto">
+                            <div class="card card-upgrade mb-0">
+                                <div class="card-header text-center pt-4 pb-1 border-bottom-0">
+                                    <h3 class="card-title">Detail Lengkap Catatan Meter</h3>
+                                </div>
+                                <div class="card-body pt-0 pb-0">
+                                    <div class="table-responsive table-upgrade">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Unit</td>
+                                                    <td>: {{currentItem.unit}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Stand Akhir Listrik</td>
+                                                    <td
+                                                        v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
+                                                        :
+                                                        {{currentItem.pencatatan_listrik}} kwh
+                                                    <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
+                                                        <input v-model="currentItem.pencatatan_listrik" class="col-5" type="number">
+                                                        &nbsp;
+                                                        kwh
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Stand Awal Listrik</td>
+                                                    <td v-if="currentItem.pencatatan_listrik_bulan_lalu">:
+                                                        {{currentItem.pencatatan_listrik_bulan_lalu}} kwh </td>
+                                                    <td v-else>: Tidak ada data </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pemakaian Listrik</td>
+                                                    <td v-if="currentItem.pemakaian_listrik !=null">: <strong>
+                                                            {{currentItem.pemakaian_listrik}} kwh </strong></td>
+                                                    <td v-else>: Tidak ada data </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Stand Akhir Air</td>
+                                                    <td
+                                                        v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
+                                                        :
+                                                        {{currentItem.pencatatan_air}} m<sup
+                                                            style="margin-top:10px;">3</sup>
+                                                    <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
+                                                        <input type="number" v-model="currentItem.pencatatan_air" class="col-5">
+                                                        &nbsp;
+                                                        m<sup style="margin-top:10px;">3</sup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Stand Awal Air</td>
+                                                    <td v-if="currentItem.pencatatan_air_bulan_lalu">:
+                                                        {{currentItem.pencatatan_air_bulan_lalu}} m<sup>3</sup>
+                                                    </td>
+                                                    <td v-else>: Tidak ada data </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pemakaian Air</td>
+                                                    <td v-if="currentItem.pemakaian_air !=null">: <strong>
+                                                            {{currentItem.pemakaian_air}} m<sup>3</sup> </strong>
+                                                    </td>
+                                                    <td v-else>: Tidak ada data </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama Teknisi</td>
+                                                    <td>: <strong> {{currentItem.engineer}} </strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tgl Upload Data</td>
+                                                    <td>: <strong> {{currentItem.tanggal_upload}} </strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Lampiran Foto</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right pt-3 pb-2 pr-1">
+                                                        <div class="zoom-effect">
+                                                            <div class="kotak">
+                                                                <img :src="'/img/camer/' + currentItem.gambar1"
+                                                                    height="150px" width="250px;">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-left pl-1 pt-3 pb-2">
+                                                        <div class="zoom-effect">
+                                                            <div class="kotak">
+                                                                <img :src="'/img/camer/' + currentItem.gambar2"
+                                                                    height="150px" width="250px;">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div v-if="currentItem.validasi == 0 && (user.role == 'Admin' || user.role == 'SuperAdmin')"
+                                    class="text-center d-flex bd-highlight pr-3 pl-3 pb-3">
+                                    <strong @click="invalid(currentItem)"
+                                        class="finger-cursor rounded mr-1 p-2 btn-danger flex-fill bd-highlight">D A
+                                        T A &nbsp; T I D A K &nbsp; V A L I D</strong>
+                                    <strong @click="validasi(currentItem)"
+                                        class="finger-cursor rounded ml-1 p-2 btn-success flex-fill bd-highlight">V
+                                        A L
+                                        I D A S
+                                        I</strong>
+                                </div>
+                                <div v-else-if="currentItem.validasi == 1"
+                                    class="text-center p-2 rounded-bottom btn-info">
+                                    <strong>T E R V A L I D A S I</strong>
+                                </div>
+                                <div v-else-if="currentItem.validasi == 2"
+                                    class="text-center p-2 rounded-bottom btn-danger">
+                                    <strong>T I D A K &nbsp; T E R V A L I D A S I</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </b-modal>
             </div>
-        </b-modal>
+            <!-- /.content -->
+            <!-- /.content-wrapper -->
+        </section>
     </div>
 </template>
 
 <script>
     import {
         mapState,
-        mapActions
+        mapActions,
+        mapMutations
     } from 'vuex'
     export default {
         data() {
@@ -298,7 +317,10 @@
             reverseYearMonth: function () {
                 let rym = this.currentMonth.split("-").reverse().join(" ")
                 this.activePagination = 'pm'
-                this.getCamerPerMonth({bulan: rym, page: 1})
+                this.getCamerPerMonth({
+                    bulan: rym,
+                    page: 1
+                })
             }
         },
         methods: {
@@ -309,6 +331,11 @@
             ...mapActions('camer', ['exportToExcel']),
             ...mapActions('camer', ['getCount']),
             ...mapActions('camer', ['getCamerPerTower']),
+            ...mapMutations(['SET_ACTIVEEL']),
+
+            activate: function (el) {
+                this.SET_ACTIVEEL(el)
+            },
 
             paginationPerTower(page) {
                 this.getCamerPerTower({
@@ -415,7 +442,6 @@
             }
         },
         created() {
-            // this.getCamer(1)
             this.getCount()
             this.bulan_tahun()
         }
