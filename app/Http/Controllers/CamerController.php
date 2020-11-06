@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Apartement;
 use Illuminate\Http\Request;
 use App\Http\Resources\CamerResource;
-use App\Http\Resources\CamerPerTowerResource;
 use App\Meter;
 use App\User;
 use Illuminate\Support\Facades\File;
@@ -33,11 +32,19 @@ class CamerController extends Controller
         } else {
             $camer = $camer->paginate(100);
         }
-        return CamerPerTowerResource::collection($camer)->response()->getData(true);
+        return CamerResource::collection($camer)->response()->getData(true);
     }
 
     public function camer_per_month(Request $request) {
         $camer = Meter::where('bulan_tahun', $request->month_year)->where('validasi', '!=', 2)->orderBy('validasi', 'asc')->paginate(100);
+        return CamerResource::collection($camer)->response()->getData(true);
+    }
+
+    public function camer_last_month(Request $request) {
+        $camer = Meter::where([
+            'apartement_id' => $request->unit_id,
+            'bulan_tahun' => date("m Y", strtotime("last month")),
+        ])->where('validasi', '!=', 2)->get();
         return CamerResource::collection($camer)->response()->getData(true);
     }
 
@@ -215,5 +222,10 @@ class CamerController extends Controller
     public function export() 
     {
         return Excel::download(new CamerExport, 'camer.xlsx');
+    }
+
+    public function invalid(Request $request) {
+        $allInvalid = CamerResource::collection(Meter::where('validasi', 2)->get());
+        return response()->json($allInvalid);
     }
 }

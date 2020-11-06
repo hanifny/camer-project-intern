@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\AdminEngineerResource;
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function all() {
-        $role = AdminEngineerResource::collection(User::orderBy('role_id', 'asc')->get());
+        $role = UserResource::collection(User::orderBy('role_id', 'asc')->get());
         return response()->json($role);
     }
 

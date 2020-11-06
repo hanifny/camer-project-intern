@@ -5,7 +5,7 @@ namespace App\Exports;
 use App\Meter;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use App\Http\Resources\CamerExcelResource;
+use App\Http\Resources\CamerResource;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -16,24 +16,28 @@ class CamerExport implements FromCollection, WithHeadings, ShouldAutoSize, WithE
 	public function headings(): array
 	{
 		return [
-            'ID Camer',
+            'ID Catatan Meter',
+            'ID Unit',
             'Unit',
-            'Pencatatan Listrik',
+            'Lantai',
+            'Stand Awal Listrik',
+            'Stand Akhir Listrik',
             'Pemakaian Listrik',
-            'Pencatatan Air',
+            'Stand Awal Air',
+            'Stand Akhir Air',
             'Pemakaian Air',
             'Bulan Tahun',
             'Status Validasi',
-            'Admin',
-            'Engineer',
+            'Administrator',
+            'Teknisi',
             'Tanggal Upload',
             'Tanggal Validasi',
         ];
-	}
+    }
 
     public function collection()
     {
-        return CamerExcelResource::collection(Meter::orderBy('validasi', 'asc')->get());
+        return CamerResource::collection(Meter::orderBy('validasi', 'asc')->get());
     }
 
     public function registerEvents(): array

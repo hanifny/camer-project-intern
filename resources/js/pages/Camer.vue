@@ -59,8 +59,10 @@
                                 <div class="card-header d-flex align-items-center justify-content-center">
                                     <!-- <h3 class="mb-0">Rekap Data Catatan Meter {{currentMonth}}</h3> -->
                                     <!-- <form> -->
+                                    <span class="font-weight-bold">Bulan :</span>
                                     <input type="month" name="currentMonth" value="currentMonth" v-model="currentMonth"
-                                        class="btn btn-light">
+                                        class="btn btn-outline-primary font-weight-bold ml-2 mr-2">
+                                    <span v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">&nbsp;|</span> 
                                     <button v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
                                         class="btn btn-danger ml-2 mr-2"
                                         @click.prevent="validasiSemua(all_camer)">Validasi

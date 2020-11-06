@@ -20,18 +20,21 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::delete('user/{id}', 'UserController@destroy');
 
         //  {{ UNIT }}  \\
-        // Get all unit where camer is invalid
-        Route::get('invalid', 'UnitController@invalid'); 
         // Get lantai
-        Route::get('floor', 'UnitController@floor');
-        // Get nama unit per lantai
-        Route::get('floor/{id}', 'UnitController@unitName_per_floor');
+        // Route::get('floor', 'UnitController@floor');
         // Get unit per lantai
-        Route::get('unit/{id}', 'UnitController@unit_per_floor');
+        Route::get('unit/{floor}', 'UnitController@unit_per_floor');
         // Get semua unit
         Route::get('unit', 'UnitController@all_unit');
         // Get unit per tower
         Route::get('unit/tower/{tower}', 'UnitController@tower');
+
+
+        // Get lantai by tower
+        Route::get('apt/{tower}', 'UnitController@floorByTower');
+        // Get unit by tower and lantai
+        Route::get('apt/{tower}/{floor}', 'UnitController@unitByFloorTower');
+
         // Get tipe
         Route::get('type', 'UnitController@all_type');
         // Store unit baru
@@ -65,7 +68,9 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // get camer
         Route::get('camer/{month_year}/{tower}', 'CamerController@camer_per_tower');
         // get camer per month
-        Route::get('camer/{month_year}', 'CamerController@camer_per_month');    
+        Route::get('camer/{month_year}', 'CamerController@camer_per_month');   
+        // get camer last month
+        Route::get('camer-last-month/{unit_id}', 'CamerController@camer_last_month'); 
         // validasi
         Route::patch('camer', [
             'uses' => 'CamerController@validation',
@@ -78,12 +83,8 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         ]);
         // Get count data
         Route::get('count', 'CamerController@count');
+        // Get all unit where camer is invalid
+        Route::get('invalid', 'CamerController@invalid'); 
         // Resend camer invalid
         Route::post('invalid', 'CamerController@update');
-
-        // Chat
-        Route::get('messages', 'ChatsController@fetchMessages');
-        Route::post('messages', 'ChatsController@sendMessage');
-
-        Route::post('payment/store', 'PaymentController@store'); 
 });

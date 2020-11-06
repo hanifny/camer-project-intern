@@ -6,15 +6,15 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">Data Unit</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item" @click="activate('home')"><router-link to="/">Dasbor</router-link></li>
                             <li class="breadcrumb-item active">Data Unit</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.content-header -->
 
@@ -27,19 +27,18 @@
                         <div class="card" v-bind="getUnit">
                             <div class="card-header">
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <form class="form-inline mr-1">
+                                    <form class="form-inline mr-2">
                                         <label class="form-control-label" for="lantai">Lantai &nbsp; </label>
-                                        <input id="lantai" type="text" class="text-center form-control"
+                                        <input id="lantai" type="text" class="text-center form-control btn-outline-primary"
                                             v-model="floor">
                                     </form>
-                                    |
+                                    <span v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">|</span>
                                     <a href="#" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
-                                        class="btn btn-sm btn-success ml-1" @click.prevent="formAdd">
+                                        class="btn btn-sm btn-success ml-2" @click.prevent="formAdd">
                                         <i class="nav-icon fas fa-plus-circle"></i>
                                         Tambah
                                     </a>
                                 </div>
-                                <!-- <h5 class="mb-0">Daftar Unit Apartement Capitol Park</h5> -->
                             </div>
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush text-center">

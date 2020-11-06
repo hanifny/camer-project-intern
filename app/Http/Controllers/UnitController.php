@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Apartement;
-use App\Http\Resources\UnitCamerResource;
 use App\Type;
 use App\Http\Resources\UnitResource;
 use App\Meter;
@@ -18,11 +17,6 @@ class UnitController extends Controller
             $unit = Apartement::where('unit', 'like', 'U%')->orderBy('unit', 'asc')->paginate(100);
         } 
         return UnitResource::collection($unit)->response()->getData(true);
-    }
-
-    public function invalid(Request $request) {
-        $allInvalid = UnitCamerResource::collection(Meter::where('validasi', 2)->get());
-        return response()->json($allInvalid);
     }
 
     public function store(Request $request) {
@@ -58,13 +52,8 @@ class UnitController extends Controller
         return response()->json($lantai);
     }
 
-    public function unitName_per_floor($id) {
-        $unit_per_floor = UnitResource::collection(Apartement::where('lantai', $id)->get());
-        return response()->json($unit_per_floor);
-    }
-
-    public function unit_per_floor($id) {
-        $unit_per_floor = Apartement::where('lantai', $id)->get();
+    public function unit_per_floor($floor) {
+        $unit_per_floor = Apartement::where('lantai', $floor)->get();
         return UnitResource::collection($unit_per_floor)->response()->getData(true);
     }
 
@@ -76,5 +65,12 @@ class UnitController extends Controller
     public function all_type() {
         $tipe = Type::orderBy('tipe', 'asc')->get();
         return response()->json($tipe);
+    }
+
+    // APP
+    // ANDROID
+    public function floorByTower($tower) {
+        $lantai = Apartement::distinct()->select('lantai')->orderBy('lantai', 'asc')->get();
+        return response()->json($lantai);
     }
 }
