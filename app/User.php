@@ -41,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
     
     private function cekUserRole($role)
     {
-        return (strtolower($role)==strtolower($this->have_role->nama)) ? true : false;
+        return (strtolower($role)==strtolower($this->have_role->name)) ? true : false;
     }
 
     public function getJWTIdentifier() {
@@ -63,9 +63,4 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
-    }
 }

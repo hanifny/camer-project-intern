@@ -4,8 +4,13 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 d-flex">
                         <h1 class="m-0 text-dark">Data Invalid</h1>
+                        <i class="far fa-question-circle ml-1" id="popover-target-1"></i>
+                        <b-popover target="popover-target-1" triggers="hover" placement="top">
+                            Data invalid adalah data yang harus dikirim ulang dikarenakan bukti gambar yang buram atau
+                            tidak jelas.
+                        </b-popover>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">

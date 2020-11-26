@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\User;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -17,8 +16,8 @@ class UserController extends Controller
 
     public function store(Request $request) {
         $user = new User;
-        $user->nama = $request->nama;
-        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->username = $request->username;
         $user->password = bcrypt($request->password);
         if ($request->role == 'admin') {
             $user->role_id = '78e83712-9bfe-4bd2-9689-886324a48acb';
@@ -31,8 +30,8 @@ class UserController extends Controller
 
     public function update(Request $request) {
         $user = User::find($request->id);
-        $user->nama = $request->nama;
-        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->username = $request->username;
         if ($request->password) {
             $user->password = bcrypt($request->password);
         }
@@ -47,7 +46,7 @@ class UserController extends Controller
 
     public function destroy($id) {
         $user = User::find($id); 
-        if ($user->role->nama != 'SuperAdmin') {
+        if ($user->role->name != 'SuperAdmin') {
             $user->delete();
             return response()->json($user);
         } else {
@@ -60,7 +59,7 @@ class UserController extends Controller
             'old_password' => 'required',
             'password' => 'required|confirmed',
         ]);
-        $user = User::where('email', $request->email);
+        $user = User::where('username', $request->username);
         $password = $user->first()->password;
 
         if (!(Hash::check($request->old_password, $password))) {

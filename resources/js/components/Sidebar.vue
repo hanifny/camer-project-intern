@@ -16,7 +16,7 @@
                         class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"> {{authenticated.nama}} </a>
+                    <a href="#" class="d-block"> {{authenticated.name}} </a>
                 </div>
             </div>
 
@@ -34,13 +34,19 @@
                         </router-link>
                     </li>
 
-                    <li class="nav-item" @click="activate('camer')">
-                        <router-link to="/camer" class="nav-link" :class="{ active : activeEl == 'camer' }">
-                            <i class="nav-icon far fa-folder"></i>
-                            <p>
-                                Catatan Meter
-                                <span class="badge badge-warning right"> {{count.camer_must_validation}} </span>
-                            </p>
+                    <li class="nav-item" @click="activate('camer.listrik')">
+                        <router-link to="/camer/listrik" class="nav-link"
+                            :class="{ active : activeEl == 'camer.listrik' }">
+                            <i class="fas fa-bolt nav-icon"></i>
+                            <p>Camer Listrik</p>
+                            <span class="badge badge-warning right"> {{count.el_validation}} </span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item" @click="activate('camer.air')">
+                        <router-link to="/camer/air" class="nav-link" :class="{ active : activeEl == 'camer.air' }">
+                            <i class="fas fa-tint nav-icon"></i>
+                            <p>Camer Air</p>
+                            <span class="badge badge-warning right"> {{count.wt_validation}} </span>
                         </router-link>
                     </li>
 
@@ -67,16 +73,24 @@
                             <i class="nav-icon far fa-times-circle"></i>
                             <p>
                                 Data Invalid
-                                <span class="badge badge-danger right"> {{count.camer_invalid}} </span>
+                                <span class="badge badge-danger right"> {{count.invalid}} </span>
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li v-if="authenticated.role == 'Admin' || authenticated.role == 'SuperAdmin'"
+                        @click.prevent="exportExcel" class="nav-item">
+                        <router-link to="#" class="nav-link">
+                            <i class="nav-icon far fa-file-excel"></i>
+                            <p>
+                                Ekspor ke Excel
                             </p>
                         </router-link>
                     </li>
 
                 </ul>
             </nav>
-            <!-- /.sidebar-menu -->
         </div>
-        <!-- /.sidebar -->
     </aside>
 </template>
 
@@ -108,7 +122,11 @@
             ...mapActions('auth', ['signout']),
             ...mapMutations(['SET_ACTIVEEL']),
             ...mapActions('camer', ['getCount']),
+            ...mapActions('camer', ['exportToExcel']),
 
+            exportExcel() {
+                this.exportToExcel()
+            },
             logout() {
                 this.signout().then(() => {
                     this.$router.push({

@@ -22,17 +22,30 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    <div class="col-lg-3 col-6"  @click="activate('invalid')"> 
-                        <!-- small box -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Hai, <b>{{name.split(' ')[0]}}</b>! Selamat datang di Web Camer
+                                    <span style="color: #ffa500;">
+                                        <i class="nav-icon fas fa-laugh-beam"></i>
+                                    </span></h5>
+                                <p class="card-text">
+                                    Web Camer (Catatan Meter) adalah web yang mengelola catatan meter yang telah
+                                    di<i>upload</i> oleh teknisi melalui Aplikasi Camer berbasis Android. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6" @click="activate('invalid')">
                         <router-link to="invalid" class="small-box bg-danger">
                             <div class="inner">
-                                <h3> {{count.camer_invalid}} </h3>
+                                <h3> {{count.invalid}} </h3>
 
                                 <p>Invalid</p>
                             </div>
-                            <div class="icon">  
+                            <div class="icon">
                                 <i class="nav-icon far fa-times-circle"></i>
                             </div>
                             <a href="#" class="small-box-footer">Lebih lanjut <i
@@ -40,11 +53,10 @@
                         </router-link>
                     </div>
 
-                    <div class="col-lg-3 col-6" @click="activate('camer')">
-                        <!-- small box -->
-                        <router-link to="camer" class="small-box bg-warning">
+                    <div class="col-lg-3 col-6" @click="activate('camer.listrik')">
+                        <router-link to="camer/listrik" class="small-box bg-warning">
                             <div class="inner">
-                                <h3> {{count.camer_must_validation}} </h3>
+                                <h3> {{count.el_validation + count.wt_validation}} </h3>
 
                                 <p>Belum Tervalidasi</p>
                             </div>
@@ -55,11 +67,10 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </router-link>
                     </div>
-                    <div class="col-lg-3 col-6" @click="activate('camer')">
-                        <!-- small box -->
-                        <router-link to="camer" class="small-box bg-success">
+                    <div class="col-lg-3 col-6" @click="activate('camer.listrik')">
+                        <router-link to="camer/listrik" class="small-box bg-success">
                             <div class="inner">
-                                <h3> {{count.camer_validated}} </h3>
+                                <h3> {{count.validated}} </h3>
 
                                 <p>Tervalidasi</p>
                             </div>
@@ -72,7 +83,6 @@
                     </div>
 
                     <div class="col-lg-3 col-6" @click="activate('user')">
-                        <!-- small box -->
                         <router-link to="user" class="small-box bg-info">
                             <div class="inner">
                                 <h3> {{count.engineer}} </h3>
@@ -86,9 +96,8 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </router-link>
                     </div>
-                    <!-- ./col -->
+
                     <div class="col-lg-3 col-6" @click="activate('unit')">
-                        <!-- small box -->
                         <router-link to="unit" class="small-box bg-info">
                             <div class="inner">
                                 <h3> {{count.unit}} </h3>
@@ -102,10 +111,66 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </router-link>
                     </div>
+
+                    <div class="col-lg-3 col-6">
+                        <router-link to="#" class="small-box bg-info">
+                            <div class="inner">
+                                <h3>
+                                    <i class="fas fa-database"></i>
+                                </h3>
+
+                                <p>Pencatatan IoT</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <a href="#" class="small-box-footer font-weight-bold bg-danger rounded-bottom">Dalam tahap
+                                pengembangan
+                                <!-- <i class="fas fa-arrow-circle-right"></i> -->
+                            </a>
+                        </router-link>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <router-link to="#" class="small-box bg-info">
+                            <div class="inner">
+                                <h3>
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </h3>
+
+                                <p>Tagihan</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <a href="#" class="small-box-footer font-weight-bold bg-danger rounded-bottom">Dalam tahap
+                                pengembangan
+                                <!-- <i class="fas fa-arrow-circle-right"></i> -->
+                            </a>
+                        </router-link>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <router-link to="#" class="small-box bg-info">
+                            <div class="inner">
+                                <h3>
+                                    <i class="fas fa-envelope-open-text"></i>
+                                </h3>
+
+                                <p>Aduan</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-inbox"></i>
+                            </div>
+                            <a href="#" class="small-box-footer font-weight-bold bg-danger rounded-bottom">Dalam tahap
+                                pengembangan
+                                <!-- <i class="fas fa-arrow-circle-right"></i> -->
+                            </a>
+                        </router-link>
+                    </div>
+
                 </div>
-                <!-- /.content -->
             </div>
-            <!-- /.content-wrapper -->
         </section>
     </div>
 </template>
@@ -120,7 +185,10 @@
         computed: {
             ...mapState('camer', {
                 count: state => state.count
-            })
+            }),
+            ...mapState('user', {
+                name: state => state.authenticated.name
+            }),
         },
         methods: {
             ...mapActions('camer', ['getCount']),

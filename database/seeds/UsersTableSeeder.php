@@ -13,26 +13,26 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'nama'     => 'Hanif Nuryanto',
-            'email'    => 'hanif@uaf.com',
+            'name'     => 'Hanif Nuryanto',
+            'username'    => 'hanif',
             'password' => bcrypt('secret'),
             'role_id'  => '42855eb8-6193-48ae-913c-aec7dea8eeb9'
         ]);
         User::create([
-            'nama'     => 'Moch Dicky',
-            'email'    => 'dicky@uaf.com',
+            'name'     => 'Moch Dicky',
+            'username'    => 'dicky',
             'password' => bcrypt('secret'),
             'role_id'  => '78e83712-9bfe-4bd2-9689-886324a48acb'
         ]);
         User::create([
-            'nama'     => 'Danes Novigar',
-            'email'    => 'danes@uaf.com',
+            'name'     => 'Danes Novigar',
+            'username'    => 'danes',
             'password' => bcrypt('secret'),
             'role_id'  => '9db7170e-7d23-4b16-98a0-095f4c3c1f6a'
         ]);
         User::create([
-            'nama'     => 'Rizki Akbaraziz',
-            'email'    => 'rizki@uaf.com',
+            'name'     => 'Rizki Akbaraziz',
+            'username'    => 'rizki',
             'password' => bcrypt('secret'),
             'role_id'  => '9db7170e-7d23-4b16-98a0-095f4c3c1f6a'
         ]);

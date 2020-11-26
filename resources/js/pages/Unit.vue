@@ -4,12 +4,19 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 d-flex">
                         <h1 class="m-0 text-dark">Data Unit</h1>
+                        <i class="far fa-question-circle ml-1" id="popover-target-1"></i>
+                        <b-popover target="popover-target-1" triggers="hover" placement="top">
+                            Menu ini termuat data semua unit. <b>Hanya</b> <i>user</i> dengan <i>role</i> SuperAdmin dan
+                            Admin yang dapat menambah, menghapus dan memperbarui data unit
+                        </b-popover>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item" @click="activate('home')"><router-link to="/">Dasbor</router-link></li>
+                            <li class="breadcrumb-item" @click="activate('home')">
+                                <router-link to="/">Dasbor</router-link>
+                            </li>
                             <li class="breadcrumb-item active">Data Unit</li>
                         </ol>
                     </div>
@@ -29,8 +36,8 @@
                                 <div class="d-flex align-items-center justify-content-center">
                                     <form class="form-inline mr-2">
                                         <label class="form-control-label" for="lantai">Lantai &nbsp; </label>
-                                        <input id="lantai" type="text" class="text-center form-control btn-outline-primary"
-                                            v-model="floor">
+                                        <input id="lantai" type="text"
+                                            class="text-center form-control btn-outline-primary" v-model="floor">
                                     </form>
                                     <span v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">|</span>
                                     <a href="#" v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
@@ -135,11 +142,7 @@
                             </div>
                             <div class="form-group mt-2">
                                 <label class="form-control-label" for="tipe">Tipe</label>
-                                <select id="tipe" class="form-control" v-model="newUnit.tipe_id">
-                                    <option v-if="newUnit.tipe != unit.tipe" v-for="unit in types" :value=unit.id>
-                                        {{unit.tipe}} </option>
-                                    <option :value=newUnit.tipe_id> {{newUnit.tipe}} </option>
-                                </select>
+                                <input id="tipe" class="form-control" v-model="newUnit.tipe">
                             </div>
                             <div class="mt-3 text-right mb-0">
                                 <a v-if="newUnit.id" href="#!" class="btn btn-sm btn-warning"

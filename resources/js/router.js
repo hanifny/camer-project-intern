@@ -4,7 +4,8 @@ import Router from 'vue-router'
 import Home from './pages/Home.vue'
 import Login from './pages/Login.vue'
 import Unit from './pages/Unit.vue'
-import Camer from './pages/Camer.vue'
+import CamerListrik from './pages/CamerListrik.vue'
+import CamerAir from './pages/CamerAir.vue'
 import User from './pages/User.vue'
 import Invalid from './pages/Invalid.vue'
 import Chat from './pages/Chat.vue'
@@ -34,9 +35,15 @@ const router = new Router({
             meta: { requiresAuth: true }
         },
         {
-            path: '/camer',
-            name: 'camer',
-            component: Camer,
+            path: '/camer/air',
+            name: 'camer.air',
+            component: CamerAir,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/camer/listrik',
+            name: 'camer.listrik',
+            component: CamerListrik,
             meta: { requiresAuth: true }
         },
         {

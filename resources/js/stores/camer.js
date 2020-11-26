@@ -148,15 +148,13 @@ const actions = {
         })
     },
     getCamer({ commit }, payload) {
-        setTimeout(function() {
-            return new Promise((resolve, reject) => {
-                $axios.get('/camer?page=' + payload)
-                .then((response) => {
-                    commit('GET_CAMER', response.data)
-                    resolve(response.data)
-                })
+        return new Promise((resolve, reject) => {
+            $axios.get('/camer/' + payload.tipe + '/' + payload.bulan + '/' + payload.tower + '?page=' + payload.page) 
+            .then((response) => {
+                commit('GET_CAMER', response.data)
+                resolve(response.data)
             })
-        }, 100)
+        })
     },
     getCamerInvalid({ commit }) {
         return new Promise((resolve, reject) => {
@@ -169,16 +167,7 @@ const actions = {
     },
     getCamerPerMonth({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.get('/camer/' + payload.bulan + '?page=' + payload.page) 
-            .then((response) => {
-                commit('GET_CAMER', response.data)
-                resolve(response.data)
-            })
-        })
-    },
-    getCamerPerTower({ commit }, payload) {
-        return new Promise((resolve, reject) => {
-            $axios.get('/camer/' + payload.bulan + '/' + payload.tower + '?page=' + payload.page) 
+            $axios.get('/camer/' + payload.type + '/' + payload.bulan + '?page=' + payload.page) 
             .then((response) => {
                 commit('GET_CAMER', response.data)
                 resolve(response.data)
@@ -188,11 +177,6 @@ const actions = {
     validation({ commit, dispatch }, payload) {
         return new Promise((resolve, reject) => {
             $axios.patch('/camer', payload)
-            .then((response) => {
-                dispatch('getCamer', 1).then(() => {
-                    resolve(response.data)
-                })
-            })
         })
     },
     validation_per_month({commit}, payload) {

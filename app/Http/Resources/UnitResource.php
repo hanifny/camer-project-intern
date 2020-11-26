@@ -16,9 +16,9 @@ class UnitResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'unit' => $this->unit,
-            'tipe' => $this->type->tipe,
-            'lantai' => $this->lantai
+            'unit' => $this->unit_code,
+            'lantai' => $this->floor,
+            'tipe' => $this->unit_type
         ];
     }
 }

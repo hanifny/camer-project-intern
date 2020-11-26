@@ -12,10 +12,10 @@
 
                     <form autocomplete="off" @submit.prevent="postLogin">
                         <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Email" v-model="data.email" autofocus required>
+                            <input type="username" class="form-control" placeholder="Username" v-model="data.username" autofocus required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
+                                    <span class="fas fa-user"></span>
                                 </div>
                             </div>
                         </div>

@@ -13,13 +13,13 @@ class AuthController extends Controller
 
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $credentials = request(['username', 'password']);
 
         if (! $token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized', 'status' => 'failed']);
         }
         $data = $this->respondWithToken($token)->original['access_token'];
-        $role  = auth()->user()->role->nama;
+        $role  = auth()->user()->role->name;
         //KEMUDIAN KIRIM RESPONSENYA KE CLIENT UNTUK DIPROSES LEBIH LANJUT
         return response()->json([
             'status' => 'success', 
@@ -30,10 +30,9 @@ class AuthController extends Controller
 
     public function me()
     {
-        $role  = auth()->user()->have_role->nama;
-        $nama = auth()->user()->nama;
-        $email = auth()->user()->email;
-        return response()->json(['role' => $role, 'nama' => $nama, 'email' => $email]);
+        $role  = auth()->user()->have_role->name;
+        $name = auth()->user()->name;
+        return response()->json(['role' => $role, 'name' => $name]);
     }
 
     public function logout()

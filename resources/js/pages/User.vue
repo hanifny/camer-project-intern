@@ -4,9 +4,14 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 d-flex">
                         <h1 class="m-0 text-dark">Data User</h1>
-                    </div><!-- /.col -->
+                        <i class="far fa-question-circle ml-1" id="popover-target-1"></i>
+                        <b-popover target="popover-target-1" triggers="hover" placement="top">
+                            Menu ini termuat daftar identitas semua <i>user</i>. <b>Hanya</b> <i>user</i> dengan <i>role</i> SuperAdmin yang dapat menambah,
+                            memperbarui dan menghapus <i>user</i>. 
+                        </b-popover>
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item" @click="activate('home')">
@@ -14,9 +19,9 @@
                             </li>
                             <li class="breadcrumb-item active">Data User</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.content-header -->
 
@@ -40,7 +45,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Role</th>
-                                            <th>Email</th>
+                                            <th>Username</th>
                                             <th>Nama</th>
                                             <th v-if="authenticated.role == 'SuperAdmin'">Aksi</th>
                                         </tr>
@@ -56,10 +61,10 @@
                                             </th>
                                             <td> {{user.role}} </td>
                                             <td>
-                                                {{user.email}}
+                                                {{user.username}}
                                             </td>
                                             <td>
-                                                {{user.nama}}
+                                                {{user.name}}
                                             </td>
                                             <td v-if="authenticated.role == 'SuperAdmin'">
                                                 <button href="" class="btn btn-sm btn-warning"
@@ -97,12 +102,12 @@
                     <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <label class="form-control-label" for="nama">Nama</label>
-                                <input id="nama" type="text" v-model="user.nama" class="form-control">
+                                <label class="form-control-label" for="name">Nama</label>
+                                <input id="name" type="text" v-model="user.name" class="form-control">
                             </div>
                             <div class="form-group mt-2">
-                                <label class="form-control-label" for="email">Email</label>
-                                <input id="email" type="email" class="form-control" v-model="user.email">
+                                <label class="form-control-label" for="username">Username</label>
+                                <input id="username" type="username" class="form-control" v-model="user.username">
                             </div>
                             <div class="form-group mt-2">
                                 <label class="form-control-label" for="tipe">Password</label>
@@ -182,7 +187,7 @@
             deleteUser(user) {
                 swal.fire({
                     title: 'Apakah kamu yakin?',
-                    text: "Kamu akan menghapus user " + user.nama,
+                    text: "Kamu akan menghapus user " + user.name,
                     icon: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

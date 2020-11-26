@@ -20,15 +20,12 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         Route::delete('user/{id}', 'UserController@destroy');
 
         //  {{ UNIT }}  \\
-        // Get lantai
-        // Route::get('floor', 'UnitController@floor');
         // Get unit per lantai
         Route::get('unit/{floor}', 'UnitController@unit_per_floor');
         // Get semua unit
         Route::get('unit', 'UnitController@all_unit');
         // Get unit per tower
         Route::get('unit/tower/{tower}', 'UnitController@tower');
-
 
         // Get lantai by tower
         Route::get('apt/{tower}', 'UnitController@floorByTower');
@@ -55,36 +52,29 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
         // {{ CAMER }} \\
         // export 
         Route::get('camer/export/', [
-            'uses' => 'CamerController@export',
+            'uses' => 'MeterRecordController@export',
             'roles' => ['Admin', 'SuperAdmin']
         ]);
         // store camer
-        Route::post('floor/{id}/{unit_id}', [
-            'uses' => 'CamerController@store',
+        Route::post('camer', [
+            'uses' => 'MeterRecordController@store',
             'roles' => ['Engineer']
         ]);
         // get camer
-        Route::get('camer', 'CamerController@all');
-        // get camer
-        Route::get('camer/{month_year}/{tower}', 'CamerController@camer_per_tower');
-        // get camer per month
-        Route::get('camer/{month_year}', 'CamerController@camer_per_month');   
+        Route::get('camer/{type}/{month_year}/{tower}', 'MeterRecordController@getCamer');
+        // get camer per month by type and month
+        Route::get('camer/{type}/{month_year}', 'MeterRecordController@camer_per_month');   
         // get camer last month
-        Route::get('camer-last-month/{unit_id}', 'CamerController@camer_last_month'); 
+        Route::get('camer-last-month/{type}/{unit_id}', 'MeterRecordController@camer_last_month'); 
         // validasi
         Route::patch('camer', [
-            'uses' => 'CamerController@validation',
-            'roles' => ['Admin', 'SuperAdmin']
-        ]);
-        // validasi semua perbulan
-        Route::patch('camer_per_month', [
-            'uses' => 'CamerController@validation_per_month',
+            'uses' => 'MeterRecordController@validation',
             'roles' => ['Admin', 'SuperAdmin']
         ]);
         // Get count data
-        Route::get('count', 'CamerController@count');
+        Route::get('count', 'MeterRecordController@count');
         // Get all unit where camer is invalid
-        Route::get('invalid', 'CamerController@invalid'); 
-        // Resend camer invalid
-        Route::post('invalid', 'CamerController@update');
+        Route::get('invalid', 'MeterRecordController@invalid'); 
+        // Resend camer that invalid
+        Route::post('invalid', 'MeterRecordController@update');
 });
