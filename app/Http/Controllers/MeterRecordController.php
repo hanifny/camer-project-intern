@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use App\Exports\MeterRecordExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\type;
 
@@ -57,6 +58,14 @@ class MeterRecordController extends Controller
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 		]);
 
+        // cek apakah user mengirim nama unit atau id unit
+        if(isset($request->unit_id)) {
+            $unit_id = $request->unit_id;
+        } else {
+            $unit = DB::table('units')->where('unit_code', $request->unit)->first();
+            $unit_id = $unit->id;
+        };
+
 		// menyimpan data file yang diupload ke variabel $file
         $gambar = $request->file('gambar');
  
@@ -66,13 +75,13 @@ class MeterRecordController extends Controller
 		$tujuan_upload = 'img/camer';
         
         $data_bulan_lalu = MeterRecord::where(
-            ['unit_id' => $request->unit_id,
+            ['unit_id' => $unit_id,
             'month_year' => date("m Y", strtotime("last month")),
             'validation' => 1,
             'type' => $request->tipe]
         )->select('meter_start')->first();
         $data_bulan_ini = MeterRecord::where(
-            ['unit_id' => $request->unit_id,
+            ['unit_id' => $unit_id,
             'month_year' => date('m Y'),
             'type' => $request->tipe
             ]
@@ -83,9 +92,9 @@ class MeterRecordController extends Controller
         $camer->type = $request->tipe;
         $camer->engineer_id = $request->user()->id;
         $camer->meter_end = $request->meter_akhir;
-        $camer->unit_id = $request->unit_id;
+        $camer->unit_id = $unit_id;
         $camer->validation = 0;
-        $camer->image = 'tes';
+        $camer->image = $bukti_gambar;
         $camer->month_year = date('m Y');
         if(!$data_bulan_ini) {
             if($data_bulan_lalu) {
@@ -98,9 +107,9 @@ class MeterRecordController extends Controller
             $gambar->move($tujuan_upload, $bukti_gambar);
             return response()->json(['status' => 'success']);
         } elseif($data_bulan_ini) {
-            return response()->json(['status' => 'data already added']);            
+            return response()->json(['status' => 'Data sudah ada'], 500);            
         }
-        return response()->json(['status' => 'failed']);
+        return response()->json(['status' => 'failed'], 500);
     }
 
     public function update(Request $request) {

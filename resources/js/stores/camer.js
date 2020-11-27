@@ -1,3 +1,4 @@
+import { reject } from 'lodash'
 import $axios from '../api.js'
 
 const state = () => ({
@@ -206,6 +207,32 @@ const actions = {
                 resolve(response.data)
             })
         })
+    },
+    addCamer({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post('/camer', 
+                payload,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            )
+            .then((response) => {
+                swal.fire(
+                    'Berhasil!',
+                    'Camer baru berhasil ditambah!',
+                    'success'
+                );
+            })
+            .catch((error) => {
+                swal.fire(
+                    'Gagal!',
+                    'Mohon diperhatikan data yang diinput',
+                    'error'
+                );
+            });
+        });
     }
 }
 

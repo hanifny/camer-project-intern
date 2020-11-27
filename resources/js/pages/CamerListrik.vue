@@ -68,11 +68,12 @@
                                     <input type="month" name="currentMonth" value="currentMonth" v-model="currentMonth"
                                         class="btn btn-outline-primary font-weight-bold ml-2 mr-2">
                                     <span v-if="user.role == 'Admin' || user.role == 'SuperAdmin'">|</span>
-                                    <button v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
-                                        class="btn btn-success ml-2 mr-2" @click.prevent="validasiSemua(all_camer)">
+                                    <b-button v-b-modal="'modal-form'"
+                                        v-if="user.role == 'Admin' || user.role == 'SuperAdmin'"
+                                        class="btn btn-success ml-2 mr-2">
                                         <i class="fas fa-plus-circle nav-icon"></i>
                                         Tambah Camer
-                                    </button>
+                                    </b-button>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table align-items-center table-flush text-center">
@@ -89,12 +90,12 @@
 
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item" href="#"
-                                                                @click="camerPerTower('Semua')">Semua</a>
+                                                                @click="camer('Semua')">Semua</a>
                                                             <a class="dropdown-item" href="#"
-                                                                @click="camerPerTower('T')">Tower
+                                                                @click="camer('T')">Tower
                                                                 T</a>
                                                             <a class="dropdown-item" href="#"
-                                                                @click="camerPerTower('U')">Tower
+                                                                @click="camer('U')">Tower
                                                                 U</a>
                                                         </div>
                                                     </div>
@@ -162,86 +163,108 @@
                         </div>
                     </div>
                 </div>
-                <b-modal id="bv-modal" size="lg" hide-header hide-footer>
+
+                <!-- MODAL CAMER -->
+                <b-modal id="modal-camer" size="lg" centered hide-header hide-footer>
                     <div class="row">
                         <div class="col-md ml-auto mr-auto">
                             <div class="card card-upgrade mb-0">
-                                <div class="card-header text-center pt-4 pb-1 border-bottom-0">
-                                    <h3 class="card-title">Detail Catatan Meter Listrik</h3>
-                                </div>
-                                <div class="card-body pt-0 pb-0">
-                                    <div class="table-responsive table-upgrade">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tipe</td>
-                                                    <td>: <b>{{currentItem.tipe}}</b> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Unit</td>
-                                                    <td>: {{currentItem.unit}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Stand Akhir Listrik</td>
-                                                    <td
-                                                        v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
-                                                        :
-                                                        {{currentItem.meter_akhir}} m<sup
-                                                            style="margin-top:10px;">3</sup>
-                                                    <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
-                                                        <input type="number" v-model="currentItem.meter_akhir"
-                                                            class="col-4"> &nbsp; kwh
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Stand Awal Listrik</td>
-                                                    <td v-if="currentItem.meter_awal">:
-                                                        {{currentItem.meter_awal}} kwh
-                                                    </td>
-                                                    <td v-else>: Tidak ada data </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Pemakaian Listrik</td>
-                                                    <td v-if="currentItem.meter_awal !=null">: <strong>
-                                                            {{currentItem.meter_akhir - currentItem.meter_awal}} kwh
-                                                        </strong>
-                                                    </td>
-                                                    <td v-else>: Tidak ada data </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nama Teknisi</td>
-                                                    <td>: <strong> {{currentItem.engineer}} </strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tgl Upload Data</td>
-                                                    <td>: <strong> {{currentItem.tanggal_upload}} </strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lampiran Foto</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-right pt-3 pb-2 pr-1">
-                                                        <div class="zoom-effect">
-                                                            <div class="kotak">
-                                                                <img :src="'/img/camer/' + currentItem.gambar1"
-                                                                    height="150px" width="250px;">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-left pl-1 pt-3 pb-2">
-                                                        <div class="zoom-effect">
-                                                            <div class="kotak">
-                                                                <img :src="'/img/camer/' + currentItem.gambar2"
-                                                                    height="150px" width="250px;">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="card-header d-flex">
+                                    <div class="col-8">
+                                        <h3 class="card-title mb-0 font-weight-bold">Detail Catatan Meter Listrik</h3>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <a href="#!" @click.prevent="closeModalCamer"
+                                            class="btn btn-sm btn-danger">x</a>
                                     </div>
                                 </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row align-items-center">
+                                            <div class="col col-lg-6">
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Tipe</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">{{currentItem.tipe}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Unit</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">{{currentItem.unit}}</div>
+                                                </div>
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col col-lg-5">Stand Akhir Listrik</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <strong
+                                                            v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
+                                                            {{currentItem.meter_akhir}} kwh
+                                                        </strong>
+                                                        <strong v-else>
+                                                            <input class="col-9" type="number"
+                                                                v-model="currentItem.meter_akhir"> &nbsp; kwh
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Stand Awal Listrik</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <span v-if="currentItem.meter_awal">
+                                                            {{currentItem.meter_awal}} kwh
+                                                        </span>
+                                                        <span v-else> Tidak ada data </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Pemakaian</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <span v-if="currentItem.meter_awal !=null"> <strong>
+                                                                {{currentItem.meter_akhir - currentItem.meter_awal}} kwh
+                                                            </strong>
+                                                        </span>
+                                                        <span v-else> Tidak ada data </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Teknisi</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6"><strong> {{currentItem.engineer}}
+                                                        </strong></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Tanggal Upload Data</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6"><strong> {{currentItem.tanggal_upload}}
+                                                        </strong></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Validator</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <span
+                                                            v-if="currentItem.validator !=null">{{currentItem.validator}}</span>
+                                                        <span v-else> - </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6">
+                                                <div class="text-center">
+                                                    <div class="zoom-effect">
+                                                        <div class="kotak">
+                                                            <img :src="'/img/camer/' + currentItem.gambar"
+                                                                class="rounded" alt="Gambar tidak tersedia"
+                                                                height="275px" width="375px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./row -->
+                                    </div>
+                                </div>
+                                <!-- ./card-body -->
                                 <div v-if="currentItem.validasi == 0 && (user.role == 'Admin' || user.role == 'SuperAdmin')"
                                     class="text-center d-flex bd-highlight pr-3 pl-3 pb-3">
                                     <strong @click="invalid(currentItem)"
@@ -254,7 +277,7 @@
                                         I</strong>
                                 </div>
                                 <div v-else-if="currentItem.validasi == 1"
-                                    class="text-center p-2 rounded-bottom btn-info">
+                                    class="text-center p-2 rounded-bottom btn-success">
                                     <strong>T E R V A L I D A S I</strong>
                                 </div>
                                 <div v-else-if="currentItem.validasi == 2"
@@ -265,10 +288,55 @@
                         </div>
                     </div>
                 </b-modal>
+                <!-- END MODAL CAMER -->
+
+                <!-- MODAL ADD CAMER -->
+                <b-modal id="modal-form" hide-footer hide-header size="sm" centered>
+                    <div class="card mb-0">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h5 class="mb-0">Tambah Camer</h5>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <a href="#!" @click.prevent="closeModalForm" class="btn btn-sm btn-danger">x</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="tipe">Tipe</label>
+                                    <input type="text" class="form-control" disabled placeholder="EL">
+                                </div>
+                                <div class="form-group mt-2">
+                                    <label class="form-control-label" for="unit">Unit</label>
+                                    <input placeholder="Ditulis dengan huruf kapital" id="unit" type="text"
+                                        class="form-control" v-model="newCamer.unit">
+                                </div>
+                                <div class="form-group mt-2">
+                                    <label class="form-control-label" for="meter_akhir">Meter Akhir</label>
+                                    <input id="meter_akhir" type="text" class="form-control"
+                                        v-model="newCamer.meter_akhir">
+                                </div>
+                                <div class="form-group mt-2">
+                                    <label class="form-control-label" for="gambar"> Gambar </label>
+                                    <input id="gambar" ref="gambar" type="file" @change="handleFileUpload()">
+                                </div>
+                                <div class="mt-3 text-right mb-0">
+                                    <a class="btn btn-sm btn-success" href="#!" @click.prevent="simpanCamer">Simpan</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </b-modal>
+                <!-- END MODAL ADD CAMER -->
+
             </div>
             <!-- /.content -->
             <!-- /.content-wrapper -->
         </section>
+
     </div>
 </template>
 
@@ -284,7 +352,9 @@
                 currentItem: {},
                 currentMonth: '',
                 activePagination: 'ac',
-                currentTower: ''
+                currentTower: '',
+                image: '',
+                newCamer: {},
             }
         },
         computed: {
@@ -314,14 +384,23 @@
             ...mapActions('camer', ['validation_per_month']),
             ...mapActions('camer', ['exportToExcel']),
             ...mapActions('camer', ['getCount']),
+            ...mapActions('camer', ['addCamer']),
             ...mapMutations(['SET_ACTIVEEL']),
 
             activate: function (el) {
                 this.SET_ACTIVEEL(el)
             },
 
+            closeModalCamer() {
+                this.$bvModal.hide('modal-camer')
+            },
+
+            closeModalForm() {
+                this.$bvModal.hide('modal-form')
+            },
+
             paginationPerTower(page) {
-                this.getCamerPerTower({
+                this.getCamer({
                     bulan: this.currentMonth.split("-").reverse().join(" "),
                     tower: this.currentTower,
                     page: page,
@@ -349,7 +428,7 @@
                 this.exportToExcel()
             },
             cekDetail(camer) {
-                this.$bvModal.show('bv-modal')
+                this.$bvModal.show('modal-camer')
                 this.currentItem = camer
             },
             validasi(camer) {
@@ -373,7 +452,7 @@
                         this.camer('Semua')
                         this.getCount()
                         this.bulan_tahun()
-                        this.$bvModal.hide('bv-modal')
+                        this.$bvModal.hide('modal-camer')
                     }
                 })
             },
@@ -401,17 +480,40 @@
                         )
                         camer.status = "invalid"
                         this.validation(camer)
-                        this.$bvModal.hide('bv-modal')
+                        this.$bvModal.hide('modal-camer')
                         this.camer('Semua')
                         this.bulan_tahun()
                         this.getCount()
                     }
                 })
-            }
+            },
+            // Handles a change on the file upload
+            handleFileUpload() {
+                this.image = this.$refs.gambar.files[0];
+            },
+            // Simpan Camer
+            simpanCamer() {
+                // Initialize the form data
+                let formData = new FormData();
+
+                // Add the form data we need to submit
+                formData.append('gambar', this.image);
+                formData.append('tipe', 'el');
+                formData.append('unit', this.newCamer.unit);
+                formData.append('meter_akhir', this.newCamer.meter_akhir);
+
+                // Make the request to the POST /single-file URL
+                this.addCamer(formData);
+                this.closeModalForm()
+                this.camer('Semua')
+                this.bulan_tahun()
+                this.getCount()
+            },
         },
+
         created() {
             this.getCount()
             this.bulan_tahun()
-        }
+        },
     }
 </script>

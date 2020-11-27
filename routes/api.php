@@ -56,10 +56,9 @@ Route::group(['middleware' => ['auth:api', 'roles']], function() {
             'roles' => ['Admin', 'SuperAdmin']
         ]);
         // store camer
-        Route::post('camer', [
-            'uses' => 'MeterRecordController@store',
-            'roles' => ['Engineer']
-        ]);
+        Route::post('camer', 'MeterRecordController@store');
+        // find camer
+        // Route::get('camer', 'MeterRecordController@findCamer');
         // get camer
         Route::get('camer/{type}/{month_year}/{tower}', 'MeterRecordController@getCamer');
         // get camer per month by type and month

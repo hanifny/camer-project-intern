@@ -95,103 +95,101 @@
                     </div>
                 </div>
             </div>
-            <b-modal id="bv-modal" size="lg" hide-header hide-footer>
+            <b-modal id="bv-modal" size="lg" centered hide-header hide-footer>
                 <div class="row">
                     <div class="col-md ml-auto mr-auto">
                         <div class="card card-upgrade mb-0">
-                            <div class="card-header text-center pt-4 pb-1 border-bottom-0">
-                                <h3 class="card-title">Detail Lengkap Catatan Meter</h3>
-                            </div>
-                            <div class="card-body pt-0 pb-0">
-                                <div class="table-responsive table-upgrade">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>Unit</td>
-                                                <td>: {{currentItem.unit}} </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stand Akhir Listrik</td>
-                                                <td
-                                                    v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
-                                                    :
-                                                    {{currentItem.pencatatan_listrik}} kwh
-                                                <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
-                                                    <input v-model="currentItem.pencatatan_listrik" type="number">
-                                                    &nbsp;
-                                                    kwh
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stand Awal Listrik</td>
-                                                <td v-if="currentItem.pencatatan_listrik_bulan_lalu">:
-                                                    {{currentItem.pencatatan_listrik_bulan_lalu}} kwh </td>
-                                                <td v-else>: Tidak ada data </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pemakaian Listrik</td>
-                                                <td v-if="currentItem.pemakaian_listrik !=null">: <strong>
-                                                        {{currentItem.pemakaian_listrik}} kwh </strong></td>
-                                                <td v-else>: Tidak ada data </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stand Akhir Air</td>
-                                                <td
-                                                    v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
-                                                    :
-                                                    {{currentItem.pencatatan_air}} m<sup
-                                                        style="margin-top:10px;">3</sup>
-                                                <td v-else class="d-flex justify-content-start col-sm">: &nbsp;
-                                                    <input type="number" v-model="currentItem.pencatatan_air">
-                                                    &nbsp;
-                                                    m<sup style="margin-top:10px;">3</sup>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stand Awal Air</td>
-                                                <td v-if="currentItem.pencatatan_air_bulan_lalu">:
-                                                    {{currentItem.pencatatan_air_bulan_lalu}} m<sup>3</sup> </td>
-                                                <td v-else>: Tidak ada data </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pemakaian Air</td>
-                                                <td v-if="currentItem.pemakaian_air !=null">: <strong>
-                                                        {{currentItem.pemakaian_air}} m<sup>3</sup> </strong></td>
-                                                <td v-else>: Tidak ada data </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama Teknisi</td>
-                                                <td>: <strong> {{currentItem.engineer}} </strong></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tgl Upload Data</td>
-                                                <td>: <strong> {{currentItem.tanggal_upload}} </strong></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Lampiran Foto</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right pt-3 pb-3 pr-1">
-                                                    <div class="zoom-effect">
-                                                        <div class="kotak">
-                                                            <img :src="'/img/camer/' + currentItem.gambar1"
-                                                                height="150px" width="250px;">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="pl-1 pt-3 pb-3">
-                                                    <div class="zoom-effect">
-                                                        <div class="kotak">
-                                                            <img :src="'/img/camer/' + currentItem.gambar2"
-                                                                height="150px" width="250px;">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="card card-upgrade mb-0">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0 font-weight-bold">Detail Catatan Meter Invalid</h3>
                                 </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row align-items-center">
+                                            <div class="col col-lg-6">
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Tipe</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">{{currentItem.tipe}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Unit</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">{{currentItem.unit}}</div>
+                                                </div>
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col col-lg-5">Stand Akhir Air</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <strong
+                                                            v-if="currentItem.validasi == 1 || currentItem.validasi == 2 || user.role == 'Engineer'">
+                                                            {{currentItem.meter_akhir}} m <sup>3</sup>
+                                                        </strong>
+                                                        <strong v-else>
+                                                            <input class="col-9" type="number"
+                                                                v-model="currentItem.meter_akhir"> &nbsp; m <sup>3</sup>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Stand Awal Air</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <span v-if="currentItem.meter_awal">
+                                                            {{currentItem.meter_awal}} m <sup>3</sup>
+                                                        </span>
+                                                        <span v-else> Tidak ada data </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Pemakaian</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <span v-if="currentItem.meter_awal !=null"> <strong>
+                                                                {{currentItem.meter_akhir - currentItem.meter_awal}} m
+                                                                <sup>3</sup>
+                                                            </strong>
+                                                        </span>
+                                                        <span v-else> Tidak ada data </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Teknisi</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6"><strong> {{currentItem.engineer}}
+                                                        </strong></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Tanggal Upload Data</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6"><strong> {{currentItem.tanggal_upload}}
+                                                        </strong></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-lg-5">Validator</div>
+                                                    <div class="col-auto text-right">:</div>
+                                                    <div class="col col-lg-6">
+                                                        <span
+                                                            v-if="currentItem.validator !=null">{{currentItem.validator}}</span>
+                                                        <span v-else> - </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6">
+                                                <div class="text-center">
+                                                    <div class="zoom-effect">
+                                                        <div class="kotak">
+                                                            <img :src="'/img/camer/' + currentItem.gambar" class="rounded" alt="Gambar tidak tersedia"
+                                                                height="275px" width="375px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./row -->
+                                    </div>
+                                </div>
+                                <!-- ./card-body -->
                             </div>
                             <div v-if="currentItem.validasi == 2" class="text-center p-2 rounded-bottom btn-danger">
                                 <strong>T I D A K &nbsp; T E R V A L I D A S I</strong>
