@@ -56,8 +56,13 @@ class MeterRecordController extends Controller
     }
 
     public function store(Request $request) {
-        $bulan_ini = date("m Y",mktime(0,0,0,date("m", strtotime($request->bulan)),1,date("Y", strtotime($request->bulan))));
-        $bulan_lalu = date("m Y",mktime(0,0,0,date("m", strtotime($request->bulan))-1,1,date("Y", strtotime($request->bulan))));
+        if(isset($request->bulan)) {
+            $bulan_ini = date("m Y",mktime(0,0,0,date("m", strtotime($request->bulan)),1,date("Y", strtotime($request->bulan))));
+            $bulan_lalu = date("m Y",mktime(0,0,0,date("m", strtotime($request->bulan))-1,1,date("Y", strtotime($request->bulan))));
+        } else {
+            $bulan_ini = date("m Y");
+            $bulan_lalu = date("m Y", strtotime("first day of previous month"));
+        }
 
         $this->validate($request, [
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
