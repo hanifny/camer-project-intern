@@ -30,7 +30,7 @@
                                     <div class="col d-flex align-items-center justify-content-between">
                                         <h6 class="text-muted text-uppercase"><b>Belum tervalidasi</b></h6>
                                         <span class="h2 font-weight-bold">
-                                            {{count.el_validation}}
+                                            {{count.wt_validation}}
                                         </span>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                                     <div class="col d-flex align-items-center justify-content-between">
                                         <h6 class="text-muted text-uppercase"><b>Tervalidasi hari ini</b></h6>
                                         <span class="h2 font-weight-bold">
-                                            {{count.el_validated_today}}
+                                            {{count.wt_validated_today}}
                                         </span>
                                     </div>
                                 </div>
