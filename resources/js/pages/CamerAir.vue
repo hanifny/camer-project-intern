@@ -453,7 +453,7 @@
                             'success'
                         )
                         this.validation(camer);
-                        bus.$emit('refreshDataEl');
+                        bus.$emit('refreshDataWt');
                         this.closeModalCamer();
                     }
                 })
@@ -485,7 +485,7 @@
                         camer.status = "invalid"
                         this.validation(camer);
                         this.closeModalCamer();
-                        bus.$emit('refreshDataEl');
+                        bus.$emit('refreshDataWt');
                     }
                 })
             },
@@ -511,7 +511,7 @@
                 this.addCamer(formData);
                 this.closeModalForm();
                 this.newCamer = {};
-                bus.$emit('refreshDataEl');
+                bus.$emit('refreshDataWt');
             },
         },
 
@@ -519,7 +519,7 @@
             this.getCount();
             this.bulan_tahun();
 
-            bus.$on('refreshDataEl', () => {
+            bus.$on('refreshDataWt', () => {
                 this.bulan_tahun();
                 this.getCount();
                 setTimeout(() => {
